@@ -36,7 +36,9 @@ public class PlayController : MonoBehaviour
     float playerMoveSpeed = 0; //player 的移動速度 -> 給動畫播放控制器知道要播放什麼樣子的動畫的變數
     float playerGoalSpeed = 0; //player 的目標速度
     float SpeedChangeRatio = 0.01f; //從當前速度變化到目標速度的快慢比率
-
+    bool CanJumpAgain = true; //是否可以再次跳躍，為了解決播放跳躍動畫時會有二段跳問題而設的參數
+    float JumpFreezingTime = 0.2f;//跳躍冷卻時間
+    float OnGroundTime = 0; //有踏在地上時間
     //----------------------------------------------------
 
 
@@ -189,6 +191,35 @@ public class PlayController : MonoBehaviour
         transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(moveDirection, Vector3.up), rotationSpeed * Time.deltaTime); 
     }
 
+    //處理跳躍
+    private void jumpBehaviour()
+    {
+        //Debug.DrawRay(transform.position, Vector3.down* distanceToGround, Color.red); //可看出有效接觸地板的距離
+        if (inputController.GetSpaceInput() && IsOnGround() && CanJumpAgain)
+        {
+            jumpDirection = Vector3.zero;
+            jumpDirection += jumpForce * Vector3.up;
+
+            animatorController.SetTrigger("IsJump"); //使用 animatorController 中的 SetTrigger()，就能播放之前設置 Trigger 時觸發的動畫
+
+            //設置可跳躍旗標
+            CanJumpAgain = false;
+            OnGroundTime = 0;
+        }
+
+        if(!CanJumpAgain && IsOnGround()) //重置可跳躍旗標
+        {
+            OnGroundTime += Time.deltaTime;
+            if (OnGroundTime >= JumpFreezingTime) CanJumpAgain = true;
+        }
+
+        jumpDirection.y -= gravityForce * Time.deltaTime; //物體無時無刻都受到向下的力
+        jumpDirection.y = Mathf.Max(jumpDirection.y, -gravityForce); //向下的力最小就是 gravityForce
+
+        characterController.Move(jumpDirection * Time.deltaTime); //實現物體受力而移動
+    }
+
+    
 
 
     //獲得當前相機的正前方方向
@@ -207,22 +238,6 @@ public class PlayController : MonoBehaviour
         cameraRight.y = 0;
         cameraRight.Normalize(); //向量正規化
         return cameraRight;
-    }
-
-    //處理跳躍
-    private void jumpBehaviour()
-    {
-        //Debug.DrawRay(transform.position, Vector3.down* distanceToGround, Color.red); //可看出有效接觸地板的距離
-        if (inputController.GetSpaceInput() && IsOnGround())
-        {
-            jumpDirection = Vector3.zero;
-            jumpDirection += jumpForce * Vector3.up;
-        }
-
-        jumpDirection.y -= gravityForce * Time.deltaTime; //物體無時無刻都受到向下的力
-        jumpDirection.y = Mathf.Max(jumpDirection.y, -gravityForce); //向下的力最小就是 gravityForce
-
-        characterController.Move(jumpDirection * Time.deltaTime); //實現物體受力而移動
     }
 
     private bool IsOnGround()
