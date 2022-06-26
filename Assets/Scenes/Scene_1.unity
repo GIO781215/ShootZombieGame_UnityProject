@@ -13141,7 +13141,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f46de8fa896d1145a3128d640b8bd75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 518921238}
+  target: {fileID: 1842492652}
   HeightOffset: 3
   smoothMoveTime: 0.2
 --- !u!1 &967374158 stripped
@@ -25169,6 +25169,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: 327784050cb412c40ac1f512a0ae7882, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: de4a1aac277723c4380a5444ca55119e, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 327784050cb412c40ac1f512a0ae7882, type: 3}
 --- !u!4 &1842492652 stripped
