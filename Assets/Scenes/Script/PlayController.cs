@@ -6,13 +6,8 @@ using UnityEngine;
 public class PlayController : MonoBehaviour
 {
     [Header("移動參數")]
-
-    [Tooltip("移動速度")]
-    [SerializeField] float moveSpeed = 8f;
-
-    [Tooltip("按住 Shift 時的加速倍率")]
-    [Range(1,3)] //設一個 1 到 3 的拉條
-    [SerializeField] float SpeedMultipler = 2f;
+    float moveSpeed = 5f; //移動速度
+    float SpeedMultipler = 2.5f; //按住 Shift 時的加速倍率
 
     [Tooltip("蹲下時的減速倍率")]
     [Range(0, 1)]
@@ -36,6 +31,15 @@ public class PlayController : MonoBehaviour
 
 
 
+    //-------------------設定動畫的參數-------------------
+    Animator animatorController; //動畫播放控制器
+    float playerMoveSpeed = 0; //player 的移動速度 -> 給動畫播放控制器知道要播放什麼樣子的動畫的變數
+    float playerGoalSpeed = 0; //player 的目標速度
+    float SpeedChangeRatio = 0.01f; //從當前速度變化到目標速度的快慢比率
+
+    //----------------------------------------------------
+
+
 
     InputController inputController;
     CharacterController characterController;
@@ -49,10 +53,10 @@ public class PlayController : MonoBehaviour
     {
         inputController = GameManager.Instance.inputController;
         characterController = GetComponent<CharacterController>(); //獲得掛在 player 物件下的 CharacterController 組件
-       
+        animatorController = GetComponentInChildren<Animator>(); //獲得動畫撥放控制器 (組件是在子物件 PlayFBX 下的，所以使用 GetComponentInChildren< > 去檢索)
     }
 
-    
+ 
     void Update()
     {
         MoveBehaviour();
@@ -74,18 +78,32 @@ public class PlayController : MonoBehaviour
         moveDirection += inputController.GetMoveInput().z * GetCurrentCameraForward();
         moveDirection += inputController.GetMoveInput().x * GetCurrentCameraRight();
         moveDirection = Vector3.ClampMagnitude(moveDirection, 1); //向量正規化，避免對角線速度過快
+        playerGoalSpeed = 0.5f; //Player 移動速度設為 0.5 -> 走路狀態
 
-        //是否按下 Z 加速
-        if(inputController.GetKeyZInput())
+        if (moveDirection == Vector3.zero) //如果鍵盤沒有移動輸入
+        {
+            playerGoalSpeed = 0f; //Player 移動速度設為 0 -> 閒置狀態
+        }
+        else if (inputController.GetKeyZInput()) //是否按下 Z 加速
         {
             moveDirection *= SpeedMultipler;
+            playerGoalSpeed = 1f;  //Player 移動速度設為 1 -> 跑步狀態
         }
 
         //若鍵盤輸入不為零才讓 player 的面朝方向轉向
-          if (moveDirection != Vector3.zero)
-          {
+        if (moveDirection != Vector3.zero)
+        {
             SmoothRotation(moveDirection); //讓 player 的面朝方向轉動到 moveDirection 的方向上
-          }
+        }
+
+
+        //這一幀與下一幀 player 的移動速度做差值，讓 walkSpeed 的值變動得更平滑
+        if (playerMoveSpeed != playerGoalSpeed)
+        {
+            playerMoveSpeed = Mathf.Lerp(playerMoveSpeed, playerGoalSpeed, SpeedChangeRatio);
+        }
+        animatorController.SetFloat("walkSpeed", playerMoveSpeed); //改變變數 walkSpeed 就能從 animatorController 中播放對應的動畫
+
 
         #region //CharacterControlle 組件與常用函數的說明 
         /*

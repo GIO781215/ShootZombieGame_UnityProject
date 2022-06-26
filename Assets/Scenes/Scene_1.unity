@@ -7032,7 +7032,7 @@ GameObject:
   - component: {fileID: 518921237}
   - component: {fileID: 518921236}
   m_Layer: 0
-  m_Name: PlayerMesh
+  m_Name: PlayerTest
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -25167,7 +25167,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 327784050cb412c40ac1f512a0ae7882, type: 3}
       propertyPath: m_Name
-      value: Player
+      value: PlayerFBX
       objectReference: {fileID: 0}
     - target: {fileID: 5866666021909216657, guid: 327784050cb412c40ac1f512a0ae7882, type: 3}
       propertyPath: m_Controller
@@ -28692,6 +28692,7 @@ MonoBehaviour:
   jumpForce: 15
   gravityForce: 50
   distanceToGround: 0.1
+  lastFrameSpeed: 0
 --- !u!143 &2098220447
 CharacterController:
   m_ObjectHideFlags: 0
