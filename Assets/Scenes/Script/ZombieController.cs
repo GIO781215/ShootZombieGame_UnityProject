@@ -6,6 +6,7 @@ using UnityEngine;
 public class ZombieController : MonoBehaviour
 {
     GameObject player;
+    ZombieNavMeshAgent zombieNavMeshAgent; //用來獲得自己寫的移動導航物件
 
     float viewDistance = 10f; //殭屍視野範圍
     float confuseTime = 5f; //當玩家在殭屍的視野範圍內消失後殭屍的困惑時間
@@ -14,10 +15,11 @@ public class ZombieController : MonoBehaviour
 
 
     // Start is called before the first frame update
-    void Awake()
+    void start()
     {
-        player = GameObject.FindGameObjectWithTag("Player"); //找到在 Unity 中將標籤設置為 Player 的 GameObject
         beginPosition = transform.position;
+        player = GameObject.FindGameObjectWithTag("Player"); //找到在 Unity 中將標籤設置為 Player 的 GameObject
+        zombieNavMeshAgent = GetComponent<ZombieNavMeshAgent>(); //獲得自己寫的移動導航物件
     }
 
 
@@ -26,23 +28,26 @@ public class ZombieController : MonoBehaviour
         if (InViewRange()) //如果在殭屍的視野範圍內
         {
             timeSinceLastSawPlayer = 0;
-            //移動到玩家位置
+        //    zombieNavMeshAgent.MoveTo(player.transform.position, 1); //移動到玩家位置
         }
         else if (timeSinceLastSawPlayer < confuseTime)
         {
-            //停止移動和攻擊
-            //困惑動作
+            zombieNavMeshAgent.CancelMove(); //停止移動
+
+            //停止攻擊
+            //困惑動作                                   
 
             timeSinceLastSawPlayer += Time.deltaTime; //開始累計困惑時間
         }
         else
         {
-            //回到巡邏點
+            zombieNavMeshAgent.MoveTo(beginPosition, 0.5f); //回到原點或巡邏點
         }
     }
 
     private bool InViewRange()
     {
-        return Vector3.Distance(transform.position, player.transform.position) < viewDistance;
+        //  return Vector3.Distance(transform.position, player.transform.position) < viewDistance;
+        return true;
     }
 }
