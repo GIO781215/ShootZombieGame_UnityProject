@@ -14,21 +14,24 @@ public class ZombieController : MonoBehaviour
     private Vector3 beginPosition; //殭屍起始位置
 
 
-    // Start is called before the first frame update
-    void start()
+
+    void Start()
     {
         beginPosition = transform.position;
-        player = GameObject.FindGameObjectWithTag("Player"); //找到在 Unity 中將標籤設置為 Player 的 GameObject
+        player = GameObject.FindGameObjectWithTag("Player"); //找到在 Unity 中將標籤設置為 Player 的 GameObject 
         zombieNavMeshAgent = GetComponent<ZombieNavMeshAgent>(); //獲得自己寫的移動導航物件
     }
 
 
+
+
     void Update()
     {
+
         if (InViewRange()) //如果在殭屍的視野範圍內
         {
             timeSinceLastSawPlayer = 0;
-        //    zombieNavMeshAgent.MoveTo(player.transform.position, 1); //移動到玩家位置
+            zombieNavMeshAgent.MoveTo(player.transform.position, 1); //移動到玩家位置
         }
         else if (timeSinceLastSawPlayer < confuseTime)
         {
@@ -43,11 +46,11 @@ public class ZombieController : MonoBehaviour
         {
             zombieNavMeshAgent.MoveTo(beginPosition, 0.5f); //回到原點或巡邏點
         }
+
     }
 
     private bool InViewRange()
     {
-        //  return Vector3.Distance(transform.position, player.transform.position) < viewDistance;
-        return true;
+        return Vector3.Distance(transform.position, player.transform.position) < viewDistance;  
     }
 }

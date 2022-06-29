@@ -9,7 +9,7 @@ public class ZombieNavMeshAgent : MonoBehaviour
     private float maxMovingSpeed = 6f; //程簿笆硉
 
 
-    void Start()
+    void Awake()
     {
         navMeshAgent = GetComponent<NavMeshAgent>(); //莉眔本更ン NavMeshAgent 舱ン
     }
@@ -18,7 +18,7 @@ public class ZombieNavMeshAgent : MonoBehaviour
     {
         navMeshAgent.isStopped = false;
         navMeshAgent.speed = maxMovingSpeed * Mathf.Clamp01(movingSpeedRatio); //Clamp01 穦盢把计 0  1 ぇ丁狦璽玥 0狦 1玥 1
-        navMeshAgent.transform.position = goalPosition; //ㄏ本更ン movingSpeedRatio 硉簿笆竚 goalPosition
+        navMeshAgent.destination = goalPosition; //ㄏ本更ン navMeshAgent.speed 硉簿笆ヘ夹竚 goalPosition
     }
 
     public void CancelMove()
