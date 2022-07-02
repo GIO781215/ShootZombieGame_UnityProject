@@ -9,10 +9,6 @@ public class PlayController : MonoBehaviour
     float moveSpeed = 5f; //移動速度
     float SpeedMultipler = 2.5f; //按住 Shift 時的加速倍率
 
-    [Tooltip("蹲下時的減速倍率")]
-    [Range(0, 1)]
-    [SerializeField] float crouchedSpeedMultipler = 0.5f;
-
     [Tooltip("旋轉速度")]
     [SerializeField] float rotationSpeed = 5f;
 
@@ -33,7 +29,7 @@ public class PlayController : MonoBehaviour
 
     //-------------------設定動畫的參數-------------------
     Animator animatorController; //動畫播放控制器
-    float playerMoveSpeed = 0; //player 的移動速度 -> 給動畫播放控制器知道要播放什麼樣子的動畫的變數
+    float playerMovingSpeed = 0; //player 當前移動速度 (控制混成動畫的變數)
     float playerGoalSpeed = 0; //player 的目標速度
     float SpeedChangeRatio = 0.01f; //從當前速度變化到目標速度的快慢比率
     bool CanJumpAgain = true; //是否可以再次跳躍，為了解決播放跳躍動畫時會有二段跳問題而設的參數
@@ -100,11 +96,11 @@ public class PlayController : MonoBehaviour
 
 
         //這一幀與下一幀 player 的移動速度做差值，讓 walkSpeed 的值變動得更平滑
-        if (playerMoveSpeed != playerGoalSpeed)
+        if (playerMovingSpeed != playerGoalSpeed) //其實不用這個 if 判斷也沒關係
         {
-            playerMoveSpeed = Mathf.Lerp(playerMoveSpeed, playerGoalSpeed, SpeedChangeRatio);
+            playerMovingSpeed = Mathf.Lerp(playerMovingSpeed, playerGoalSpeed, SpeedChangeRatio);
         }
-        animatorController.SetFloat("walkSpeed", playerMoveSpeed); //改變變數 walkSpeed 就能從 animatorController 中播放對應的動畫
+        animatorController.SetFloat("walkSpeed", playerMovingSpeed); //改變變數 walkSpeed 就能從 animatorController 中播放對應的動畫
 
 
         #region //CharacterControlle 組件與常用函數的說明 
