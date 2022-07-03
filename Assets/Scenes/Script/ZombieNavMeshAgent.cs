@@ -21,9 +21,19 @@ public class ZombieNavMeshAgent : MonoBehaviour
     void Awake()
     {
         navMeshAgent = GetComponent<NavMeshAgent>(); //獲得掛載在此物件下的 NavMeshAgent 組件
-        animatorController = GetComponent<Animator>();
+        animatorController = GetComponentInChildren<Animator>();
     }
 
+    private void Start()
+    {
+        navMeshAgent.speed = 0;
+    }
+
+    
+    public void SetNavMeshAgentSpeed(int Speed) //直接對 SetNavMeshAgentSpeed 設定速度，因為其會直接影響動畫，所以把方法開出來
+    {
+        navMeshAgent.speed = Speed;
+    }
 
     private void Update()
     {
