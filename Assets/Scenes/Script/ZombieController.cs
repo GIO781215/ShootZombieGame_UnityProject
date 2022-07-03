@@ -7,10 +7,12 @@ public class ZombieController : MonoBehaviour
 {
     GameObject player;
     ZombieNavMeshAgent zombieNavMeshAgent; //用來獲得自己寫的移動導航物件
+    Health health; //用來獲得自己的血量系統物件
 
     float viewDistance = 10f; //殭屍視野範圍
     float confuseTime = 3f; //當玩家在殭屍的視野範圍內消失後殭屍的困惑時間
     float timeSinceLastSawPlayer = Mathf.Infinity; //初始值設為無限大
+
 
 
     //-------------------設定動畫的參數-------------------
@@ -28,11 +30,21 @@ public class ZombieController : MonoBehaviour
     //----------------------------------------------------
 
 
+
+
+
+
+
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player"); //找到在 Unity 中將標籤設置為 Player 的 GameObject 
         zombieNavMeshAgent = GetComponent<ZombieNavMeshAgent>(); //獲得自己寫的移動導航物件
         animatorController = GetComponentInChildren<Animator>();
+
+        health = GetComponent<Health>();
+        health.onDamage += OnDamage; //將自己的函數 OnDamage() 丟進 health 的事件委派容器 onDamage 中
+        health.onDie += OnDie; //將自己的函數 OnDie() 丟進 health 的事件委派容器 onDie 中
+
     }
 
 
@@ -40,6 +52,17 @@ public class ZombieController : MonoBehaviour
 
     void Update()
     {
+        //--------------------------------------------
+        print("血量:" + health.GetCurrentHealth());
+        if(Input.GetKeyDown(KeyCode.S))
+        {
+            health.TakeDamage(30);
+        }
+        //---------------------------------------------*/
+
+
+
+        if (health.IsDead()) return; //如果角色已經死了那就什麼都不做了
 
         if (InViewRange()) //如果在殭屍的視野範圍內
         {
@@ -130,4 +153,32 @@ public class ZombieController : MonoBehaviour
     {
         return Vector3.Distance(transform.position, player.transform.position) < viewDistance;  
     }
+
+
+
+
+
+    void OnDamage()
+    {
+        //受到攻擊時的動畫、叫聲等等
+
+    }
+
+    void OnDie()
+    {
+        //死亡叫一下
+        zombieNavMeshAgent.CancelMove(); //停止移動 
+        animatorController.SetTrigger("IsDead"); //播放死亡動畫
+
+    }
+
+
+
+
+
+
+
+
+
+
 }
