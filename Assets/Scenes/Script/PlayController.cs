@@ -41,6 +41,8 @@ public class PlayController : MonoBehaviour
 
     InputController inputController;
     CharacterController characterController;
+    Health health; //用來獲得自己的血量系統物件
+
 
     Vector3 moveDirection; //Player 下一幀要移動到的位置
     Vector3 jumpDirection; //Player 下一幀要跳躍到的方向
@@ -52,11 +54,25 @@ public class PlayController : MonoBehaviour
         inputController = GameManager.Instance.inputController;
         characterController = GetComponent<CharacterController>(); //獲得掛在 player 物件下的 CharacterController 組件
         animatorController = GetComponentInChildren<Animator>(); //獲得動畫撥放控制器 (組件是在子物件 PlayFBX 下的，所以使用 GetComponentInChildren< > 去檢索)
+
+        health = GetComponent<Health>();
+        health.InitHealth(200, 200);
+        health.onDamage += OnDamage; //將自己的函數 OnDamage() 丟進 health 的事件委派容器 onDamage 中
+        health.onDie += OnDie; //將自己的函數 OnDie() 丟進 health 的事件委派容器 onDie 中
     }
 
  
     void Update()
     {
+        //--------------------------------------------
+        //print("玩家血量:" + health.GetCurrentHealth());
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            health.TakeDamage(40);
+        }
+        //---------------------------------------------*/
+
+
         MoveBehaviour();
         jumpBehaviour();
         /*
@@ -215,7 +231,20 @@ public class PlayController : MonoBehaviour
         characterController.Move(jumpDirection * Time.deltaTime); //實現物體受力而移動
     }
 
-    
+
+    void OnDamage()
+    {
+        //受到攻擊時的動畫、叫聲等等
+    }
+
+    void OnDie()
+    {
+        //死亡音效
+        animatorController.SetTrigger("IsDead"); //播放死亡動畫
+    }
+
+
+
 
 
     //獲得當前相機的正前方方向
@@ -242,6 +271,8 @@ public class PlayController : MonoBehaviour
         //CharacterController、CapsuleCollider、PlayController 等組件都掛載在空物件 Player 底下，而網格模型則是在 PlayerMesh 中，Player 的錨點在 PlayerMesh 的正下方，所以 Player 往下一點距離就是地板了
         //但這樣做的話要記得 CharacterController 與 CapsuleCollider 的位置都要再往上移才能與 PlayerMesh 的模型位置吻合
     }
+
+
 
 
 

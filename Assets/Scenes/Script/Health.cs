@@ -5,8 +5,8 @@ using System;
 
 public class Health : MonoBehaviour
 {
-    private float maxHealth = 100f; //最大血量
-    private float currentHealth; //當前血量
+    [HideInInspector] public float maxHealth = 0f; //最大血量
+    [HideInInspector] public float currentHealth = 0f; //當前血量
 
     public event Action onDamage; //受到傷害時的事件委派容器
     public event Action nHealed; //受到傷害時的事件委派容器
@@ -17,9 +17,14 @@ public class Health : MonoBehaviour
 
     void Start()
     {
-        currentHealth = maxHealth;
+
     }
 
+    public void InitHealth(float _maxHealth, float _currentHealth) //血量初始化，參數: 最大血量、當前血量
+    {
+        maxHealth = _maxHealth;
+        currentHealth = _currentHealth;
+    }
 
     public float GetCurrentHealth()
     {

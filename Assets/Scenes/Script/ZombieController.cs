@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
+
 
 public class ZombieController : MonoBehaviour
 {
@@ -12,7 +14,6 @@ public class ZombieController : MonoBehaviour
     float viewDistance = 10f; //殭屍視野範圍
     float confuseTime = 3f; //當玩家在殭屍的視野範圍內消失後殭屍的困惑時間
     float timeSinceLastSawPlayer = Mathf.Infinity; //初始值設為無限大
-
 
 
     //-------------------設定動畫的參數-------------------
@@ -30,6 +31,12 @@ public class ZombieController : MonoBehaviour
     //----------------------------------------------------
 
 
+    //-------------------攻擊相關的參數-------------------
+    float AttackRangeRadius = 1f; //攻擊範圍半徑
+    float timeSinceLastAttack = Mathf.Infinity; //上次攻擊後經過的時間
+    float timeBetweenAttack = 1.1f; //能再次攻擊的時間間隔
+    bool IsAttacking = false; //是否正在攻擊中
+    //----------------------------------------------------
 
 
 
@@ -42,6 +49,7 @@ public class ZombieController : MonoBehaviour
         animatorController = GetComponentInChildren<Animator>();
 
         health = GetComponent<Health>();
+        health.InitHealth(100, 100);
         health.onDamage += OnDamage; //將自己的函數 OnDamage() 丟進 health 的事件委派容器 onDamage 中
         health.onDie += OnDie; //將自己的函數 OnDie() 丟進 health 的事件委派容器 onDie 中
 
@@ -53,10 +61,10 @@ public class ZombieController : MonoBehaviour
     void Update()
     {
         //--------------------------------------------
-        print("血量:" + health.GetCurrentHealth());
-        if(Input.GetKeyDown(KeyCode.S))
+        //print("焦屍血量:" + health.GetCurrentHealth());
+        if(Input.GetKeyDown(KeyCode.V))
         {
-            health.TakeDamage(30);
+            health.TakeDamage(40);
         }
         //---------------------------------------------*/
 
@@ -64,25 +72,66 @@ public class ZombieController : MonoBehaviour
 
         if (health.IsDead()) return; //如果角色已經死了那就什麼都不做了
 
-        if (InViewRange()) //如果在殭屍的視野範圍內
+
+
+        if (InAttackRange() || IsAttacking) //如果在殭屍的攻擊範圍內，或是已經正在攻擊中
+        {
+            timeSinceLastSawPlayer = 0;
+            AttackBehaviour(); //攻擊行為
+        }
+        else if (InViewRange() && !IsAttacking) //如果在殭屍的視野範圍內
         {
             animatorController.SetBool("IsConfuse", false); //解除困惑動作                                   
-
             timeSinceLastSawPlayer = 0;
             zombieNavMeshAgent.MoveTo(player.transform.position, 1); //移動到玩家位置
             zombiePatrolPath.transform.position = this.transform.position; //巡邏點也會一直跟著殭屍移動，直到殭屍停下來才不會再一起動
+            zombiePatrolPath.transform.rotation = this.transform.rotation;
         }
-        else if (timeSinceLastSawPlayer < confuseTime)
+        else if ((timeSinceLastSawPlayer < confuseTime) && !IsAttacking)
         {
             ConfuseBehaviour(); //困惑行為
             IsPatrol = true; //困惑完後就可以巡邏了
         }
-        else
+        else if(!IsAttacking)
         {
             PatrolBehaviour(); //巡邏行為
         }
 
+
+        timeSinceLastAttack += Time.deltaTime;
+        timeSinceLastSawPlayer += Time.deltaTime;
+
     }
+
+    private void AttackBehaviour()
+    {
+
+        if (timeSinceLastAttack > timeBetweenAttack)
+        {
+            IsAttacking = true;
+            timeSinceLastAttack = 0;
+            zombieNavMeshAgent.CancelMove(); //停止移動 
+            animatorController.SetBool("IsConfuse", false); //解除困惑動作
+            animatorController.SetBool("IsAttack", true); //播放攻擊動畫    
+        }
+
+        if (timeSinceLastAttack + Time.deltaTime >= timeBetweenAttack && !InAttackRange()) //已經播完動畫了，而且不在攻擊範圍內了，就可以去執行其他行為了   (還是要改成攻擊完才觸發一個函數 重新判斷周圍狀況比較好 ???
+        {
+            IsAttacking = false;
+            animatorController.SetBool("IsAttack", false); //停止攻擊動畫      
+        }
+    }
+
+
+
+
+    private void AttackOver()
+    {
+        Debug.Log("AttackOver");
+
+    }
+
+
 
 
     private void PatrolBehaviour()
@@ -144,9 +193,8 @@ public class ZombieController : MonoBehaviour
     private void ConfuseBehaviour()
     {
         zombieNavMeshAgent.CancelMove(); //停止移動 
-                                         //animatorController.SetBool("IsAttack", false); //停止攻擊
+        animatorController.SetBool("IsAttack", false); //停止攻擊
         animatorController.SetBool("IsConfuse", true); //困惑動作                                    
-        timeSinceLastSawPlayer += Time.deltaTime; //開始累計困惑時間
     }
 
     private bool InViewRange()
@@ -154,7 +202,10 @@ public class ZombieController : MonoBehaviour
         return Vector3.Distance(transform.position, player.transform.position) < viewDistance;  
     }
 
-
+    private bool InAttackRange()
+    {
+        return Vector3.Distance(this.transform.position + this.transform.TransformDirection(Vector3.forward * 1f), player.transform.position) < AttackRangeRadius;
+    }
 
 
 
@@ -174,6 +225,19 @@ public class ZombieController : MonoBehaviour
 
 
 
+    //畫圖功能 Debug 用 
+    void OnDrawGizmos()
+    {
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            //Gizmos.color = Color.blue;
+            //Gizmos.DrawLine(GetPatrolPointPosition(i), GetPatrolPointPosition(j)); //畫線
+            //Gizmos.DrawSphere(GetPatrolPointPosition(i), CircleRadius); //畫球
+            Handles.color = Color.green;
+            Handles.DrawWireDisc(this.transform.position  + this.transform.TransformDirection(Vector3.forward * 1f), new Vector3(0, 1, 0), AttackRangeRadius); //畫圓，參數: 圓盤中心、圓盤法線、圓盤半徑 (須 using UnityEditor)
+            //GameObject.transform.TransformDirection(Vector3 direction) 能把向量 direction 從物件的 local 座標系轉換到世界座標系上
+        }
+    }
 
 
 
