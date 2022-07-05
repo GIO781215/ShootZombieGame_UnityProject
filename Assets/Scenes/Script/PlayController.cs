@@ -56,7 +56,7 @@ public class PlayController : MonoBehaviour
         animatorController = GetComponentInChildren<Animator>(); //獲得動畫撥放控制器 (組件是在子物件 PlayFBX 下的，所以使用 GetComponentInChildren< > 去檢索)
 
         health = GetComponent<Health>();
-        health.InitHealth(200, 200);
+        health.InitHealth(100, 100);
         health.onDamage += OnDamage; //將自己的函數 OnDamage() 丟進 health 的事件委派容器 onDamage 中
         health.onDie += OnDie; //將自己的函數 OnDie() 丟進 health 的事件委派容器 onDie 中
     }
@@ -72,6 +72,8 @@ public class PlayController : MonoBehaviour
         }
         //---------------------------------------------*/
 
+        if (health.currentHealth == 0)
+            return; 
 
         MoveBehaviour();
         jumpBehaviour();

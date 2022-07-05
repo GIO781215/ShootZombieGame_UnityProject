@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FollowPlayer : MonoBehaviour
+public class CubeFollowPlayer : MonoBehaviour
 {
     [Header("°lÂÜ¥Ø¼Ð")]
     [SerializeField] Transform player;

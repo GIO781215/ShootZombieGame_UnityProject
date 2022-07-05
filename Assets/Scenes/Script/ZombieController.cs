@@ -11,6 +11,10 @@ public class ZombieController : MonoBehaviour
     ZombieNavMeshAgent zombieNavMeshAgent; //用來獲得自己寫的移動導航物件
     Health health; //用來獲得自己的血量系統物件
 
+    bool gameOver = false;
+    float timeSinceLastGameOver = 0;
+
+
     float viewDistance = 10f; //殭屍視野範圍
     float confuseTime = 3f; //當玩家在殭屍的視野範圍內消失後殭屍的困惑時間
     float timeSinceLastSawPlayer = Mathf.Infinity; //初始值設為無限大
@@ -70,7 +74,29 @@ public class ZombieController : MonoBehaviour
 
 
 
-        if (health.IsDead()) return; //如果角色已經死了那就什麼都不做了
+
+        if(gameOver == true )
+        {
+            timeSinceLastGameOver += Time.deltaTime;
+            if (timeSinceLastGameOver > 3f && timeSinceLastGameOver <= 3f + Time.deltaTime)  //最後一次困惑結束
+            {
+                animatorController.SetBool("IsConfuse", false);
+            }
+            return;
+        }
+        if ((this.health.IsDead() || player.GetComponent<Health>().IsDead()))  //如果殭屍或玩家已經死了那就什麼都不做了
+        {
+            zombieNavMeshAgent.CancelMove(); //停止移動 
+            zombieNavMeshAgent.SetNavMeshAgentSpeed(0); //將控制動畫的變數 WalkSpeed 設為 0 才會播放 idle 動畫
+            animatorController.SetBool("IsAttack", false); //解除攻擊動畫
+            animatorController.SetBool("IsConfuse", true); //最後困惑一下
+            gameOver = true;
+            return;
+        }
+ 
+
+
+
 
 
 
@@ -101,6 +127,7 @@ public class ZombieController : MonoBehaviour
         timeSinceLastAttack += Time.deltaTime;
         timeSinceLastSawPlayer += Time.deltaTime;
 
+
     }
 
     private void AttackBehaviour()
@@ -122,15 +149,20 @@ public class ZombieController : MonoBehaviour
         }
     }
 
-
-
-
-    private void AttackOver()
+    public void AtHit()
     {
-        Debug.Log("AttackOver");
-
+        if(InAttackRange()) //如果這時玩家還在攻擊範圍內
+        {
+            if (player != null)  //玩家就扣寫
+            {
+                Health health = player.GetComponent<Health>();
+                if (health != null)
+                {
+                    health.TakeDamage(90); //扣 90 滴血
+                }
+            }
+        }
     }
-
 
 
 
@@ -238,10 +270,6 @@ public class ZombieController : MonoBehaviour
             //GameObject.transform.TransformDirection(Vector3 direction) 能把向量 direction 從物件的 local 座標系轉換到世界座標系上
         }
     }
-
-
-
-
 
 
 
