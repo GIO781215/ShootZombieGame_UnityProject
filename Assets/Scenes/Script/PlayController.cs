@@ -37,6 +37,13 @@ public class PlayController : MonoBehaviour
     float OnGroundTime = 0; //有踏在地上時間
     //----------------------------------------------------
 
+    //-------------------瞄準動作相關的參數-------------------
+    bool IsAim = false;  
+    
+    //----------------------------------------------------
+
+
+
 
 
     InputController inputController;
@@ -73,10 +80,15 @@ public class PlayController : MonoBehaviour
         //---------------------------------------------*/
 
         if (health.currentHealth == 0)
-            return; 
+            return;
 
+
+        AimBBehaviour();
         MoveBehaviour();
-        jumpBehaviour();
+        if(!IsAim) //不在瞄準模式下才能跳躍
+            jumpBehaviour();
+
+
         /*
         //印出鍵盤移動的輸入值
         if(inputController.GetMoveInput() != Vector3.zero)
@@ -84,6 +96,25 @@ public class PlayController : MonoBehaviour
             Debug.Log(inputController.GetMoveInput());
         }
         */
+    }
+
+    //處理瞄準動作
+    private void AimBBehaviour()
+    {
+        if (inputController.GetMouseLeftKeyDown())
+        {
+            IsAim = true;
+        }
+
+        if (inputController.GetMouseRightKeyDown())
+        {
+            IsAim = !IsAim;
+        }
+
+        animatorController.SetBool("IsAim", IsAim);
+        //當進行瞄準時應該要限定攝影機上下移動的範圍?------------------------------------------------------------------------------------
+
+
     }
 
     //處理移動
@@ -100,25 +131,32 @@ public class PlayController : MonoBehaviour
         {
             playerGoalSpeed = 0f; //Player 移動速度設為 0 -> 閒置狀態
         }
-        else if (inputController.GetKeyZInput()) //是否按下 Z 加速
+        else if (inputController.GetKeyZInput() && !IsAim) //是否按下 Z 加速，並且不在瞄準模式
         {
             moveDirection *= SpeedMultipler;
             playerGoalSpeed = 1f;  //Player 移動速度設為 1 -> 跑步狀態
         }
 
-        //若鍵盤輸入不為零才讓 player 的面朝方向轉向
-        if (moveDirection != Vector3.zero)
+        //若鍵盤輸入不為零，也不在瞄準狀態時，才讓 player 的面朝方向轉向鍵盤輸入的移動方向
+        if (moveDirection != Vector3.zero && !IsAim)
         {
             SmoothRotation(moveDirection); //讓 player 的面朝方向轉動到 moveDirection 的方向上
         }
-
+        else if(IsAim) //如果是在瞄準狀態，就讓 Player 的朝向一直與攝影機的朝向同向
+        {      
+            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(GetCurrentCameraForward(), Vector3.up), rotationSpeed * Time.deltaTime *　10);  //讓 player 的面朝方向轉動到攝影機的方向上，但人物的 y 軸保持向上不變
+        }
 
         //這一幀與下一幀 player 的移動速度做差值，讓 walkSpeed 的值變動得更平滑
         if (playerMovingSpeed != playerGoalSpeed) //其實不用這個 if 判斷也沒關係
         {
             playerMovingSpeed = Mathf.Lerp(playerMovingSpeed, playerGoalSpeed, SpeedChangeRatio);
         }
+
         animatorController.SetFloat("walkSpeed", playerMovingSpeed); //改變變數 walkSpeed 就能從 animatorController 中播放對應的動畫
+        animatorController.SetFloat("Vertical", inputController.GetMoveInput().z);  
+        animatorController.SetFloat("Horizontal", inputController.GetMoveInput().x);
+        //上下跟左右快速切換會導致動畫跳針，限制上鍵按下鬆開一段時間後按下鍵才有移動效果，或是上鍵按下後再按下鍵過一段時間後才有移動效果，左右同理 <--------------------------之後再來實現這功能
 
 
         #region //CharacterControlle 組件與常用函數的說明 

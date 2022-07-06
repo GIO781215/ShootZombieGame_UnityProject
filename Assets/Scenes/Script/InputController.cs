@@ -69,6 +69,40 @@ public class InputController : MonoBehaviour
         return 0;
     }
 
+    public bool GetMouseLeftKeyDown() //是否按下滑鼠的左鍵
+    {
+        if (canInput)
+            return Input.GetMouseButtonDown(0);
+        return false;
+    }
+
+    public bool GetMouseLeftKeyHeldDown() //是否持續按著滑鼠的左鍵
+    {
+        if (canInput)
+            return Input.GetMouseButton(0);
+        return false;
+    }
+
+    public bool GetMouseLeftKeyUp() //是否鬆開滑鼠的左鍵
+    {
+        if (canInput)
+            return Input.GetMouseButtonUp(0);
+        return false;
+    }
+
+    public bool GetMouseRightKeyDown() //是否按下滑鼠的右鍵
+    {
+        if (canInput)
+            return Input.GetMouseButtonDown(1);
+        return false;
+    }
+
+
+
+
+
+
+
     public bool GetSpaceInput() //是否按下 Space 鍵
     {
         if (canInput)
@@ -84,6 +118,13 @@ public class InputController : MonoBehaviour
         {
             return Input.GetKey(KeyCode.Z);
         }
+        return false;
+    }
+
+    public bool GetKeyXInput() //是否按下 X 鍵
+    {
+        if (canInput)
+            return Input.GetKeyDown(KeyCode.X);
         return false;
     }
 
