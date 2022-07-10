@@ -68,7 +68,7 @@ public class ZombieController : MonoBehaviour
         //print("µJ«Í¦å¶q:" + health.GetCurrentHealth());
         if(Input.GetKeyDown(KeyCode.V))
         {
-            health.TakeDamage(40);
+          //  health.TakeDamage(40);
         }
         //---------------------------------------------*/
 

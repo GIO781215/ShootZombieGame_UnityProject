@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayController : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
     [Header("移動參數")]
     float moveSpeed = 5f; //移動速度
@@ -38,8 +38,8 @@ public class PlayController : MonoBehaviour
     //----------------------------------------------------
 
     //-------------------瞄準動作相關的參數-------------------
-    bool IsAim = false;  
-    
+    bool IsAim = false;
+    public event Action<bool> onAim; //切換成瞄準動作的事件容器
     //----------------------------------------------------
 
 
@@ -49,6 +49,7 @@ public class PlayController : MonoBehaviour
     InputController inputController;
     CharacterController characterController;
     Health health; //用來獲得自己的血量系統物件
+    PlayerWeaponController playerWeaponController;
 
 
     Vector3 moveDirection; //Player 下一幀要移動到的位置
@@ -60,8 +61,9 @@ public class PlayController : MonoBehaviour
     {
         inputController = GameManager.Instance.inputController;
         characterController = GetComponent<CharacterController>(); //獲得掛在 player 物件下的 CharacterController 組件
-        animatorController = GetComponentInChildren<Animator>(); //獲得動畫撥放控制器 (組件是在子物件 PlayFBX 下的，所以使用 GetComponentInChildren< > 去檢索)
+        playerWeaponController = GetComponentInChildren<PlayerWeaponController>();  //獲得掛在 player 物件下的 PlayerWeaponController 組件
 
+        animatorController = GetComponentInChildren<Animator>(); //獲得動畫撥放控制器 (組件是在子物件 PlayFBX 下的，所以使用 GetComponentInChildren< > 去檢索)
         health = GetComponent<Health>();
         health.InitHealth(100, 100);
         health.onDamage += OnDamage; //將自己的函數 OnDamage() 丟進 health 的事件委派容器 onDamage 中
@@ -75,7 +77,7 @@ public class PlayController : MonoBehaviour
         //print("玩家血量:" + health.GetCurrentHealth());
         if (Input.GetKeyDown(KeyCode.C))
         {
-            health.TakeDamage(40);
+           // health.TakeDamage(40);
         }
         //---------------------------------------------*/
 
@@ -83,7 +85,7 @@ public class PlayController : MonoBehaviour
             return;
 
 
-        AimBBehaviour();
+        AimBehaviour();
         MoveBehaviour();
         if(!IsAim) //不在瞄準模式下才能跳躍
             jumpBehaviour();
@@ -99,19 +101,22 @@ public class PlayController : MonoBehaviour
     }
 
     //處理瞄準動作
-    private void AimBBehaviour()
+    private void AimBehaviour()
     {
         if (inputController.GetMouseLeftKeyDown())
         {
             IsAim = true;
+            animatorController.SetBool("IsAim", IsAim);
+            onAim?.Invoke(IsAim); //更改 PlayerWeaponController 的 isAim 變數
         }
 
         if (inputController.GetMouseRightKeyDown())
         {
             IsAim = !IsAim;
+            animatorController.SetBool("IsAim", IsAim);
+            onAim?.Invoke(IsAim); //更改 PlayerWeaponController 的 isAim 變數                 
         }
 
-        animatorController.SetBool("IsAim", IsAim);
         //當進行瞄準時應該要限定攝影機上下移動的範圍?------------------------------------------------------------------------------------
 
 
@@ -308,7 +313,7 @@ public class PlayController : MonoBehaviour
     private bool IsOnGround()
     {
         return Physics.Raycast(transform.position, Vector3.down, distanceToGround);  //參數意義: (射線發射點, 射線方向, 射線長度)，回傳值為射線是否有射到障礙物
-        //CharacterController、CapsuleCollider、PlayController 等組件都掛載在空物件 Player 底下，而網格模型則是在 PlayerMesh 中，Player 的錨點在 PlayerMesh 的正下方，所以 Player 往下一點距離就是地板了
+        //CharacterController、CapsuleCollider、PlayerController 等組件都掛載在空物件 Player 底下，而網格模型則是在 PlayerMesh 中，Player 的錨點在 PlayerMesh 的正下方，所以 Player 往下一點距離就是地板了
         //但這樣做的話要記得 CharacterController 與 CapsuleCollider 的位置都要再往上移才能與 PlayerMesh 的模型位置吻合
     }
 

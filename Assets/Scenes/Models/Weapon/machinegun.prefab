@@ -175,6 +175,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2912997987189655556}
+  - component: {fileID: 2910760269760084850}
   m_Layer: 0
   m_Name: machinegun
   m_TagString: Untagged
@@ -189,12 +190,55 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2912997987189655803}
-  m_LocalRotation: {x: -0.48353696, y: 0.3802332, z: 0.37615004, w: 0.6929112}
+  m_LocalRotation: {x: -0.48353788, y: 0.3802337, z: 0.37614954, w: 0.69291055}
   m_LocalPosition: {x: -0.159, y: 0.424, z: 0.091}
   m_LocalScale: {x: 1.1979576, y: 1.1979576, z: 1.1979576}
   m_Children:
   - {fileID: 2912997986145651151}
   - {fileID: 2912997986282109511}
+  - {fileID: 3071417396959391267}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -72.969, y: 33.856, z: 31.621}
+--- !u!114 &2910760269760084850
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2912997987189655803}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18a15e4ec5cc33d4abf1c905e1f4c4e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &5631182273794192332
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3071417396959391267}
+  m_Layer: 0
+  m_Name: Muzzle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3071417396959391267
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5631182273794192332}
+  m_LocalRotation: {x: 0.000000089406946, y: 0.007933466, z: -0.00000007450579, w: 0.9999685}
+  m_LocalPosition: {x: -0.0007, y: 0.0623, z: 0.4689}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2912997987189655556}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0.909, z: 0}

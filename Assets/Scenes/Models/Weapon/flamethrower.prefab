@@ -94,13 +94,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3131896053862664794}
+  - component: {fileID: 6122824852750530545}
   m_Layer: 0
   m_Name: flamethrower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3131896053862664794
 Transform:
   m_ObjectHideFlags: 0
@@ -108,15 +109,29 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3131896053862307450}
-  m_LocalRotation: {x: -0.53564024, y: 0.429973, z: 0.41484916, w: 0.596752}
+  m_LocalRotation: {x: -0.535638, y: 0.42997497, z: 0.4148509, w: 0.59675145}
   m_LocalPosition: {x: -0.053965073, y: 0.6157807, z: 0.08126906}
-  m_LocalScale: {x: 1.340954, y: 1.340954, z: 1.340954}
+  m_LocalScale: {x: 1.3409537, y: 1.340954, z: 1.3409543}
   m_Children:
   - {fileID: 3131896053862664792}
   - {fileID: 3131896053862664798}
+  - {fileID: 3219083544373190903}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -84.897, y: 50.625, z: 22.825}
+--- !u!114 &6122824852750530545
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3131896053862307450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18a15e4ec5cc33d4abf1c905e1f4c4e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShootMode: 1
 --- !u!1 &3131896053862307454
 GameObject:
   m_ObjectHideFlags: 0
@@ -200,3 +215,33 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &7824640410910020081
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3219083544373190903}
+  m_Layer: 0
+  m_Name: Muzzle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3219083544373190903
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7824640410910020081}
+  m_LocalRotation: {x: 0.0042377994, y: 0.0047632135, z: -0.018432803, w: 0.99980974}
+  m_LocalPosition: {x: 0.0018995346, y: 0.1015001, z: 0.41630107}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3131896053862664794}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0.496, y: 0.537, z: -2.11}

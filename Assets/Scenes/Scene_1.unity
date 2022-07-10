@@ -13062,7 +13062,7 @@ GameObject:
   m_Component:
   - component: {fileID: 953125766}
   m_Layer: 0
-  m_Name: EqulpWeapon
+  m_Name: EquipWeapon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29218,6 +29218,7 @@ GameObject:
   - component: {fileID: 2098220445}
   - component: {fileID: 2098220447}
   - component: {fileID: 2098220446}
+  - component: {fileID: 2098220449}
   - component: {fileID: 2098220448}
   m_Layer: 0
   m_Name: Player
@@ -29290,6 +29291,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   currentHealth: 0
+--- !u!114 &2098220449
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2098220444}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c424b30177ee5714aa01a0dcd709b1f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AllWeaponsList:
+  - {fileID: 2910760269760084850, guid: d91b165891dcfad42beea0c3fa67ff93, type: 3}
+  - {fileID: 6122824852750530545, guid: 3bdd1579623025d40b8a4f4abc4058c6, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  equipPosition: {fileID: 953125766}
 --- !u!1 &2099507232 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3803929166521794716, guid: d8cd41689d07f2c49a95d803bc014810, type: 3}

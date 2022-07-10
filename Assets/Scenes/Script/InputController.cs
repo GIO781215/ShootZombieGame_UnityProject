@@ -41,12 +41,7 @@ public class InputController : MonoBehaviour
         }
     }
 
-    public Vector3 GetMoveInput() //得到鍵盤前後左右的輸入值
-    {
-        Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0f, Input.GetAxis("Vertical"));
-        move = Vector3.ClampMagnitude(move, 1); //將向量限制在 1 單位
-        return move;
-    }
+
 
     public float GetMouseX() //得到滑鼠的左右移動輸入
     {
@@ -101,7 +96,12 @@ public class InputController : MonoBehaviour
 
 
 
-
+    public Vector3 GetMoveInput() //得到鍵盤前後左右的輸入值
+    {
+        Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0f, Input.GetAxis("Vertical"));
+        move = Vector3.ClampMagnitude(move, 1); //將向量限制在 1 單位
+        return move;
+    }
 
     public bool GetSpaceInput() //是否按下 Space 鍵
     {
@@ -125,6 +125,27 @@ public class InputController : MonoBehaviour
     {
         if (canInput)
             return Input.GetKeyDown(KeyCode.X);
+        return false;
+    }
+
+    public bool GetKeyCInput() //是否按下 C 鍵
+    {
+        if (canInput)
+            return Input.GetKeyDown(KeyCode.C);
+        return false;
+    }
+
+    public bool GetKeyVInput() //是否按下 V 鍵
+    {
+        if (canInput)
+            return Input.GetKeyDown(KeyCode.V);
+        return false;
+    }
+
+    public bool GetKeyRInput() //是否按下 R 鍵
+    {
+        if (canInput)
+            return Input.GetKeyDown(KeyCode.R);
         return false;
     }
 
