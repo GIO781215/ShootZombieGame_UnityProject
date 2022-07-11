@@ -188,6 +188,7 @@ public class PlayerWeaponController : MonoBehaviour
         //如果剛剛沒拿槍，突然變成瞄準動作 -> 統一變成拿第一把槍
         if(currentWeaponSlotIndex == -1)
         {
+            //----------------------------------------------------------------注意這一下不要發射子彈 有個BUG!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             currentWeaponSlotIndex = 0;
             switchWeapon(currentWeaponSlotIndex);
         }

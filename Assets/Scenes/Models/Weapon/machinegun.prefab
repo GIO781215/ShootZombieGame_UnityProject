@@ -212,6 +212,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18a15e4ec5cc33d4abf1c905e1f4c4e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weaponMullze: {fileID: 3071417396959391267}
+  ShootMode: 0
+  projectilePrefab: {fileID: 9061392720676801460, guid: 3ce0e8cce98b0074a96d1491c0007598, type: 3}
 --- !u!1 &5631182273794192332
 GameObject:
   m_ObjectHideFlags: 0
@@ -235,10 +238,10 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5631182273794192332}
-  m_LocalRotation: {x: 0.000000089406946, y: 0.007933466, z: -0.00000007450579, w: 0.9999685}
+  m_LocalRotation: {x: 0.025952978, y: 0.13048144, z: -0.0034167732, w: 0.99110514}
   m_LocalPosition: {x: -0.0007, y: 0.0623, z: 0.4689}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2912997987189655556}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0.909, z: 0}
+  m_LocalEulerAnglesHint: {x: 3, y: 15, z: 0}
