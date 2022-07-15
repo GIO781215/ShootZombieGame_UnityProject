@@ -20,7 +20,7 @@ public class PlayerWeaponController : MonoBehaviour
     int currentWeaponSlotIndex; //目前在武器槽中選擇的武器的索引值，-1 代表目前沒有選擇任何槍
     [SerializeField] Transform equipPosition; //裝備武器的位置 (從 Unity 中指定給他)
     bool isAim; //使否處於瞄準狀態
-
+    bool toAim = false; //true 代表為剛拿起武器的狀態，false 代表沒拿武器或已經拿武器的狀態
     PlayerController playerController;
     InputController inputController;
 
@@ -52,11 +52,11 @@ public class PlayerWeaponController : MonoBehaviour
         hasSwitchWeaponInput(); //判斷有沒有按下切換武器鍵要切換武器
 
         //處理射擊
-        if (currentWeaponSlotIndex != -1 && isAim) //如果目前有選擇武器，且為瞄準狀態
+        if (currentWeaponSlotIndex != -1 && isAim && !toAim) //如果目前有選擇武器，且為瞄準狀態
         {
             PlayerWeaponSlot[currentWeaponSlotIndex].HandleShootInput(inputController.GetMouseLeftKeyDown(), inputController.GetMouseLeftKeyHeldDown(), inputController.GetMouseLeftKeyUp()); //處理射擊
         }
- 
+
     }
 
 
@@ -185,10 +185,18 @@ public class PlayerWeaponController : MonoBehaviour
 
     private void  OnAim(bool value)
     {
-        //如果剛剛沒拿槍，突然變成瞄準動作 -> 統一變成拿第一把槍
-        if(currentWeaponSlotIndex == -1)
+        if(isAim == false && value == true) //如果剛剛不是瞄準動作，突然變成瞄準動作
         {
-            //----------------------------------------------------------------注意這一下不要發射子彈 有個BUG!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            toAim = true;
+        }
+        else
+        {
+            toAim = false;
+        }
+
+        //如果剛剛沒拿槍，突然變成瞄準動作 -> 統一變成拿第一把槍
+        if (currentWeaponSlotIndex == -1)
+        {
             currentWeaponSlotIndex = 0;
             switchWeapon(currentWeaponSlotIndex);
         }

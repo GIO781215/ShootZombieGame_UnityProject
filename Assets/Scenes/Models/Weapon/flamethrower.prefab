@@ -101,7 +101,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &3131896053862664794
 Transform:
   m_ObjectHideFlags: 0
@@ -131,7 +131,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18a15e4ec5cc33d4abf1c905e1f4c4e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ShootMode: 1
+  weaponMullze: {fileID: 3219083544373190903}
+  projectilePrefab: {fileID: 9061392720676801460, guid: 3ce0e8cce98b0074a96d1491c0007598, type: 3}
+  ShootMode: 0
 --- !u!1 &3131896053862307454
 GameObject:
   m_ObjectHideFlags: 0
