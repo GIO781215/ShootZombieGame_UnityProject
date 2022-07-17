@@ -28,13 +28,24 @@ public class Weapon : MonoBehaviour
     float AmmoReloadRate = 1f; //每秒補充的彈藥量    
     float AmmoReloadDelay = 2f; //射完之後到可以補充彈藥量的間隔時間      
     */
-
-
     bool isAim; //是否在瞄準狀態
 
-    bool i = true;
 
-    private void Start()
+
+    [SerializeField] public GameObject shootEffectPrefab; //射擊特效預製物件
+
+
+
+
+
+
+
+
+
+
+
+
+   private void Start()
     {
         //currentAmmo = maxAmmo;
     }
@@ -68,7 +79,7 @@ public class Weapon : MonoBehaviour
         angle = Camera.main.transform.rotation.eulerAngles.x;
         if (angle >= 180) angle -= 360;
         angle = 15 - angle;
-        Debug.Log(angle); //angle 初始值是 0，範圍在 -5 ~ 25 之間
+        //Debug.Log(angle); //angle 初始值是 0，範圍在 -5 ~ 25 之間
         //----------------------------------------------------------
 
         //創建一條從攝影機向其前方發出的射線 
@@ -115,7 +126,7 @@ public class Weapon : MonoBehaviour
             case WeaponShootMode.Single:
                 if(inputDown)
                 {
-                    print("Single射擊");
+                    //print("Single射擊");
                     SingleShoot();
                 }
                 return;
@@ -123,7 +134,7 @@ public class Weapon : MonoBehaviour
             case WeaponShootMode.Automatic:
                 if (inputHeld)
                 {
-                    print("Auto射擊");
+                    //print("Auto射擊");
                 }
                 return;
             default:
@@ -138,6 +149,14 @@ public class Weapon : MonoBehaviour
         {
             Projectile projectile = Instantiate(projectilePrefab, weaponMullze.position, Quaternion.LookRotation(weaponMullze.forward)); //產生子彈，LookRotation(Vector3(x,y,z)) : 獲取一個向量所表示的方向（將一個向量轉為該向量所指的方向）
             timeLastShoot = Time.time;
+
+            /* //射擊噴發效果，感覺挺干擾射擊，還是不要用好了...
+            if(shootEffectPrefab != null)
+            {
+                GameObject shootEffect = Instantiate(shootEffectPrefab, weaponMullze.position, Quaternion.LookRotation(weaponMullze.forward));
+                Destroy(shootEffect, 1.5f);
+            }
+            */
 
         }
     }

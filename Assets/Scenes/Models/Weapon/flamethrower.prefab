@@ -97,7 +97,7 @@ GameObject:
   - component: {fileID: 6122824852750530545}
   m_Layer: 0
   m_Name: flamethrower
-  m_TagString: Untagged
+  m_TagString: Weapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -133,7 +133,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponMullze: {fileID: 3219083544373190903}
   projectilePrefab: {fileID: 9061392720676801460, guid: 3ce0e8cce98b0074a96d1491c0007598, type: 3}
-  ShootMode: 0
+  ShootMode: 1
+  shootEffectPrefab: {fileID: 0}
 --- !u!1 &3131896053862307454
 GameObject:
   m_ObjectHideFlags: 0

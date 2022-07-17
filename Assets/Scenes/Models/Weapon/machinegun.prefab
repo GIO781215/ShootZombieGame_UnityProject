@@ -178,7 +178,7 @@ GameObject:
   - component: {fileID: 2910760269760084850}
   m_Layer: 0
   m_Name: machinegun
-  m_TagString: Untagged
+  m_TagString: Weapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -215,6 +215,7 @@ MonoBehaviour:
   weaponMullze: {fileID: 3071417396959391267}
   projectilePrefab: {fileID: 9061392720676801460, guid: 3ce0e8cce98b0074a96d1491c0007598, type: 3}
   ShootMode: 0
+  shootEffectPrefab: {fileID: 3474502346550728555, guid: 30e73fa277eb24a43930754269294bdb, type: 3}
 --- !u!1 &5631182273794192332
 GameObject:
   m_ObjectHideFlags: 0
