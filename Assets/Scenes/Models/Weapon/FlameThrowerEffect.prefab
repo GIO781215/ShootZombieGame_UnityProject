@@ -1135,7 +1135,7 @@ ParticleSystem:
         m_RotationOrder: 4
     y:
       serializedVersion: 2
-      minMaxState: 1
+      minMaxState: 2
       scalar: 1
       minScalar: 1
       maxCurve:
@@ -1188,7 +1188,7 @@ ParticleSystem:
         m_RotationOrder: 4
     z:
       serializedVersion: 2
-      minMaxState: 1
+      minMaxState: 2
       scalar: 1
       minScalar: 1
       maxCurve:
@@ -3810,7 +3810,7 @@ ParticleSystem:
       m_Bits: 4294967295
     maxCollisionShapes: 256
     quality: 2
-    voxelSize: 500
+    voxelSize: 50
     collisionMessages: 1
     collidesWithDynamic: 0
     interiorCollisions: 0
@@ -4932,8 +4932,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3292072437187433265, guid: 6ba2e5681d58a6c469247cbfa89ea12f, type: 3}
+      propertyPath: SizeModule.y.minMaxState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3292072437187433265, guid: 6ba2e5681d58a6c469247cbfa89ea12f, type: 3}
+      propertyPath: SizeModule.z.minMaxState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3292072437187433265, guid: 6ba2e5681d58a6c469247cbfa89ea12f, type: 3}
       propertyPath: CollisionModule.voxelSize
-      value: 500
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 3292072437187433265, guid: 6ba2e5681d58a6c469247cbfa89ea12f, type: 3}
       propertyPath: ClampVelocityModule.dampen
