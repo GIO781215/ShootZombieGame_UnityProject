@@ -9,7 +9,7 @@ public class Health : MonoBehaviour
     [HideInInspector] public float currentHealth = 0f; //當前血量
 
     public event Action onDamage; //受到傷害時的事件委派容器
-    public event Action nHealed; //受到傷害時的事件委派容器
+    public event Action onHealed; //受到治癒時的事件委派容器
     public event Action onDie; //受到傷害時的事件委派容器
 
     private bool isDead = false;

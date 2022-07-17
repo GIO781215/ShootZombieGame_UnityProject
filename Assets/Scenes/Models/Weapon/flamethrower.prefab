@@ -133,8 +133,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponMullze: {fileID: 3219083544373190903}
   projectilePrefab: {fileID: 9061392720676801460, guid: 3ce0e8cce98b0074a96d1491c0007598, type: 3}
-  ShootMode: 1
-  shootEffectPrefab: {fileID: 0}
+  weaponType: 1
+  ShootEffectPrefab: {fileID: 1295782629849733217, guid: e964cbb9037b1fc4d9e236a19cb3da06, type: 3}
 --- !u!1 &3131896053862307454
 GameObject:
   m_ObjectHideFlags: 0
@@ -241,10 +241,10 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7824640410910020081}
-  m_LocalRotation: {x: 0.0042377994, y: 0.0047632135, z: -0.018432803, w: 0.99980974}
+  m_LocalRotation: {x: -0.00008628286, y: 0.0046853954, z: -0.018411955, w: 0.9998195}
   m_LocalPosition: {x: 0.0018995346, y: 0.1015001, z: 0.41630107}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3131896053862664794}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0.496, y: 0.537, z: -2.11}
+  m_LocalEulerAnglesHint: {x: 0, y: 0.537, z: -2.11}

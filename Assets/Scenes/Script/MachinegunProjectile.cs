@@ -2,19 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-/*
-public enum ProjectileType //子彈種類 (其實這應該要寫成繼承類才對)
-{
-    machinegun,
-    fiamethrower,
-}
-*/
 
 
-
-
-
-public class Projectile : MonoBehaviour
+public class MachinegunProjectile : MonoBehaviour
 {
 
     float projectrileSpeed = 100f; //子彈速度
@@ -23,10 +13,7 @@ public class Projectile : MonoBehaviour
 
     Vector3 currentVelocity;
 
-  //  [Header("子彈種類")]
-  //  [SerializeField] ProjectileType projectileType;
-   // [Header("射到目標時的特效")]
-    [SerializeField] GameObject hitEffectPrefab;
+    [SerializeField] GameObject hitEffectPrefab; //射到目標時的特效
     float damage = 30; //射到目標時殭屍扣的血量
 
 
