@@ -40,8 +40,9 @@ public class PlayerController : MonoBehaviour
     //-------------------瞄準動作相關的參數-------------------
     bool IsAim = false;
     public event Action<bool> onAim; //切換成瞄準動作的事件容器
-    //----------------------------------------------------
+                                     //----------------------------------------------------
 
+    public event Action onSprint; //用來觸發加速時的特效函數
 
 
 
@@ -116,7 +117,7 @@ public class PlayerController : MonoBehaviour
             animatorController.SetBool("IsAim", IsAim);
             onAim?.Invoke(IsAim); //更改 PlayerWeaponController 的 isAim 變數                 
         }
-
+     
         //當進行瞄準時應該要限定攝影機上下移動的範圍?------------------------------------------------------------------------------------
 
 
@@ -140,6 +141,7 @@ public class PlayerController : MonoBehaviour
         {
             moveDirection *= SpeedMultipler;
             playerGoalSpeed = 1f;  //Player 移動速度設為 1 -> 跑步狀態
+            onSprint?.Invoke();
         }
 
         //若鍵盤輸入不為零，也不在瞄準狀態時，才讓 player 的面朝方向轉向鍵盤輸入的移動方向
@@ -316,9 +318,5 @@ public class PlayerController : MonoBehaviour
         //CharacterController、CapsuleCollider、PlayerController 等組件都掛載在空物件 Player 底下，而網格模型則是在 PlayerMesh 中，Player 的錨點在 PlayerMesh 的正下方，所以 Player 往下一點距離就是地板了
         //但這樣做的話要記得 CharacterController 與 CapsuleCollider 的位置都要再往上移才能與 PlayerMesh 的模型位置吻合
     }
-
-
-
-
 
 }

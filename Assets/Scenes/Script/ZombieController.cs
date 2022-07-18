@@ -43,7 +43,8 @@ public class ZombieController : MonoBehaviour
     //----------------------------------------------------
 
 
-
+    
+    AnimatorStateInfo BaseLayer;
 
 
     void Start()
@@ -93,7 +94,6 @@ public class ZombieController : MonoBehaviour
             gameOver = true;
             return;
         }
- 
 
 
 
@@ -270,6 +270,35 @@ public class ZombieController : MonoBehaviour
             //GameObject.transform.TransformDirection(Vector3 direction) 能把向量 direction 從物件的 local 座標系轉換到世界座標系上
         }
     }
+
+
+
+
+//----------------------------------------------------------------------------------------
+    private void checkAnimatorState() //此函數可判斷 Animator 當前是什麼動作狀態
+    {
+        BaseLayer = animatorController.GetCurrentAnimatorStateInfo(0); //獲得第 0 層(BaseLayer層) 的資料
+        //  print(BaseLayer.fullPathHash);
+        //  print(Animator.StringToHash("BaseLayer.attack"));                                                                    
+
+        //判斷 BaseLayer 層狀態機的 Hash 碼是否與指定動作的 Hash 碼相同
+        if (BaseLayer.fullPathHash == Animator.StringToHash("Base Layer.Blend Tree"))
+        {
+            print("idle");
+        }
+
+        if (BaseLayer.fullPathHash == Animator.StringToHash("Base Layer.confuse"))
+        {
+            print("confuse");
+        }
+
+        if (BaseLayer.fullPathHash == Animator.StringToHash("Base Layer.attack"))
+        {
+            print("attack");
+        }
+    }
+ //----------------------------------------------------------------------------------------
+
 
 
 
