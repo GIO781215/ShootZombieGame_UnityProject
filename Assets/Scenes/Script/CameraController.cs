@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +9,8 @@ public class CameraController : MonoBehaviour
 
     [Header("相機跟隨的目標")]
     [SerializeField] private Transform target; //private 可省略，預設就是 private
+    [SerializeField] GameObject player; //做受傷特效用，要得到玩家的血量系統
+    [SerializeField] ParticleSystem behitEffect; //受傷時的特效
 
     [Header("攝影機的高度")]
     [SerializeField] float HeightOffset = 3; //攝影機的高度
@@ -30,11 +33,11 @@ public class CameraController : MonoBehaviour
     Vector3 referenceObjectToCameraOffset = Vector3.zero; //虛擬參考物距離攝影機的距離
 
 
-
-
     void Start()
     {
         inputController = GameManager.Instance.inputController;
+        player.GetComponent<Health>().onDamage += OnDamage;
+
     }
 
     private void LateUpdate() //在 Update 後執行
@@ -76,7 +79,21 @@ public class CameraController : MonoBehaviour
             
         }
 
-
-
     }
+
+    private void OnDamage()
+    {
+        if(behitEffect != null)
+        {
+            behitEffect.Play();
+        }
+    }
+
+
+
+
+
+
+
+
 }

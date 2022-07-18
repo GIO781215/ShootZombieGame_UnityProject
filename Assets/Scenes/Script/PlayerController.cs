@@ -279,7 +279,7 @@ public class PlayerController : MonoBehaviour
 
     void OnDamage()
     {
-        //受到攻擊時的動畫、叫聲等等
+         //受到攻擊時的動畫、叫聲等等
     }
 
     void OnDie()

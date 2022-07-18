@@ -51,28 +51,26 @@ public class Health : MonoBehaviour
     {
         if (isDead) return;
 
-        currentHealth -= damage;
-        currentHealth = Mathf.Max(currentHealth, 0); //避免扣血完血量變負值
-
-        if(currentHealth>0)
+        if (currentHealth > 0)
         {
-            onDamage?.Invoke();  
+            onDamage?.Invoke();
         }
-        /*相等於
+        /*相等於下  onDamage?.Invoke(); 是簡寫
         if(currentHealth > 0 && onDamage != null)
         {
             onDamage.Invoke();  
         }
         */
+
+
+        currentHealth -= damage;
+        currentHealth = Mathf.Max(currentHealth, 0); //避免扣血完血量變負值
         if(currentHealth <= 0)
         {
             isDead = true;
             onDie?.Invoke();
             //Destroy(GameObject); //將角色消除
         }
-
-
-
 
     }
 
