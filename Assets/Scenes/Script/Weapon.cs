@@ -22,15 +22,27 @@ public class Weapon : MonoBehaviour
     [SerializeField] public WeaponType weaponType; //槍的種類
     float machinegunDelayBetweenShoots = 0.1f; //射擊間隔時間
     float flamethrowerDelayBetweenShoots = 0.05f; //射擊間隔時間
-    float timeLastShoot = -Mathf.Infinity; //上次射擊完的時間
 
-    /* 先不設計成有需要彈藥量的遊戲機制
-    float currentAmmo; //當前彈藥量
-    float maxAmmo = 10; //最大彈藥量               
-    float AmmoPerShoot; //每次射擊時消耗的彈藥量         bulletPerShoot 
-    float AmmoReloadRate = 1f; //每秒補充的彈藥量    
-    float AmmoReloadDelay = 2f; //射完之後到可以補充彈藥量的間隔時間      
-    */
+    float timeLastShoot_machinegun = -Mathf.Infinity; //上次射擊完的時間
+    float timeLastShoot_flamethrower = -Mathf.Infinity; //上次射擊完的時間
+
+    //武器彈藥量參數
+    float maxAmmo_machinegun = 100; //最大彈藥量               
+    float currentAmmo_machinegun; //當前彈藥量
+    float AmmoPerShoot_machinegun = 5f; //每次射擊時消耗的彈藥量         
+    float AmmoReloadRate_machinegun = 10f; //每秒補充的彈藥速度 
+    float AmmoReloadDelay_machinegun = 0.3f; //射完之後到可以補充彈藥量的間隔時間      
+    bool canAmmoReload_machinegun = true; //可補充彈藥量旗標
+
+    float maxAmmo_flamethrower = 100; //最大彈藥量               
+    float currentAmmo_flamethrower; //當前彈藥量
+    float AmmoPerShoot_flamethrower = 2f; //每次射擊時消耗的彈藥量         
+    float AmmoReloadRate_flamethrower = 20f; //每秒補充的彈藥速度    
+    float AmmoReloadDelay_flamethrower = 2f; //射完之後到可以補充彈藥量的間隔時間     
+    bool canAmmoReload_flamethrower = true; //可補充彈藥量旗標
+
+
+
     bool isAim; //是否在瞄準狀態
 
     [SerializeField] public GameObject ShootEffectPrefab; //射擊特效預製物件，machinegun 就丟 FX_BloodSplatter 給他，flamethrower 就丟 FlameThrower 給他
@@ -47,8 +59,10 @@ public class Weapon : MonoBehaviour
 
     private void Start()
     {
-        //currentAmmo = maxAmmo;
+        currentAmmo_machinegun = maxAmmo_machinegun;
+        currentAmmo_flamethrower = maxAmmo_flamethrower;
     }
+
 
     private void Update()
     {
@@ -87,6 +101,13 @@ public class Weapon : MonoBehaviour
         Debug.DrawRay(shootRay.origin, shootRay.direction * 10, Color.red);
         weaponMullze.transform.rotation = Quaternion.LookRotation(shootRay.GetPoint(10) - shootRay.GetPoint(0)); //將 weaponMullze 的朝向設成與 shootRay 相同
 
+
+
+
+
+        //補充武器彈藥
+        reloadAmmo_machinegun();
+        reloadAmmo_flamethrower();
     }
 
     private void UpdateAmmo()
@@ -146,10 +167,21 @@ public class Weapon : MonoBehaviour
 
     private void machinegunShoot()
     {
-        if (timeLastShoot + machinegunDelayBetweenShoots <  Time.time)
+        if (timeLastShoot_machinegun + machinegunDelayBetweenShoots <  Time.time && currentAmmo_machinegun >= AmmoPerShoot_machinegun)
         {
-            MachinegunProjectile projectile = Instantiate(projectilePrefab, weaponMullze.position, Quaternion.LookRotation(weaponMullze.forward)); //產生子彈，LookRotation(Vector3(x,y,z)) : 獲取一個向量所表示的方向（將一個向量轉為該向量所指的方向）
-            timeLastShoot = Time.time;
+            //減少彈藥量
+            currentAmmo_machinegun -= AmmoPerShoot_machinegun;
+            currentAmmo_machinegun = Mathf.Max(currentAmmo_machinegun, 0);
+            if (currentAmmo_machinegun < AmmoPerShoot_machinegun)
+                currentAmmo_machinegun = 0;
+            canAmmoReload_machinegun = false;
+
+
+            if (projectilePrefab != null)
+            {
+                MachinegunProjectile projectile = Instantiate(projectilePrefab, weaponMullze.position, Quaternion.LookRotation(weaponMullze.forward)); //產生子彈，LookRotation(Vector3(x,y,z)) : 獲取一個向量所表示的方向（將一個向量轉為該向量所指的方向）
+            }
+            timeLastShoot_machinegun = Time.time;
 
             /* //射擊噴發效果，感覺挺干擾射擊，還是不要用好了...
             if(ShootEffectPrefab != null)
@@ -164,19 +196,61 @@ public class Weapon : MonoBehaviour
 
     private void flamethrowerShoot()
     {
-        if (timeLastShoot + flamethrowerDelayBetweenShoots < Time.time)
+        if (timeLastShoot_flamethrower + flamethrowerDelayBetweenShoots < Time.time && currentAmmo_flamethrower >= AmmoPerShoot_flamethrower)
         {
+            //減少彈藥量
+            currentAmmo_flamethrower -= AmmoPerShoot_flamethrower;
+            currentAmmo_flamethrower = Mathf.Max(currentAmmo_flamethrower, 0);
+            if (currentAmmo_flamethrower < AmmoPerShoot_flamethrower)
+                currentAmmo_flamethrower = 0;
+            canAmmoReload_flamethrower = false;
+
+
             if (ShootEffectPrefab != null)
             {
                 GameObject shootEffect = Instantiate(ShootEffectPrefab, weaponMullze.position, Quaternion.LookRotation(weaponMullze.forward));
                 Destroy(shootEffect, 2f);
             }
-            timeLastShoot = Time.time;
+            timeLastShoot_flamethrower = Time.time;
         }
 
     }
 
 
 
-        
+   void reloadAmmo_machinegun()  
+    {
+        if (timeLastShoot_machinegun + AmmoReloadDelay_machinegun < Time.time) //射擊過程中不會補充彈藥量，射完經過一段時間才能繼續補充彈藥量
+        {
+            canAmmoReload_machinegun = true;
+        }
+
+            if (currentAmmo_machinegun < maxAmmo_machinegun && canAmmoReload_machinegun == true)
+        {
+            currentAmmo_machinegun += AmmoReloadRate_machinegun * Time.deltaTime;
+        }
+    }
+
+    void reloadAmmo_flamethrower()  
+    {
+        if (timeLastShoot_flamethrower + AmmoReloadDelay_flamethrower < Time.time) //射擊過程中不會補充彈藥量，射完經過一段時間才能繼續補充彈藥量
+        {
+            canAmmoReload_flamethrower = true;
+        }
+
+        if (currentAmmo_flamethrower < maxAmmo_flamethrower && canAmmoReload_flamethrower == true)
+        {
+            currentAmmo_flamethrower += AmmoReloadRate_flamethrower * Time.deltaTime;
+        }
+    }
+
+    public float CurrentAmmoRatio_machinegun() //獲得武器彈藥量的百分比
+    {
+        return currentAmmo_machinegun / maxAmmo_machinegun;
+    }
+
+    public float CurrentAmmoRatio_flamethrower() //獲得武器彈藥量的百分比
+    {
+        return currentAmmo_flamethrower / maxAmmo_flamethrower;
+    }
 }

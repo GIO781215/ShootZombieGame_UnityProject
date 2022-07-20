@@ -1,7 +1,6 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 //1是1號槍 machinegun，2是2號槍 flamethrower
@@ -15,8 +14,17 @@ public class PlayerWeaponController : MonoBehaviour
     推測是在 Unity 中可以把掛有該腳本的 GameObject 直接指定給該腳本的 class 變數，而得到的依然是這個 class 組件而不是丟給他的 GameObject
     *///---------------------------------------------------------------------------
     [SerializeField] List<Weapon> AllWeaponsList = new List<Weapon>(); //遊戲中所有種類的武器，在 Unity 中就把所有武器的 prefab 都先丟進來給他 (只要把 Weapon 腳本掛在武器模型的預製物件下，就可以直接先丟進去)
+    public Image[] machinegunUI = new Image[3];
+    public Image[] flamethrowerUI = new Image[3];
 
-    Weapon[] PlayerWeaponSlot = new Weapon[3]; //Player 的武器槽，Player 最多只能得到三個武器
+
+
+
+    public Sprite image; //可直接放圖片資源
+
+
+    Weapon[] PlayerWeaponSlot = new Weapon[3]; //Player 的武器槽，Player 最多只能得到三個武器，但這遊戲現在最多就只有兩把武器而已，所以武器 weaponUI 就只有先設 2 而已
+
     int currentWeaponSlotIndex; //目前在武器槽中選擇的武器的索引值，-1 代表目前沒有選擇任何槍
     [SerializeField] Transform equipPosition; //裝備武器的位置 (從 Unity 中指定給他)
     bool isAim; //使否處於瞄準狀態
@@ -35,16 +43,32 @@ public class PlayerWeaponController : MonoBehaviour
         playerController = GetComponent<PlayerController>();
         playerController.onAim += OnAim;
 
-        //    playerController.onAim += OnAim; //讓 playerController 腳本能與此腳本的 isAim 旗標同步
-        //playerController的omAim呢??????????
 
-        foreach (Weapon weapon in AllWeaponsList) //這邊先讓玩家在一開始就得到所有武器 
+        /* //先讓玩家在一開始就得到所有武器 
+        foreach (Weapon weapon in AllWeaponsList) 
         {
             AddWeapon(weapon);
         }
+        */
 
 
-     }
+
+        //初始化武器 UI，變小變灰所有武器的 UI
+        machinegunUI[0].transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
+        flamethrowerUI[0].transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
+        machinegunUI[0].color = new Color(170f / 255f, 170f / 255f, 170f / 255f);
+        machinegunUI[1].color = new Color(170f / 255f, 170f / 255f, 170f / 255f);
+        machinegunUI[2].color = new Color(170f / 255f, 170f / 255f, 170f / 255f);
+        flamethrowerUI[0].color = new Color(170f / 255f, 170f / 255f, 170f / 255f);
+        flamethrowerUI[1].color = new Color(170f / 255f, 170f / 255f, 170f / 255f);
+        flamethrowerUI[2].color = new Color(170f / 255f, 170f / 255f, 170f / 255f);
+
+
+
+        AddWeapon(AllWeaponsList[0]); //加入武器 machinegun
+        AddWeapon(AllWeaponsList[1]); //加入武器 flamethrower
+
+    }
 
 
     void Update()
@@ -56,7 +80,22 @@ public class PlayerWeaponController : MonoBehaviour
         {
             PlayerWeaponSlot[currentWeaponSlotIndex].HandleShootInput(inputController.GetMouseLeftKeyDown(), inputController.GetMouseLeftKeyHeldDown(), inputController.GetMouseLeftKeyUp()); //處理射擊
         }
+ 
 
+       
+        //不停更新所有武器的 UI 的彈藥量條
+        foreach (Weapon weapon in PlayerWeaponSlot)
+        {
+            if (weapon != null && weapon.weaponType == WeaponType.machinegun)
+            {
+                machinegunUI[1].fillAmount = Mathf.Lerp(machinegunUI[1].fillAmount, weapon.CurrentAmmoRatio_machinegun(), 0.05f);
+            }
+            else if (weapon != null && weapon.weaponType == WeaponType.flamethrower)
+            {
+                print(weapon.CurrentAmmoRatio_flamethrower());
+                flamethrowerUI[1].fillAmount = Mathf.Lerp(flamethrowerUI[1].fillAmount, weapon.CurrentAmmoRatio_flamethrower(), 0.3f);
+            }
+        }
     }
 
 
@@ -83,6 +122,18 @@ public class PlayerWeaponController : MonoBehaviour
                 weaponInstance.sourcePrefab = weapon.gameObject; //為這個 Weapon 腳本的 sourcePrefab 指定初始值         
                 PlayerWeaponSlot[i] = weaponInstance; //---------------------------------------------------------------------所以 AllWeaponsList 中的 Weapon 還不是實體，而 PlayerWeaponSlot[] 中的 Weapon 是實體嗎???
                 PlayerWeaponSlot[i].HiddenWeapon(); //先不顯示
+
+                //顯示加入的武器的UI
+                if (weapon == AllWeaponsList[0]) //武器是 machinegun
+                {
+                    machinegunUI[2].enabled = false;
+
+                }
+                else if (weapon == AllWeaponsList[1])  //武器是 flamethrower
+                {
+                    flamethrowerUI[2].enabled = false;
+                }
+
                 //print("成功加入武器 " + weaponInstance);
                 return;
             }
@@ -91,11 +142,11 @@ public class PlayerWeaponController : MonoBehaviour
         return;
     }
 
-    private bool HasWeapon(Weapon weaponPrefab) //檢查是否已經有 weaponPrefab 這把武器
+    private bool HasWeapon(Weapon weapon) //檢查是否已經有 weapon 這把武器
     {
-        foreach (Weapon weapon in PlayerWeaponSlot)
+        foreach (Weapon PWS_weapon in PlayerWeaponSlot)
         {
-            if (weapon != null && weapon.sourcePrefab == weaponPrefab)
+            if (PWS_weapon != null && PWS_weapon.weaponType == weapon.weaponType)
             {
                 return true;
             }
@@ -168,11 +219,34 @@ public class PlayerWeaponController : MonoBehaviour
                     weapon.HiddenWeapon();
                 }
             }
+            //變小變灰所有武器的 UI
+            machinegunUI[0].transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
+            flamethrowerUI[0].transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
+            machinegunUI[0].color = new Color(170f / 255f, 170f / 255f, 170f / 255f);
+            machinegunUI[1].color = new Color(170f / 255f, 170f / 255f, 170f / 255f);
+            machinegunUI[2].color = new Color(170f / 255f, 170f / 255f, 170f / 255f);
+            flamethrowerUI[0].color = new Color(170f / 255f, 170f / 255f, 170f / 255f);
+            flamethrowerUI[1].color = new Color(170f / 255f, 170f / 255f, 170f / 255f);
+            flamethrowerUI[2].color = new Color(170f / 255f, 170f / 255f, 170f / 255f);
+
+
             //只顯示那把武器
             if (index != -1)
             {
                 //print("切換成武器 " + PlayerWeaponSlot[index]);
                 PlayerWeaponSlot[index].ShowWeapon();
+
+                //顯示武器的 UI
+                if (PlayerWeaponSlot[index].weaponType == WeaponType.machinegun)
+                {
+                    machinegunUI[0].transform.localScale = new Vector3(1f, 1f, 1f);
+                    machinegunUI[1].color = Color.white;
+                }
+                else if(PlayerWeaponSlot[index].weaponType == WeaponType.flamethrower)
+                {
+                    flamethrowerUI[0].transform.localScale = new Vector3(1f, 1f, 1f);
+                    flamethrowerUI[1].color = Color.white;
+                }
             }
             else
             {
