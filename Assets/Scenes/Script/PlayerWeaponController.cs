@@ -16,11 +16,7 @@ public class PlayerWeaponController : MonoBehaviour
     [SerializeField] List<Weapon> AllWeaponsList = new List<Weapon>(); //遊戲中所有種類的武器，在 Unity 中就把所有武器的 prefab 都先丟進來給他 (只要把 Weapon 腳本掛在武器模型的預製物件下，就可以直接先丟進去)
     public Image[] machinegunUI = new Image[3];
     public Image[] flamethrowerUI = new Image[3];
-
-
-
-
-    public Sprite image; //可直接放圖片資源
+    //public Sprite image; //可直接放圖片資源
 
 
     Weapon[] PlayerWeaponSlot = new Weapon[3]; //Player 的武器槽，Player 最多只能得到三個武器，但這遊戲現在最多就只有兩把武器而已，所以武器 weaponUI 就只有先設 2 而已
@@ -32,24 +28,28 @@ public class PlayerWeaponController : MonoBehaviour
     PlayerController playerController;
     InputController inputController;
 
- 
+
+
 
 
     void Start()
     {
-        currentWeaponSlotIndex = -1; //一開始設定成沒有拿武器
 
         inputController = GameManager.Instance.inputController;
         playerController = GetComponent<PlayerController>();
         playerController.onAim += OnAim;
 
 
-        /* //先讓玩家在一開始就得到所有武器 
+
+        currentWeaponSlotIndex = -1; //一開始設定成沒有拿武器
+        AddWeapon(AllWeaponsList[0]); //加入武器 machinegun (一開始就得到 machinegun)
+        /* //讓玩家得到所有武器 
         foreach (Weapon weapon in AllWeaponsList) 
         {
             AddWeapon(weapon);
         }
-        */
+          */
+
 
 
 
@@ -62,11 +62,6 @@ public class PlayerWeaponController : MonoBehaviour
         flamethrowerUI[0].color = new Color(170f / 255f, 170f / 255f, 170f / 255f);
         flamethrowerUI[1].color = new Color(170f / 255f, 170f / 255f, 170f / 255f);
         flamethrowerUI[2].color = new Color(170f / 255f, 170f / 255f, 170f / 255f);
-
-
-
-        AddWeapon(AllWeaponsList[0]); //加入武器 machinegun
-        AddWeapon(AllWeaponsList[1]); //加入武器 flamethrower
 
     }
 
@@ -92,7 +87,6 @@ public class PlayerWeaponController : MonoBehaviour
             }
             else if (weapon != null && weapon.weaponType == WeaponType.flamethrower)
             {
-                print(weapon.CurrentAmmoRatio_flamethrower());
                 flamethrowerUI[1].fillAmount = Mathf.Lerp(flamethrowerUI[1].fillAmount, weapon.CurrentAmmoRatio_flamethrower(), 0.3f);
             }
         }
@@ -279,7 +273,20 @@ public class PlayerWeaponController : MonoBehaviour
     }
 
 
-
+    public void PickUpWeapon(GameObject gameObject)
+    {     
+        if (gameObject != null  )
+        {
+            PickUpItem pickUpItem = gameObject.GetComponent<PickUpItem>();
+            if(pickUpItem != null )
+            {
+                if(pickUpItem.weaponType == WeaponType.flamethrower)
+                {
+                    AddWeapon(AllWeaponsList[1]); //撿到火焰槍 -> 加入武器 flamethrower
+                }
+            }
+        }
+    }
 
 
 }
