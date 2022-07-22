@@ -5,13 +5,15 @@ using UnityEngine;
 public class InputController : MonoBehaviour
 {
     public float vertical_value;
-    public float horizontal_value;
-    private bool canInput;
+    [HideInInspector] public float horizontal_value;
+    [HideInInspector] private bool canInput;
+    public GameObject pauseUI;
 
     private void Awake()
     {
         Cursor.lockState = CursorLockMode.Locked; //將鼠標鎖住
         canInput = true;
+
         //Cursor.visible = false; //將鼠標隱藏  (將鼠標鎖住好像就會自動隱藏了，Cursor.visible = false 好像沒效果???
     }
 
@@ -30,11 +32,15 @@ public class InputController : MonoBehaviour
         {
             if (Cursor.lockState == CursorLockMode.Locked)
             {
+                Time.timeScale = 0; //暫停遊戲
+                pauseUI.SetActive(true);
                 Cursor.lockState = CursorLockMode.None;
                 canInput = false;
             }
             else
             {
+                Time.timeScale = 1; //繼續遊戲 (恢復遊戲運行數度)
+                pauseUI.SetActive(false);
                 Cursor.lockState = CursorLockMode.Locked;
                 canInput = true;
             }

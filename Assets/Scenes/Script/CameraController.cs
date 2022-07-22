@@ -82,7 +82,6 @@ public class CameraController : MonoBehaviour
             transform.position = referenceObjectPosition + referenceObjectToCameraOffset; //從虛擬參考物的位置(受 SmoothDamp() 效果影響) 在加上 referenceObjectToCameraOffset 即為攝影機該在的位置
             
         }
-
     }
 
     private void OnDamage()
