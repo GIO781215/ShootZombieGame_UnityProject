@@ -26,7 +26,7 @@ public class ZombieController : MonoBehaviour
 
 
     //-------------------巡邏相關的參數-------------------
-    [SerializeField] public PatrolPath zombiePatrolPath; //可以直接從 Unity 中丟給他掛有 PatrolPath 腳本的物件
+    [SerializeField] public PatrolPath patrolPath; //可以直接從 Unity 中丟給他掛有 patrolPath 腳本的物件
     float timeSinceLastArrivePatrolPoint = 0; //離上次抵達巡邏點經過的時間 
     float timeSinceLastStartPatrol = 0; //離上次開始巡邏經過的時間 (解決永遠達不到下一個巡邏點的問題)
     int GoalPatrolPoint = 0; //當前需要到達的巡邏點
@@ -65,14 +65,7 @@ public class ZombieController : MonoBehaviour
 
     void Update()
     {
-        //--------------------------------------------
-        //print("焦屍血量:" + health.GetCurrentHealth());
-        if(Input.GetKeyDown(KeyCode.V))
-        {
-          //  health.TakeDamage(40);
-        }
-        //---------------------------------------------*/
-
+ 
 
 
 
@@ -110,8 +103,8 @@ public class ZombieController : MonoBehaviour
             animatorController.SetBool("IsConfuse", false); //解除困惑動作                                   
             timeSinceLastSawPlayer = 0;
             zombieNavMeshAgent.MoveTo(player.transform.position, 1); //移動到玩家位置
-            zombiePatrolPath.transform.position = this.transform.position; //巡邏點也會一直跟著殭屍移動，直到殭屍停下來才不會再一起動
-            zombiePatrolPath.transform.rotation = this.transform.rotation;
+            patrolPath.transform.position = this.transform.position; //巡邏點也會一直跟著殭屍移動，直到殭屍停下來才不會再一起動
+            patrolPath.transform.rotation = this.transform.rotation;
         }
         else if ((timeSinceLastSawPlayer < confuseTime) && !IsAttacking)
         {
@@ -173,7 +166,7 @@ public class ZombieController : MonoBehaviour
             if(!IsArrivePatrolPoint() && !IsConfuseInPatrol) //如果還沒到達巡邏點，並且不在困惑中
             {
                 animatorController.SetBool("IsConfuse", false); //困惑動作                                    
-                zombieNavMeshAgent.MoveTo(zombiePatrolPath.GetPatrolPointPosition(GoalPatrolPoint), 0.2f); //移動到目標巡邏點 
+                zombieNavMeshAgent.MoveTo(patrolPath.GetPatrolPointPosition(GoalPatrolPoint), 0.2f); //移動到目標巡邏點 
 
                 //有時候會完全走不到下一個巡邏點，如果行走超過一段時間，則判定走不到，直接困惑一次並結束巡邏
                 timeSinceLastStartPatrol += Time.deltaTime;
@@ -190,7 +183,7 @@ public class ZombieController : MonoBehaviour
                 zombieNavMeshAgent.CancelMove(); //停止移動 
                 IsConfuseInPatrol = true;
                 animatorController.SetBool("IsConfuse", true); //開始困惑動畫
-                GoalPatrolPoint = zombiePatrolPath.GetNextPatrolPointNumber(GoalPatrolPoint); //將目標轉向下一個巡邏點         
+                GoalPatrolPoint = patrolPath.GetNextPatrolPointNumber(GoalPatrolPoint); //將目標轉向下一個巡邏點         
                 timeSinceLastArrivePatrolPoint = 0;  //重置開始困惑時間
                 timeSinceLastStartPatrol = 0; //重置開始巡邏經過時間
 
@@ -218,7 +211,7 @@ public class ZombieController : MonoBehaviour
 
     private bool IsArrivePatrolPoint() //是否到達巡邏點了
     {
-        return (Vector3.Distance(this.transform.position, zombiePatrolPath.GetPatrolPointPosition(GoalPatrolPoint)) < zombiePatrolPath.CircleRadius); //當前位置與目標巡邏點的距離是否小於巡邏點半徑了
+        return (Vector3.Distance(this.transform.position, patrolPath.GetPatrolPointPosition(GoalPatrolPoint)) < patrolPath.CircleRadius); //當前位置與目標巡邏點的距離是否小於巡邏點半徑了
     }
 
 

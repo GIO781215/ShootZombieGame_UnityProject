@@ -13,35 +13,48 @@ public class MutantController : MonoBehaviour
     bool gameOver = false;
     float timeSinceLastGameOver = 0;
 
-
-    float viewDistance = 10f; //殭屍視野範圍
-    float confuseTime = 3f; //當玩家在殭屍的視野範圍內消失後殭屍的困惑時間
-    float timeSinceLastSawPlayer = Mathf.Infinity; //初始值設為無限大
-
-
     //-------------------設定動畫的參數-------------------
     Animator animatorController; //動畫播放控制器
-    //----------------------------------------------------
+                                 
 
+
+
+
+
+    float viewDistance = 28f; //視野範圍，在視野範圍內就會往玩家位置移動
+    float confuseTime = 3f; //當玩家在視野範圍內消失後的困惑時間
+    float timeSinceLastSawPlayer = Mathf.Infinity; //初始值設為無限大
 
     //-------------------巡邏相關的參數-------------------
-    [SerializeField] public PatrolPath PatrolPath; //可以直接從 Unity 中丟給他掛有 PatrolPath 腳本的物件
+    [SerializeField] public PatrolPath patrolPath; //可以直接從 Unity 中丟給他掛有 patrolPath 腳本的物件
     float timeSinceLastArrivePatrolPoint = 0; //離上次抵達巡邏點經過的時間 
     float timeSinceLastStartPatrol = 0; //離上次開始巡邏經過的時間 (解決永遠達不到下一個巡邏點的問題)
     int GoalPatrolPoint = 0; //當前需要到達的巡邏點
     bool IsPatrol = false; //是否進入巡邏狀態
     bool IsConfuseInPatrol = false; //是否在巡邏中的困惑狀態
-    //----------------------------------------------------
+ 
 
 
     //-------------------攻擊相關的參數-------------------
-    float AttackRangeRadius = 1f; //攻擊範圍半徑
+    float JumpAttackRangeRadius = 15f; //偵測跳躍攻擊半徑範圍 
+    float AttackRangeRadius = 8f; //偵測打擊攻擊半徑範圍 
+    float FireBallAttackRangeRadius = 30f; //偵測丟火球攻擊半徑範圍 
+
+    float JumpAttackDamageRangeRadius = 5f; //跳躍攻擊有效半徑範圍 
+    float AttackDamageRangeRadius = 3f; //打擊攻擊有效半徑範圍 
+
+
+
     float timeSinceLastAttack = Mathf.Infinity; //上次攻擊後經過的時間
     float timeBetweenAttack = 1.1f; //能再次攻擊的時間間隔
     bool IsAttacking = false; //是否正在攻擊中
 
 
-    float JumpAttackRangeRadius = 2f; //跳躍攻擊距離
+
+
+
+
+
 
     //----------------------------------------------------
     AnimatorStateInfo BaseLayer;
@@ -57,7 +70,7 @@ public class MutantController : MonoBehaviour
     [SerializeField] Transform handPosition; //手部座標
 
 
-    //普通打擊(在某個範圍內) 跳躍打擊(在某個雙圏範圍區間) 火球攻擊(在某個雙圏範圍區間，且血量降到一定數值)
+    //普通打擊(在某個範圍內) 跳躍打擊(在某個雙圏範圍區間) 火球攻擊(在某個雙圏範圍區間，且血量降到一定數值，且這時就會一直追著玩家跑(大於火球攻擊範圍時))
     //被射到會強制追人一段時間
 
 
@@ -69,10 +82,10 @@ public class MutantController : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player"); //找到在 Unity 中將標籤設置為 Player 的 GameObject 
         mutantNavMeshAgent = GetComponent<MutantNavMeshAgent>(); //獲得自己寫的移動導航物件
-        animatorController = GetComponentInChildren<Animator>();
+        animatorController = GetComponent<Animator>();
 
         health = GetComponent<Health>();
-        health.InitHealth(100, 100);
+        health.InitHealth(1000, 1000);
         health.onDamage += OnDamage; //將自己的函數 OnDamage() 丟進 health 的事件委派容器 onDamage 中
         health.onDie += OnDie; //將自己的函數 OnDie() 丟進 health 的事件委派容器 onDie 中
 
@@ -84,10 +97,9 @@ public class MutantController : MonoBehaviour
     void Update()
     {
         //--------------------------------------------
-        //print("焦屍血量:" + health.GetCurrentHealth());
-        if (Input.GetKeyDown(KeyCode.V))
+         if (Input.GetKeyDown(KeyCode.O))
         {
-            //  health.TakeDamage(40);
+              health.TakeDamage(100);
         }
         //---------------------------------------------*/
 
@@ -103,7 +115,7 @@ public class MutantController : MonoBehaviour
             }
             return;
         }
-        if ((this.health.IsDead() || player.GetComponent<Health>().IsDead()))  //如果殭屍或玩家已經死了那就什麼都不做了
+        if ((this.health.IsDead() || player.GetComponent<Health>().IsDead()))  //如果自己或玩家已經死了那就什麼都不做了
         {
             mutantNavMeshAgent.CancelMove(); //停止移動 
             //mutantNavMeshAgent.SetNavMeshAgentSpeed(0); //將控制動畫的變數 WalkSpeed 設為 0 才會播放 idle 動畫
@@ -133,8 +145,8 @@ public class MutantController : MonoBehaviour
             animatorController.SetBool("IsConfuse", false); //解除困惑動作                                   
             timeSinceLastSawPlayer = 0;
             mutantNavMeshAgent.MoveTo(player.transform.position); //移動到玩家位置
-            PatrolPath.transform.position = this.transform.position; //巡邏點也會一直跟著殭屍移動，直到殭屍停下來才不會再一起動
-            PatrolPath.transform.rotation = this.transform.rotation;
+            patrolPath.transform.position = this.transform.position; //巡邏點也會一直跟著殭屍移動，直到殭屍停下來才不會再一起動
+            patrolPath.transform.rotation = this.transform.rotation;
         }
         else if ((timeSinceLastSawPlayer < confuseTime) && !IsAttacking)
         {
@@ -222,7 +234,7 @@ public class MutantController : MonoBehaviour
             if (!IsArrivePatrolPoint() && !IsConfuseInPatrol) //如果還沒到達巡邏點，並且不在困惑中
             {
                 animatorController.SetBool("IsConfuse", false); //困惑動作                                    
-                mutantNavMeshAgent.MoveTo(PatrolPath.GetPatrolPointPosition(GoalPatrolPoint)); //移動到目標巡邏點 
+                mutantNavMeshAgent.MoveTo(patrolPath.GetPatrolPointPosition(GoalPatrolPoint)); //移動到目標巡邏點 
 
                 //有時候會完全走不到下一個巡邏點，如果行走超過一段時間，則判定走不到，直接困惑一次並結束巡邏
                 timeSinceLastStartPatrol += Time.deltaTime;
@@ -239,7 +251,7 @@ public class MutantController : MonoBehaviour
                 mutantNavMeshAgent.CancelMove(); //停止移動 
                 IsConfuseInPatrol = true;
                 animatorController.SetBool("IsConfuse", true); //開始困惑動畫
-                GoalPatrolPoint = PatrolPath.GetNextPatrolPointNumber(GoalPatrolPoint); //將目標轉向下一個巡邏點         
+                GoalPatrolPoint = patrolPath.GetNextPatrolPointNumber(GoalPatrolPoint); //將目標轉向下一個巡邏點         
                 timeSinceLastArrivePatrolPoint = 0;  //重置開始困惑時間
                 timeSinceLastStartPatrol = 0; //重置開始巡邏經過時間
 
@@ -267,7 +279,7 @@ public class MutantController : MonoBehaviour
 
     private bool IsArrivePatrolPoint() //是否到達巡邏點了
     {
-        return (Vector3.Distance(this.transform.position, PatrolPath.GetPatrolPointPosition(GoalPatrolPoint)) < PatrolPath.CircleRadius); //當前位置與目標巡邏點的距離是否小於巡邏點半徑了
+        return (Vector3.Distance(this.transform.position, patrolPath.GetPatrolPointPosition(GoalPatrolPoint)) < patrolPath.CircleRadius); //當前位置與目標巡邏點的距離是否小於巡邏點半徑了
     }
 
 
@@ -278,6 +290,7 @@ public class MutantController : MonoBehaviour
         animatorController.SetBool("IsConfuse", true); //困惑動作                                    
     }
 
+
     private bool InViewRange()
     {
         return Vector3.Distance(transform.position, player.transform.position) < viewDistance;
@@ -285,14 +298,21 @@ public class MutantController : MonoBehaviour
 
     private bool InAttackRange()
     {
-        return Vector3.Distance(this.transform.position + this.transform.TransformDirection(Vector3.forward * 1f), player.transform.position) < AttackRangeRadius;
+        return Vector3.Distance(this.transform.position , player.transform.position) < AttackRangeRadius;
     }
 
     private bool InJumpAttackRange()
     {
-        return Vector3.Distance(this.transform.position + this.transform.TransformDirection(Vector3.forward * 1f), player.transform.position) < JumpAttackRangeRadius;
+        if (InAttackRange())
+            return false;
+        return Vector3.Distance(this.transform.position , player.transform.position) < JumpAttackRangeRadius;
     }
 
+    private bool InFireBallAttackRange()
+    {
+
+        return Vector3.Distance(this.transform.position, player.transform.position) < FireBallAttackRangeRadius && Vector3.Distance(this.transform.position, player.transform.position) > FireBallAttackRangeRadius - 10;
+    }
 
 
 
@@ -342,11 +362,22 @@ public class MutantController : MonoBehaviour
             //Gizmos.color = Color.blue;
             //Gizmos.DrawLine(GetPatrolPointPosition(i), GetPatrolPointPosition(j)); //畫線
             //Gizmos.DrawSphere(GetPatrolPointPosition(i), CircleRadius); //畫球
-            Handles.color = Color.green;
-            Handles.DrawWireDisc(this.transform.position + this.transform.TransformDirection(Vector3.forward * 1f), new Vector3(0, 1, 0), AttackRangeRadius); //畫圓，參數: 圓盤中心、圓盤法線、圓盤半徑 (須 using UnityEditor)
-                                                                                                                                                              //GameObject.transform.TransformDirection(Vector3 direction) 能把向量 direction 從物件的 local 座標系轉換到世界座標系上
+
+
             Handles.color = Color.yellow;
-            Handles.DrawWireDisc(this.transform.position + this.transform.TransformDirection(Vector3.forward * 1f), new Vector3(0, 1, 0), JumpAttackRangeRadius);
+            Handles.DrawWireDisc(this.transform.position , new Vector3(0, 1, 0), viewDistance); //視野追逐範圍
+
+            Handles.color = Color.red;
+            Handles.DrawWireDisc(this.transform.position, new Vector3(0, 1, 0), JumpAttackRangeRadius);  //跳躍攻擊範圍
+            Handles.DrawWireDisc(this.transform.position, new Vector3(0, 1, 0), AttackRangeRadius);  //打擊攻擊範圍
+
+            Handles.color = Color.green;
+            Handles.DrawWireDisc(this.transform.position + this.transform.TransformDirection(Vector3.forward * 4f), new Vector3(0, 1, 0), AttackDamageRangeRadius);  //打擊攻擊有效範圍
+            //GameObject.transform.TransformDirection(Vector3 direction) 能把向量 direction 從物件的 local 座標系轉換到世界座標系上
+
+
+
+
         }
     }
 
