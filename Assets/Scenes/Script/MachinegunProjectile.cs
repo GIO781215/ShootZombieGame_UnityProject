@@ -14,7 +14,6 @@ public class MachinegunProjectile : MonoBehaviour
     Vector3 currentVelocity;
 
     [SerializeField] GameObject hitEffectPrefab; //射到目標時的特效
-    float damage = 30; //射到目標時殭屍扣的血量
 
 
     private void OnEnable() //在 void Start() 前就會執行
@@ -44,11 +43,21 @@ public class MachinegunProjectile : MonoBehaviour
             Health targetHealth = other.GetComponent<Health>();
             if(targetHealth != null && !targetHealth.IsDead())
             {
-                targetHealth.TakeDamage(damage);
+                targetHealth.TakeDamage(30);
             }
         }
 
-        if(hitEffectPrefab != null)
+        if (other.gameObject.tag == "Mutant")
+        {
+            //print("魔王扣血");
+            Health targetHealth = other.GetComponent<Health>();
+            if (targetHealth != null && !targetHealth.IsDead())
+            {
+                targetHealth.TakeDamage(10); 
+            }
+        }
+
+        if (hitEffectPrefab != null)
         {
             GameObject hitEffect =Instantiate(hitEffectPrefab, transform.position, transform.rotation);
             Destroy(hitEffect, 1.5f);

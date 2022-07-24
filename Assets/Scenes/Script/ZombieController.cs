@@ -151,7 +151,7 @@ public class ZombieController : MonoBehaviour
                 Health health = player.GetComponent<Health>();
                 if (health != null)
                 {
-                    health.TakeDamage(90); //¦© 90 ºw¦å
+                    health.TakeDamage(30); //¦© 30 ºw¦å
                 }
             }
         }

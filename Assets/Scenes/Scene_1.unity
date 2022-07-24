@@ -5329,7 +5329,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 356208057}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.65, y: 0, z: -0.61}
+  m_LocalPosition: {x: -0.16, y: 0, z: -13.31}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3131896054551916251}
@@ -31531,10 +31531,9 @@ GameObject:
   - component: {fileID: 919132148848664999}
   - component: {fileID: 919132148848665003}
   - component: {fileID: 919132148848665002}
-  - component: {fileID: 919132148848665004}
   m_Layer: 0
   m_Name: Mutant
-  m_TagString: Untagged
+  m_TagString: Mutant
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -31615,22 +31614,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   patrolPath: {fileID: 1143404524}
   handPosition: {fileID: 0}
---- !u!54 &919132148848665004
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 919132148848664998}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 116
-  m_CollisionDetection: 0
 --- !u!1 &1039890582374266242
 GameObject:
   m_ObjectHideFlags: 0
@@ -61693,7 +61676,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6724296492845888909, guid: 2187963bad286b24fb3794b12348e45c, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1.28
+      value: -4.84
       objectReference: {fileID: 0}
     - target: {fileID: 6724296492845888909, guid: 2187963bad286b24fb3794b12348e45c, type: 3}
       propertyPath: m_LocalRotation.w

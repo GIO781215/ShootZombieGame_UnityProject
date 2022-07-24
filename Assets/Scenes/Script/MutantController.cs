@@ -36,12 +36,11 @@ public class MutantController : MonoBehaviour
 
 
     //-------------------攻擊相關的參數-------------------
-    float JumpAttackRangeRadius = 15f; //偵測跳躍攻擊半徑範圍 
+    float JumpAttackRangeRadius = 10f; //偵測跳躍攻擊半徑範圍 
     float HitAttackDamageRangeRadius = 4f; //偵測打擊與攻擊有效半徑範圍 
     float FireBallAttackRangeRadius = 50f; //偵測丟火球攻擊半徑範圍 
     float CancelFireBallAttackRangeRadius = 25f; //偵測不丟火球了的半徑範圍 
-
-    float JumpAttackDamageRangeRadius = 5f; //跳躍攻擊有效半徑範圍 
+    float JumpAttackDamageRangeRadius = 6f; //跳躍攻擊傷害有效半徑範圍 
 
 
     bool HitAttacking = false; //當前是否正在打擊攻擊中
@@ -52,11 +51,11 @@ public class MutantController : MonoBehaviour
 
 
     //-----------打擊角度修正用變數-----------
-    Vector3 attackAnglefix = Vector3.zero; //打擊攻擊的角度修正用變數(因為動畫手揮下去的位置太偏了，所以用程式來修正)
-    bool IsattackAnglefix = true; //下次攻擊時是否要做角度修正
+    Vector3 AttackAngleFix = Vector3.zero; //打擊攻擊的角度修正用變數(因為動畫手揮下去的位置太偏了，所以用程式來修正)
+    bool IsAttackAngleFix = true; //下次攻擊時是否要做角度修正
     float timeSinceLastHitAttack = Mathf.Infinity; //上次攻擊後經過的時間
 
-
+    Vector3 JumpAttackAngleFix = Vector3.zero; //跳躍攻擊的角度修正用變數
 
 
     //----------------------------------------------------
@@ -123,7 +122,6 @@ public class MutantController : MonoBehaviour
         {
             mutantNavMeshAgent.CancelMove(); //停止移動 
             animatorController.SetBool("IsIdle", true); //進入閒置動作
-            animatorController.SetBool("IsAttack", false); //解除攻擊動畫
             animatorController.SetBool("IsConfuse", true); //最後困惑一下
             gameOver = true;
             return;
@@ -141,17 +139,19 @@ public class MutantController : MonoBehaviour
             timeSinceLastSawPlayer = 0;
             FireBallAttack();
         }
-        else if (InJumpAttackRange() || IsAttacking)  //跳躍攻擊
+         */
+        if (InJumpAttackRange() && !HitAttacking && !JumpAttacking && !FireBallAttacking)  //跳躍攻擊
         {
+            JumpAttacking = true;
             timeSinceLastSawPlayer = 0;
-            JumpAttackBehaviour(); //攻擊行為
+            JumpAttackBehaviour();  
         }
-               */
-        if (InHitAttackRange() && !HitAttacking && !JumpAttacking && !FireBallAttacking) //打擊攻擊
+              
+        else if (InHitAttackRange() && !HitAttacking && !JumpAttacking && !FireBallAttacking) //打擊攻擊
         {
             HitAttacking = true; //如果靠動畫的回掉函數 InHitAttacking() 來讓 HitAttacking = true 還是會慢一拍的樣子，所以這邊再直接給他設 true 一次
             timeSinceLastSawPlayer = 0;
-            HitAttackBehaviour(); //攻擊行為
+            HitAttackBehaviour();  
         }
         else if(HitAttacking)
         {
@@ -184,7 +184,7 @@ public class MutantController : MonoBehaviour
         timeSinceLastHitAttack += Time.deltaTime;
         if (timeSinceLastHitAttack > 0.2f)
         {
-            IsattackAnglefix = true;
+            IsAttackAngleFix = true;
         }
     }
 
@@ -215,22 +215,12 @@ public class MutantController : MonoBehaviour
 
     private void JumpAttackBehaviour()
     {
-        /*
-        if (timeSinceLastAttack > timeBetweenAttack)
-        {
-            IsAttacking = true;
-            timeSinceLastAttack = 0;
-            mutantNavMeshAgent.CancelMove(); //停止移動 
-            animatorController.SetBool("IsConfuse", false); //解除困惑動作  
-            animatorController.SetBool("IsJumpAttack", true); //播放攻擊動畫    
-        }
+        JumpAttackAngleFix = player.transform.position - transform.position; //設定朝向玩家的方向向量，朝向函數在 InJumpAttacking() 中
 
-        if (timeSinceLastAttack + Time.deltaTime >= timeBetweenAttack && !InJumpAttackRange()) //已經播完動畫了，而且不在攻擊範圍內了，就可以去執行其他行為了   (還是要改成攻擊完才觸發一個函數 重新判斷周圍狀況比較好 ???
-        {
-            IsAttacking = false;
-            animatorController.SetBool("IsJumpAttack", false); //停止攻擊動畫      
-        }
-        */
+        mutantNavMeshAgent.CancelMove(); //停止移動 
+        animatorController.SetBool("IsConfuse", false); //解除困惑動作
+        animatorController.SetBool("IsIdle", false); //解除閒置動作
+        animatorController.SetTrigger("JumpAttack"); //播放攻擊動畫  
     }
 
 
@@ -302,9 +292,22 @@ public class MutantController : MonoBehaviour
     private void ConfuseBehaviour()
     {
         mutantNavMeshAgent.CancelMove(); //停止移動 
-        animatorController.SetBool("IsAttack", false); //停止攻擊
         animatorController.SetBool("IsConfuse", true); //困惑動作                                    
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -313,26 +316,23 @@ public class MutantController : MonoBehaviour
     public void InHitAttacking()
     {
         HitAttacking = true;
-        if (IsattackAnglefix == true)
+        if (IsAttackAngleFix == true)
         {
-            IsattackAnglefix = false;
+            IsAttackAngleFix = false;
 
-            attackAnglefix = this.transform.TransformDirection(new Vector3(-3, 0, 10));
-            StartCoroutine(AttackAnglefix());
+            AttackAngleFix = this.transform.TransformDirection(new Vector3(-3, 0, 10));
+            StartCoroutine(AttackAngle_Fix());
         }
     }
 
-    private IEnumerator AttackAnglefix() //平滑地轉向修正後的角度
+    private IEnumerator AttackAngle_Fix() //平滑地轉向修正後的角度
     {
         for (int i = 0; i < 100; i++)
         {
-            transform.rotation = Quaternion.Lerp(transform.rotation , Quaternion.LookRotation(attackAnglefix, Vector3.up), 0.01f);
+            transform.rotation = Quaternion.Lerp(transform.rotation , Quaternion.LookRotation(AttackAngleFix, Vector3.up), 0.01f);
             yield return new WaitForSeconds(0.01f);
         }
     }
-
-
-
 
     public void OutHitAttacking()
     {
@@ -341,23 +341,35 @@ public class MutantController : MonoBehaviour
 
     public void InJumpAttacking()
     {
-        JumpAttacking = false;
+        JumpAttacking = true;
+        StartCoroutine(JumpAttackAngle_Fix());
     }
+
+    private IEnumerator JumpAttackAngle_Fix()
+    {
+        for (int i = 0; i < 100; i++)
+        {
+            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(JumpAttackAngleFix, Vector3.up), 0.05f);
+            yield return new WaitForSeconds(0.001f);
+        }
+    }
+
 
     public void OutJumpAttacking()
     {
-        JumpAttacking = true;
+        JumpAttacking = false;
     }
 
     public void InFireBallAttacking()
     {
-        FireBallAttacking = false;
+        FireBallAttacking = true;
     }
 
     public void OutFireBallAttacking()
     {
-        FireBallAttacking = true;
+        FireBallAttacking = false;
     }
+
 
 
 
@@ -371,17 +383,25 @@ public class MutantController : MonoBehaviour
                 Health health = player.GetComponent<Health>();
                 if (health != null)
                 {
-                    health.TakeDamage(10); //扣 100 滴血
+                    health.TakeDamage(100); //扣 100 滴血
                 }
             }
         }
     }
 
-
     public void AtJumpAttack()
     {
-        print("AtJumpAttack");
-
+        if (InJumpAttackDamageRange()) //如果這時玩家在傷害範圍內
+        {
+            if (player != null)  //玩家就扣寫
+            {
+                Health health = player.GetComponent<Health>();
+                if (health != null)
+                {
+                    health.TakeDamage(60);  
+                }
+            }
+        }
     }
 
     public void GetFireBall()
@@ -432,6 +452,12 @@ public class MutantController : MonoBehaviour
         return Vector3.Distance(this.transform.position , player.transform.position) < JumpAttackRangeRadius;
     }
 
+    private bool InJumpAttackDamageRange()
+    {
+        return Vector3.Distance(this.transform.position, player.transform.position) < JumpAttackDamageRangeRadius;
+    }
+
+
     private bool InFireBallAttackRange()
     {
 
@@ -444,7 +470,7 @@ public class MutantController : MonoBehaviour
 
 
 
-
+    
 
 
 

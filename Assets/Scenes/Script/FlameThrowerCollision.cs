@@ -4,23 +4,6 @@ using UnityEngine;
 
 public class FlameThrowerCollision : MonoBehaviour
 {
-    float damage = 2; //殭屍被火焰噴到時扣的血量
-
-
-
-    // Start is called before the first frame update
-    void Start()
-    {
-  
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
-
 
 
 
@@ -42,6 +25,7 @@ public class FlameThrowerCollision : MonoBehaviour
 
     private void OnParticleCollision(GameObject other) //當火焰粒子特效的碰撞事件發生時會觸發這個函數
     {
+        print(other);
 
         if (other.gameObject.tag == "Weapon" || other.gameObject.tag == "Player") return; //如果子彈碰到槍或玩家則沒反應
 
@@ -50,9 +34,19 @@ public class FlameThrowerCollision : MonoBehaviour
             Health targetHealth = other.GetComponent<Health>();
             if (targetHealth != null && !targetHealth.IsDead())
             {
-                targetHealth.TakeDamage(damage);
+                targetHealth.TakeDamage(2);
             }
         }
+
+        if (other.gameObject.tag == "Mutant")
+        {
+            Health targetHealth = other.GetComponent<Health>();
+            if (targetHealth != null && !targetHealth.IsDead())
+            {
+                targetHealth.TakeDamage(3);
+            }
+        }
+
     }
     
      
