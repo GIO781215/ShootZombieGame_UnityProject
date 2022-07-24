@@ -18,6 +18,84 @@ public class ZombieNavMeshAgent : MonoBehaviour
 
 
 
+
+    /*  之後再來修殭屍一直追著 player 繞圈的 Bug
+
+    由於NavMeshAgent組件的加速度Acceleration太高，自動導航到目的地的轉角太多，或者角度太小，導致自動導航的時候，無法到達路徑，或者在路徑的地方不停徘徊，改變agent.acceleration即可。
+
+ 
+    if(agent.hasPath)
+    {
+        Vector3 toTarget = agent.steeringTarget - this.transform.position;
+        float turnAngle = Vector3.Angle(this.transform.forward,toTarget);
+        agent.acceleration = turnAngle * agnet.speed;
+
+    //Unity NavMesh Area Costs and Agent Speeds Part 2
+    }
+
+
+
+
+
+   //看看有沒有需要以下這個知識點
+
+        NavMeshAgent自動尋路判斷到達目的地    -----------------------------使用NavMeshAgent的destination 和nextPosition這兩個 自帶的屬性變量 用到的的是 NavMeshAgent的destination 和nextPosition這兩個 自帶的屬性變量。
+
+        if ((destination.x - agent.nextPosition.x <= 0.05f)  && (destination.y - agent.nextPosition.y <= 0.05f)   && (destination.z - agent.nextPosition.z <= 0.05f)      )
+          {
+               Debug.Log("  onPos ");
+          }            
+                  
+        destination是NavMeshAgent組件的 目的地        nextPosition是NavMeshAgent組件的 及時的位置信息        因為 兩個 向量 坐標 的精度通常是(17.00001,12.000001,46.0000001)，所以無法 進行 == 運算比較。        這樣就只能相減，
+
+
+       destination.x - agent.nextPosition.x <= 0.05f
+
+        這裡存在一個BUG：鼠標點擊有的地方，會一直調用並顯示
+
+                        Debug.Log("  onPos ");
+        如果 目的地的點擊特效在 這裡進行判斷，就會 顯示不出來。出現BUG。 （相關資料5）
+
+
+        ---------------------用 NavMeshAgent的nav.remainingDistance參數
+
+        用 NavMeshAgent的nav.remainingDistance參數作為判斷 是否到達目的地的參數。
+
+
+
+        if (Mathf.Abs(nav.remainingDistance) < 0.01)
+        {
+        animator.SetBool("Move", false);
+        }
+        else
+        {
+        animator.SetBool("Move", true); 
+        }
+
+
+
+        NavMeshAgent的nav.remainingDistance參數有個局限，不能用於 自動烘培。
+
+        只能使用 Unity自帶的靜態烘培。
+
+
+
+---------------------
+
+
+
+
+
+
+
+
+
+
+
+    */
+
+
+
     void Awake()
     {
         navMeshAgent = GetComponent<NavMeshAgent>(); //獲得掛載在此物件下的 NavMeshAgent 組件

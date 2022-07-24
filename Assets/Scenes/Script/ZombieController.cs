@@ -26,7 +26,7 @@ public class ZombieController : MonoBehaviour
 
 
     //-------------------巡邏相關的參數-------------------
-    [SerializeField] public ZombiePatrolPath zombiePatrolPath; //可以直接從 Unity 中丟給他掛有 ZombiePatrolPath 腳本的物件
+    [SerializeField] public PatrolPath zombiePatrolPath; //可以直接從 Unity 中丟給他掛有 PatrolPath 腳本的物件
     float timeSinceLastArrivePatrolPoint = 0; //離上次抵達巡邏點經過的時間 
     float timeSinceLastStartPatrol = 0; //離上次開始巡邏經過的時間 (解決永遠達不到下一個巡邏點的問題)
     int GoalPatrolPoint = 0; //當前需要到達的巡邏點

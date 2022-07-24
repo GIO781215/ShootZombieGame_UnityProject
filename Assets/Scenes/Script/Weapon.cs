@@ -49,9 +49,11 @@ public class Weapon : MonoBehaviour
 
     Ray shootRay; //射出子彈方向的射線
 
+    [SerializeField] AudioClip sound_MachinegunShoot;
+    [SerializeField] AudioClip sound_FlamethrowerShoot;
+    [SerializeField] AudioClip sound_SwitchWeapon;
 
-
-
+    AudioSource audioSource;
 
 
 
@@ -61,6 +63,7 @@ public class Weapon : MonoBehaviour
     {
         currentAmmo_machinegun = maxAmmo_machinegun;
         currentAmmo_flamethrower = maxAmmo_flamethrower;
+        audioSource = GetComponent<AudioSource>();
     }
 
 
@@ -180,8 +183,11 @@ public class Weapon : MonoBehaviour
             if (projectilePrefab != null)
             {
                 MachinegunProjectile projectile = Instantiate(projectilePrefab, weaponMullze.position, Quaternion.LookRotation(weaponMullze.forward)); //產生子彈，LookRotation(Vector3(x,y,z)) : 獲取一個向量所表示的方向（將一個向量轉為該向量所指的方向）
+                audioSource.PlayOneShot(sound_MachinegunShoot);
             }
             timeLastShoot_machinegun = Time.time;
+
+
 
             /* //射擊噴發效果，感覺挺干擾射擊，還是不要用好了...
             if(ShootEffectPrefab != null)
@@ -209,6 +215,7 @@ public class Weapon : MonoBehaviour
             if (ShootEffectPrefab != null)
             {
                 GameObject shootEffect = Instantiate(ShootEffectPrefab, weaponMullze.position, Quaternion.LookRotation(weaponMullze.forward));
+                audioSource.PlayOneShot(sound_FlamethrowerShoot);
                 Destroy(shootEffect, 2f);
             }
             timeLastShoot_flamethrower = Time.time;
