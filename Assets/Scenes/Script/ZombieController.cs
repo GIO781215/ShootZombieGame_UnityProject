@@ -173,6 +173,7 @@ public class ZombieController : MonoBehaviour
                 if (timeSinceLastStartPatrol > 8f) //如果走了八秒還到不了
                 {
                     IsPatrol = false; //直接結束巡邏
+                    zombieNavMeshAgent.CancelMove();
                     zombieNavMeshAgent.SetNavMeshAgentSpeed(0); //將控制動畫的變數 WalkSpeed 設為 0 才會播放 idle 動畫
                     timeSinceLastStartPatrol = 0;
                     GoalPatrolPoint = 0;

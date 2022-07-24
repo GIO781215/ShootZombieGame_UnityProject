@@ -9,6 +9,8 @@ using UnityEngine.AI;
 
 不是全部由程式指定位置，而是會運用到動畫本身的位移來做移動控制
 
+註 : 給 navMeshAgent.speed 設值好像就會失去效用，會依照動畫本身的移動速度來套用角色的移動速度
+
 *///----------------------------
 
 
@@ -89,7 +91,7 @@ public class MutantNavMeshAgent : MonoBehaviour
         animatorController.SetBool("Move", false);
     }
 
-
+ 
 
 
 
