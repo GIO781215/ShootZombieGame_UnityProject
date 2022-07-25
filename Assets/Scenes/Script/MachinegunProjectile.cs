@@ -53,7 +53,7 @@ public class MachinegunProjectile : MonoBehaviour
             Health targetHealth = other.GetComponent<Health>();
             if (targetHealth != null && !targetHealth.IsDead())
             {
-                targetHealth.TakeDamage(10); 
+                targetHealth.TakeDamage(10);
             }
         }
 

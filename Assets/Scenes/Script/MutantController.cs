@@ -15,13 +15,14 @@ public class MutantController : MonoBehaviour
 
     //-------------------設定動畫的參數-------------------
     Animator animatorController; //動畫播放控制器
-                                 
 
 
 
 
 
-    float viewDistance = 28f; //視野範圍，在視野範圍內就會往玩家位置移動
+    float startDistance = 31f; //血超過一半時的視野範圍，在視野範圍內就會往玩家位置移動
+    float middleDistance = 50f; //血剩一半後的視野範圍
+    float viewDistance; //程式計算判斷用的視野範圍
     float confuseTime = 3f; //當玩家在視野範圍內消失後的困惑時間
     float timeSinceLastSawPlayer = Mathf.Infinity; //初始值設為無限大
 
@@ -38,8 +39,8 @@ public class MutantController : MonoBehaviour
     //-------------------攻擊相關的參數-------------------
     float JumpAttackRangeRadius = 10f; //偵測跳躍攻擊半徑範圍 
     float HitAttackDamageRangeRadius = 4f; //偵測打擊與攻擊有效半徑範圍 
-    float FireBallAttackRangeRadius = 50f; //偵測丟火球攻擊半徑範圍 
-    float CancelFireBallAttackRangeRadius = 25f; //偵測不丟火球了的半徑範圍 
+    float FireBallAttackRangeRadius = 40f; //偵測丟火球攻擊半徑範圍 
+    float CancelFireBallAttackRangeRadius = 35f; //偵測不丟火球了的半徑範圍 
     float JumpAttackDamageRangeRadius = 6f; //跳躍攻擊傷害有效半徑範圍 
 
 
@@ -56,7 +57,7 @@ public class MutantController : MonoBehaviour
     float timeSinceLastHitAttack = Mathf.Infinity; //上次攻擊後經過的時間
 
     Vector3 JumpAttackAngleFix = Vector3.zero; //跳躍攻擊的角度修正用變數
-
+    Vector3 FireBallAttackAngleFix = Vector3.zero; //丟火球攻擊的角度修正用變數 
 
     //----------------------------------------------------
     AnimatorStateInfo BaseLayer;
@@ -90,6 +91,9 @@ public class MutantController : MonoBehaviour
         health.InitHealth(1000, 1000);
         health.onDamage += OnDamage; //將自己的函數 OnDamage() 丟進 health 的事件委派容器 onDamage 中
         health.onDie += OnDie; //將自己的函數 OnDie() 丟進 health 的事件委派容器 onDie 中
+
+
+        viewDistance = startDistance;
     }
 
 
@@ -100,9 +104,18 @@ public class MutantController : MonoBehaviour
         //--------------------------------------------
          if (Input.GetKeyDown(KeyCode.O))
         {
-              health.TakeDamage(100);
+              health.TakeDamage(600);
         }
         //---------------------------------------------*/
+         
+ 
+
+
+
+
+
+
+
 
 
 
@@ -131,16 +144,15 @@ public class MutantController : MonoBehaviour
 
 
 
-
-        /*
+ 
         //-------------攻擊-------------
-        if (InFireBallAttackRange() || IsAttacking && (this.health.currentHealth < health.maxHealth / 2))  //丟火球攻擊
+        if (InFireBallAttackRange() && !HitAttacking && !JumpAttacking && !FireBallAttacking && (this.health.currentHealth <= this.health.maxHealth / 2))  //丟火球攻擊 (血剩一半後才會丟火球)
         {
+            FireBallAttacking = true;
             timeSinceLastSawPlayer = 0;
             FireBallAttack();
         }
-         */
-        if (InJumpAttackRange() && !HitAttacking && !JumpAttacking && !FireBallAttacking)  //跳躍攻擊
+        else if (InJumpAttackRange() && !HitAttacking && !JumpAttacking && !FireBallAttacking)  //跳躍攻擊
         {
             JumpAttacking = true;
             timeSinceLastSawPlayer = 0;
@@ -186,6 +198,8 @@ public class MutantController : MonoBehaviour
         {
             IsAttackAngleFix = true;
         }
+
+  
     }
 
 
@@ -209,7 +223,12 @@ public class MutantController : MonoBehaviour
 
     private void FireBallAttack()
     {
+        FireBallAttackAngleFix = player.transform.position - transform.position; //設定朝向玩家的方向向量，朝向函數在 In FireBallAttacking() 中
 
+        mutantNavMeshAgent.CancelMove(); //停止移動 
+        animatorController.SetBool("IsConfuse", false); //解除困惑動作
+        animatorController.SetBool("IsIdle", false); //解除閒置動作
+        animatorController.SetTrigger("FireBallAttack"); //播放攻擊動畫  
 
     }
 
@@ -231,9 +250,6 @@ public class MutantController : MonoBehaviour
         animatorController.SetBool("IsIdle", false); //解除閒置動作
         animatorController.SetTrigger("Attack"); //播放攻擊動畫  
     }
-
-
-
 
     private void PatrolBehaviour()
     {
@@ -306,11 +322,6 @@ public class MutantController : MonoBehaviour
 
 
 
-
-
-
-
-
     //--------------------------動畫的回掉函數--------------------------
 
     public void InHitAttacking()
@@ -338,7 +349,7 @@ public class MutantController : MonoBehaviour
     {
         HitAttacking = false;
     }
-
+    //--------------
     public void InJumpAttacking()
     {
         JumpAttacking = true;
@@ -354,21 +365,35 @@ public class MutantController : MonoBehaviour
         }
     }
 
-
     public void OutJumpAttacking()
     {
         JumpAttacking = false;
     }
-
+    //--------------
     public void InFireBallAttacking()
     {
         FireBallAttacking = true;
+        StartCoroutine(FireBallAttackAngle_Fix());
     }
 
     public void OutFireBallAttacking()
     {
         FireBallAttacking = false;
     }
+
+    private IEnumerator FireBallAttackAngle_Fix()
+    {
+        for (int i = 0; i < 100; i++)
+        {
+            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(FireBallAttackAngleFix, Vector3.up), 0.05f);
+            yield return new WaitForSeconds(0.001f);
+        }
+    }
+     
+
+
+
+
 
 
 
@@ -404,21 +429,42 @@ public class MutantController : MonoBehaviour
         }
     }
 
-    public void GetFireBall()
+    public void GetFireBall() //拿出火球
     {
         //  if(fireBallProjectile != null )
         {
             print("產生火球");//產生火球子彈
         }
     }
-    //丟火球攻擊
-    public void ShootFireBall()
+    public void ShootFireBall() //丟火球攻擊
     {
         //  if(fireBallProjectile != null )
         {
             print("丟出火球");//產生火球子彈
         }
     }
+
+
+
+
+ 
+
+    private IEnumerator keepChasing(float time) //vd 是要恢復的原視野範圍
+    {
+        float _viewDistance = viewDistance;
+        print(viewDistance);
+        viewDistance = 10000;
+        yield return new WaitForSeconds(time); //等待 time 秒後
+        viewDistance = _viewDistance;
+        print(viewDistance);
+
+    }
+
+
+
+
+
+
 
 
 
@@ -481,7 +527,12 @@ public class MutantController : MonoBehaviour
 
     void OnDamage()
     {
-        //受到攻擊時的動畫、叫聲等等
+        if (this.health.currentHealth <= this.health.maxHealth / 2)
+        {
+            viewDistance = middleDistance;
+        }
+        StartCoroutine(keepChasing(7f)); //受到攻擊後的 7 秒內會瘋狂追玩家
+                                         //受到攻擊時的動畫、叫聲等等
 
     }
 
