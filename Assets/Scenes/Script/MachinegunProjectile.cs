@@ -8,7 +8,7 @@ public class MachinegunProjectile : MonoBehaviour
 {
 
     float projectrileSpeed = 100f; //子彈速度
-    float maxLifeTime = 3f; //子彈的存在時間
+    float maxLifeTime = 5f; //子彈的存在時間
     float gravityDownForce = 0.001f; //受到重力下墜的量
 
     Vector3 currentVelocity;

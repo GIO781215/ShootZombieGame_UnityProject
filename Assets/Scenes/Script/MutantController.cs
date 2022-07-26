@@ -17,9 +17,6 @@ public class MutantController : MonoBehaviour
     Animator animatorController; //動畫播放控制器
 
 
-
-
-
     float startDistance = 31f; //血超過一半時的視野範圍，在視野範圍內就會往玩家位置移動
     float middleDistance = 50f; //血剩一半後的視野範圍
     float viewDistance; //程式計算判斷用的視野範圍
@@ -40,9 +37,12 @@ public class MutantController : MonoBehaviour
     float JumpAttackRangeRadius = 10f; //偵測跳躍攻擊半徑範圍 
     float HitAttackDamageRangeRadius = 4f; //偵測打擊與攻擊有效半徑範圍 
     float FireBallAttackRangeRadius = 40f; //偵測丟火球攻擊半徑範圍 
-    float CancelFireBallAttackRangeRadius = 35f; //偵測不丟火球了的半徑範圍 
+    float CancelFireBallAttackRangeRadius = 30f; //偵測不丟火球了的半徑範圍 
     float JumpAttackDamageRangeRadius = 6f; //跳躍攻擊傷害有效半徑範圍 
 
+    [SerializeField] FireBallProjectile FireBallProjectile; //火球子彈模板
+    [SerializeField] Transform handPosition; //手部座標
+    FireBallProjectile projectileAtHand; //拿在手上的火球
 
     bool HitAttacking = false; //當前是否正在打擊攻擊中
     bool JumpAttacking = false; //當前是否正在跳躍攻擊中
@@ -62,19 +62,11 @@ public class MutantController : MonoBehaviour
     //----------------------------------------------------
     AnimatorStateInfo BaseLayer;
 
+ 
 
-    /*  ToDo:
-    
-    普通攻擊跟跳躍攻擊的傷害不一樣多
-    丟火球
+   
 
-    */
-    //[SerializeField] fireBallProjectile; //火球子彈預製物件 <- 去寫一個火球腳本 (跟子彈類似的腳本
-    [SerializeField] Transform handPosition; //手部座標
-
-
-    //普通打擊(在某個範圍內) 跳躍打擊(在某個雙圏範圍區間) 火球攻擊(在某個雙圏範圍區間，且血量降到一定數值，且這時就會一直追著玩家跑(大於火球攻擊範圍時))
-    //被射到會強制追人一段時間
+ 
 
 
 
@@ -101,20 +93,13 @@ public class MutantController : MonoBehaviour
 
     void Update()
     {
-        //--------------------------------------------
-         if (Input.GetKeyDown(KeyCode.O))
+
+        /*//--------------------------------------------
+        if (Input.GetKeyDown(KeyCode.O))
         {
               health.TakeDamage(600);
         }
-        //---------------------------------------------*/
-         
- 
-
-
-
-
-
-
+        *///---------------------------------------------
 
 
 
@@ -201,15 +186,6 @@ public class MutantController : MonoBehaviour
 
   
     }
-
-
-
-
-
-
-
-
-
 
 
 
@@ -396,9 +372,6 @@ public class MutantController : MonoBehaviour
 
 
 
-
-
-
     public void AtHitAttack()
     {
         if (InHitAttackRange()) //如果這時玩家還在攻擊範圍內
@@ -431,25 +404,47 @@ public class MutantController : MonoBehaviour
 
     public void GetFireBall() //拿出火球
     {
-        //  if(fireBallProjectile != null )
+        if(FireBallProjectile != null )
         {
-            print("產生火球");//產生火球子彈
+            //產生火球子彈，這顆火球不會射出去
+            projectileAtHand = Instantiate(FireBallProjectile, handPosition.position, Quaternion.LookRotation((player.transform.position + Vector3.up * 3f) - handPosition.position));
+            StartCoroutine(getFireBall(projectileAtHand));
+
         }
     }
+
+    private IEnumerator getFireBall(FireBallProjectile projectile) //一直讓火球黏在手上
+    {
+        while (projectile != null)
+        {
+            projectile.transform.position = handPosition.position;
+            yield return new WaitForSeconds(0.001f);
+        }
+    }
+
+
     public void ShootFireBall() //丟火球攻擊
     {
-        //  if(fireBallProjectile != null )
+        if (projectileAtHand != null) //銷毀原本黏在手上的火球
         {
-            print("丟出火球");//產生火球子彈
+            Destroy(projectileAtHand.gameObject);
+        }
+
+        if (FireBallProjectile != null )
+        {
+            //產生火球子彈，這顆火球會射出去
+            FireBallProjectile projectile = Instantiate(FireBallProjectile, handPosition.position, Quaternion.LookRotation((player.transform.position + Vector3.up * 3f) - handPosition.position));
+            projectile.isShoot = true;  
         }
     }
 
 
 
+    //------------------------------------其他行為-------------------------------------------
 
  
 
-    private IEnumerator keepChasing(float time) //vd 是要恢復的原視野範圍
+    private IEnumerator keepChasing(float time) //瘋狂追逐玩家的函數  
     {
         float _viewDistance = viewDistance;
         print(viewDistance);
@@ -460,13 +455,24 @@ public class MutantController : MonoBehaviour
 
     }
 
+    void OnDamage()
+    {
+        if (this.health.currentHealth <= this.health.maxHealth / 2)
+        {
+            viewDistance = middleDistance;
+        }
+        StartCoroutine(keepChasing(7f)); //受到攻擊後的 7 秒內會瘋狂追玩家
+                                         //受到攻擊時的動畫、叫聲等等
 
+    }
 
+    void OnDie()
+    {
+        //死亡叫一下
+        mutantNavMeshAgent.CancelMove(); //停止移動 
+        animatorController.SetTrigger("IsDead"); //播放死亡動畫
 
-
-
-
-
+    }
 
 
 
@@ -509,49 +515,6 @@ public class MutantController : MonoBehaviour
 
         return Vector3.Distance(this.transform.position, player.transform.position) < FireBallAttackRangeRadius && Vector3.Distance(this.transform.position, player.transform.position) > CancelFireBallAttackRangeRadius;
     }
-
-
-
-
-
-
-
-    
-
-
-
-
-
-
-
-
-    void OnDamage()
-    {
-        if (this.health.currentHealth <= this.health.maxHealth / 2)
-        {
-            viewDistance = middleDistance;
-        }
-        StartCoroutine(keepChasing(7f)); //受到攻擊後的 7 秒內會瘋狂追玩家
-                                         //受到攻擊時的動畫、叫聲等等
-
-    }
-
-    void OnDie()
-    {
-        //死亡叫一下
-        mutantNavMeshAgent.CancelMove(); //停止移動 
-        animatorController.SetTrigger("IsDead"); //播放死亡動畫
-
-    }
-
-
-
-
-
-
-
-
-
 
 
 

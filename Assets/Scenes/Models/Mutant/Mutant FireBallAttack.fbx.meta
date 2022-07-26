@@ -66,22 +66,22 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 1
-        functionName: OutFireBallAttacking
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      - time: 0.25093824
+      - time: 0.1970555
         functionName: GetFireBall
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.37485948
+      - time: 0.49054888
         functionName: ShootFireBall
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 1
+        functionName: OutFireBallAttacking
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
