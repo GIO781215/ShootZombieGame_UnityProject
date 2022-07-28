@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2912997986145651151}
   - component: {fileID: 2912997986145651145}
   - component: {fileID: 2912997986145651144}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Mesh1_Group2_Group1_Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 2912997986282109511}
   - component: {fileID: 2912997986282109505}
   - component: {fileID: 2912997986282109504}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Mesh2_Group3_Group1_Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -177,7 +177,7 @@ GameObject:
   - component: {fileID: 2912997987189655556}
   - component: {fileID: 2910760269760084850}
   - component: {fileID: -6641396572792127402}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: machinegun
   m_TagString: Weapon
   m_Icon: {fileID: 0}
@@ -325,7 +325,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3071417396959391267}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Muzzle
   m_TagString: Untagged
   m_Icon: {fileID: 0}

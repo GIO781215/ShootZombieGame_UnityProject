@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3131896053862664792}
   - component: {fileID: 3131896053861370490}
   - component: {fileID: 3131896053860370618}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Mesh1_Group2_Group1_Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 3131896053862664794}
   - component: {fileID: 6122824852750530545}
   - component: {fileID: -234537182222435315}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: flamethrower
   m_TagString: Weapon
   m_Icon: {fileID: 0}
@@ -246,7 +246,7 @@ GameObject:
   - component: {fileID: 3131896053862664798}
   - component: {fileID: 3131896053861370488}
   - component: {fileID: 3131896053860370616}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Mesh2_Group3_Group1_Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -327,7 +327,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3219083544373190903}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Muzzle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
