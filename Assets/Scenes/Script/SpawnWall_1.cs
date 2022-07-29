@@ -29,7 +29,8 @@ public class SpawnWall_1 : MonoBehaviour //空氣牆_1 的腳本
     {
         for(int i = 0; i < spawnAmoint; i++)
         {
-            int index = Random.Range(0, spawnPoint.Length - 1);
+            int index = Random.Range(0, spawnPoint.Length); // Random.Range() 隨機產生一個整數，範圍 : 最小值 ~ 最大值(不包含)。
+            print(index);
             Instantiate(Zombie, spawnPoint[index].position, spawnPoint[index].rotation);
             yield return new WaitForSeconds(spawnTime);
         }
