@@ -17,13 +17,12 @@ public class PlayerController : MonoBehaviour
     [Space(20)]
     [Header("跳躍參數")]
     [Tooltip("跳躍時向上施加的力量")]
-    [SerializeField] float jumpForce = 15;
+    [SerializeField] float jumpForce;
 
     [Tooltip("地心引力的力量")]
-    [SerializeField] float gravityForce = 50;
+    [SerializeField] float gravityForce;
 
-    [Tooltip("角色與地面之間的距離(小於此距離角色才可跳躍)")]
-    [SerializeField] float distanceToGround = 0.1f;
+    float distanceToGround = 0.1f; //角色與地面之間的距離(小於此距離角色才可跳躍)
 
 
 
@@ -104,21 +103,29 @@ public class PlayerController : MonoBehaviour
     //處理瞄準動作
     private void AimBehaviour()
     {
-        if (inputController.GetMouseLeftKeyDown())
+        if (IsOnGround())
         {
-            IsAim = true;
+            if (inputController.GetMouseLeftKeyDown())
+            {
+                IsAim = true;
+                animatorController.SetBool("IsAim", IsAim);
+                onAim?.Invoke(IsAim); //更改 PlayerWeaponController 的 isAim 變數
+            }
+
+            if (inputController.GetMouseRightKeyDown())
+            {
+                IsAim = !IsAim;
+                animatorController.SetBool("IsAim", IsAim);
+                onAim?.Invoke(IsAim); //更改 PlayerWeaponController 的 isAim 變數                 
+            }
+        }
+        else //如果不在地板上應該解除瞄準狀態
+        {
+            IsAim = false;
             animatorController.SetBool("IsAim", IsAim);
-            onAim?.Invoke(IsAim); //更改 PlayerWeaponController 的 isAim 變數
+            onAim?.Invoke(IsAim);
         }
 
-        if (inputController.GetMouseRightKeyDown())
-        {
-            IsAim = !IsAim;
-            animatorController.SetBool("IsAim", IsAim);
-            onAim?.Invoke(IsAim); //更改 PlayerWeaponController 的 isAim 變數                 
-        }
-     
-        //當進行瞄準時應該要限定攝影機上下移動的範圍?------------------------------------------------------------------------------------
 
 
     }
