@@ -105,7 +105,7 @@ public class PlayerController : MonoBehaviour
     {
         if (IsOnGround())
         {
-            if (inputController.GetMouseLeftKeyDown())
+            if (inputController.GetMouseLeftKeyDown() || inputController.GetSpaceInputDowu())
             {
                 IsAim = true;
                 animatorController.SetBool("IsAim", IsAim);
@@ -261,7 +261,7 @@ public class PlayerController : MonoBehaviour
     private void jumpBehaviour()
     {
         //Debug.DrawRay(transform.position, Vector3.down* distanceToGround, Color.red); //可看出有效接觸地板的距離
-        if (inputController.GetSpaceInput() && IsOnGround() && CanJumpAgain)
+        if (inputController.GetKeyXInput() && IsOnGround() && CanJumpAgain)
         {
             jumpDirection = Vector3.zero;
             jumpDirection += jumpForce * Vector3.up;

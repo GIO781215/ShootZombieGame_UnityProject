@@ -112,7 +112,7 @@ public class MutantController : MonoBehaviour
             timeSinceLastGameOver += Time.deltaTime;
             if (timeSinceLastGameOver > 3f && timeSinceLastGameOver <= 3f + Time.deltaTime)  //最後一次困惑結束
             {
-                animatorController.SetBool("IsConfuse", false);
+                animatorController.SetBool("WinPose", false);
             }
             return;
         }
@@ -120,7 +120,7 @@ public class MutantController : MonoBehaviour
         {
             mutantNavMeshAgent.CancelMove(); //停止移動 
             animatorController.SetBool("IsIdle", true); //進入閒置動作
-            animatorController.SetBool("IsConfuse", true); //最後困惑一下
+            animatorController.SetTrigger("WinPose"); //最後擺出勝利姿勢
             gameOver = true;
             return;
         }

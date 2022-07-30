@@ -73,11 +73,14 @@ public class PlayerWeaponController : MonoBehaviour
         //處理射擊
         if (currentWeaponSlotIndex != -1 && isAim && !toAim) //如果目前有選擇武器，且為瞄準狀態
         {
-            PlayerWeaponSlot[currentWeaponSlotIndex].HandleShootInput(inputController.GetMouseLeftKeyDown(), inputController.GetMouseLeftKeyHeldDown(), inputController.GetMouseLeftKeyUp()); //處理射擊
-        }
- 
+            //用滑鼠控制射擊
+            PlayerWeaponSlot[currentWeaponSlotIndex].HandleShootInput(inputController.GetMouseLeftKeyDown(), inputController.GetMouseLeftKeyHeldDown()); //處理射擊
 
-       
+            //用鍵盤控制射擊
+            PlayerWeaponSlot[currentWeaponSlotIndex].HandleShootInput(inputController.GetSpaceInputDowu(), inputController.GetSpaceInput()); //處理射擊
+        }
+
+
         //不停更新所有武器的 UI 的彈藥量條
         foreach (Weapon weapon in PlayerWeaponSlot)
         {

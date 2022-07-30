@@ -109,7 +109,18 @@ public class InputController : MonoBehaviour
         return move;
     }
 
-    public bool GetSpaceInput() //是否按下 Space 鍵
+
+
+    public bool GetSpaceInputDowu() //是否按下 Space 鍵
+    {
+        if (canInput)
+        {
+            return Input.GetKeyDown(KeyCode.Space);
+        }
+        return false;
+    }
+
+    public bool GetSpaceInput() //是否按住 Space 鍵
     {
         if (canInput)
         {
@@ -118,7 +129,7 @@ public class InputController : MonoBehaviour
         return false;
     }
 
-    public bool GetKeyZInput() //是否按下 Z 鍵
+    public bool GetKeyZInput() //是否按住 Z 鍵
     {
         if (canInput)
         {
@@ -126,6 +137,10 @@ public class InputController : MonoBehaviour
         }
         return false;
     }
+
+
+
+
 
     public bool GetKeyXInput() //是否按下 X 鍵
     {

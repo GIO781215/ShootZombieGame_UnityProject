@@ -143,7 +143,7 @@ public class Weapon : MonoBehaviour
     }
 
 
-    public void HandleShootInput(bool inputDown, bool inputHeld, bool inputUp)
+    public void HandleShootInput(bool inputDown, bool inputHeld)
     {
         switch (weaponType) //先判斷是使用哪種武器
         {
