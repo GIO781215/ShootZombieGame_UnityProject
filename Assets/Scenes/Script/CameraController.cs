@@ -37,6 +37,14 @@ public class CameraController : MonoBehaviour
     Vector3 currentVelocity = Vector3.zero; //Vector3.SmoothDamp() 要使用到的全局變量變數 (此值為虛擬參考物的當前速度)
     Vector3 referenceObjectToCameraOffset = Vector3.zero; //虛擬參考物距離攝影機的距離
 
+    //用來暫存 W S A D 輸入的變數
+    float WSAD_move_Speed = 0.5f;
+    float W_value = 0;
+    float S_value = 0;
+    float A_value = 0;
+    float D_value = 0;
+
+
 
     void Start()
     {
@@ -51,18 +59,77 @@ public class CameraController : MonoBehaviour
         if(Cursor.lockState == CursorLockMode.Locked)
         {
             //設置攝影機角度
-            CameraAngle_X += inputController.GetMouseX() * sensitivity_X;
-            if(IsFirsrRun)
+            //滑鼠輸入
+            CameraAngle_X += inputController.GetMouseX() * sensitivity_X ; 
+            //鍵盤輸入
+            if (inputController.GetDInputHold())
             {
-                CameraAngle_X += CameraAngle_Offset;
+                D_value += WSAD_move_Speed * Time.deltaTime * 1.2f;
+                D_value = Mathf.Clamp(D_value, 0, 0.3f);
             }
+            else
+            {
+                D_value = 0;
+            }
+            CameraAngle_X += D_value;
+
+            if (inputController.GetAInputHold())
+            {
+                A_value += WSAD_move_Speed * Time.deltaTime * 1.2f;
+                A_value = Mathf.Clamp(A_value, 0, 0.3f);
+            }
+            else
+            {
+                A_value = 0;
+            }
+            CameraAngle_X -= A_value;
+            //------------------------------
+            if (IsFirsrRun)
+            {
+                CameraAngle_X += CameraAngle_Offset; //遊戲一開始先設定攝影機的旋轉角度朝向
+            }
+
+            //滑鼠輸入
             CameraAngle_Y += inputController.GetMouseY() * sensitivity_Y;
+            //鍵盤輸入
+            if (inputController.GetWInputHold())
+            {
+                W_value += WSAD_move_Speed * Time.deltaTime * 1.2f;
+                W_value = Mathf.Clamp(W_value, 0, 0.3f);
+            }
+            else
+            {
+                W_value = 0;
+            }
+            CameraAngle_Y += W_value;
+
+            if (inputController.GetSInputHold())
+            {
+                S_value += WSAD_move_Speed * Time.deltaTime * 1.2f;
+                S_value = Mathf.Clamp(S_value, 0, 0.3f);
+            }
+            else
+            {
+                S_value = 0;
+            }
+            CameraAngle_Y -= S_value;
+            //------------------------------
             CameraAngle_Y = Mathf.Clamp(CameraAngle_Y, minVerticalAngle, maxVerticalAngle); //限制 CameraAngle_Y 的最大角度與最小角度
             transform.rotation = Quaternion.Euler(CameraAngle_Y, CameraAngle_X, 0);
 
 
             //設置攝影機位置
+            //滑鼠輸入
             cameraToTargetDistance += inputController.GetMouseScrollWheel() * sensitivity_ScrollWheel;
+            //鍵盤輸入
+            if (inputController.GetQInputHold())
+            {
+                cameraToTargetDistance += 0.02f;
+            }
+            if (inputController.GetEInputHold())
+            {
+                cameraToTargetDistance -= 0.02f;
+            }
             cameraToTargetDistance = Mathf.Clamp(cameraToTargetDistance, cameraToTargetMinDistance, cameraToTargetMaxDistance);
 
             if(IsFirsrRun)

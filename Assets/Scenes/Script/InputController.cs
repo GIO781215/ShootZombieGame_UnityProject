@@ -185,5 +185,62 @@ public class InputController : MonoBehaviour
         }
         return false;
     }
+    
 
+
+
+
+
+
+
+
+
+    public bool GetWInputHold() //是否有按住 W 鍵
+    {
+        if (canInput)
+        {
+            return Input.GetKey(KeyCode.W);
+        }
+        return false;
+    }
+    public bool GetSInputHold() //是否有按住 S 鍵
+    {
+        if (canInput)
+        {
+            return Input.GetKey(KeyCode.S);
+        }
+        return false;
+    }
+    public bool GetAInputHold() //是否有按住 A 鍵
+    {
+        if (canInput)
+        {
+            return Input.GetKey(KeyCode.A);
+        }
+        return false;
+    }
+    public bool GetDInputHold() //是否有按住 D 鍵
+    {
+        if (canInput)
+        {
+            return Input.GetKey(KeyCode.D);
+        }
+        return false;
+    }
+    public bool GetQInputHold() //是否有按住 Q 鍵
+    {
+        if (canInput)
+        {
+            return Input.GetKey(KeyCode.Q);
+        }
+        return false;
+    }
+    public bool GetEInputHold() //是否有按住 R 鍵
+    {
+        if (canInput)
+        {
+            return Input.GetKey(KeyCode.E);
+        }
+        return false;
+    }
 }
