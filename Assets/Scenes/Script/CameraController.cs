@@ -27,6 +27,8 @@ public class CameraController : MonoBehaviour
     float cameraToTargetDistance = 10; //攝影機與目標的起始距離
     float cameraToTargetMinDistance = 5; //攝影機與目標的最小距離
     float cameraToTargetMaxDistance = 15; //攝影機與目標的最大距離
+    [SerializeField] float CameraAngle_Offset; //攝影機 Y 軸的起始旋轉角度
+    bool IsFirsrRun = true; //第一次執行 LateUpdate() 的旗標
 
     //-----------------讓攝影機平滑追蹤物體需要的變數//-----------------
     [Header("攝影機平滑追蹤物體的時間")]
@@ -50,6 +52,10 @@ public class CameraController : MonoBehaviour
         {
             //設置攝影機角度
             CameraAngle_X += inputController.GetMouseX() * sensitivity_X;
+            if(IsFirsrRun)
+            {
+                CameraAngle_X += CameraAngle_Offset;
+            }
             CameraAngle_Y += inputController.GetMouseY() * sensitivity_Y;
             CameraAngle_Y = Mathf.Clamp(CameraAngle_Y, minVerticalAngle, maxVerticalAngle); //限制 CameraAngle_Y 的最大角度與最小角度
             transform.rotation = Quaternion.Euler(CameraAngle_Y, CameraAngle_X, 0);
@@ -59,23 +65,30 @@ public class CameraController : MonoBehaviour
             cameraToTargetDistance += inputController.GetMouseScrollWheel() * sensitivity_ScrollWheel;
             cameraToTargetDistance = Mathf.Clamp(cameraToTargetDistance, cameraToTargetMinDistance, cameraToTargetMaxDistance);
 
-
-            //追蹤方式為 攝影機追虛擬參考物(無平滑效果) 虛擬參考物追 Player (有平滑效果)
-            //得到虛擬參考物的位置，因為最後有對 transform.position 加上 referenceObjectToCameraOffset，所以這邊要減回來才是 虛擬參考物應該在的位置
-            referenceObjectPosition = Vector3.SmoothDamp(transform.position - referenceObjectToCameraOffset, target.position, ref currentVelocity, smoothMoveTime);
-            #region //SmoothDamp() 平滑阻尼函數 : 進行跟隨移動，可以使跟隨看起來很平滑，而不顯得突兀    
-            /*
-            static function SmoothDamp (current : Vector3, target : Vector3, ref currentVelocity : Vector3, smoothTime : float, maxSpeed : float = Mathf.Infinity, deltaTime : float = Time.deltaTime) : Vector3
-            參數含義：
-            1.current 當前物體位置
-            2.target 目標物體位置
-            3.ref currentVelocity 當前速度，這個值由你每次調用這個函數時被修改（因為使用 ref 關鍵字，所以函數會真的改變 currentVelocity 這個變數，這代表可以在讓何時刻得到物體當前的速度 currentVelocity）
-              注意 : 變數 currentVelocity 要使用全局變量，如果定義為局部?量移動效果會出問題，參閱文章 <Unity中Lerp與SmoothDamp函數使用誤區淺析> : https://www.jianshu.com/p/8a5341c6d5a6
-            4.smoothTime 到達目標的時間，較小的值將快速到達目標
-            5.maxSpeed 所允許的最大速度，默認無窮大
-            6.deltaTime 自上次調用這個函數的時間，默認為Time.deltaTime
-            */
-            #endregion
+            if(IsFirsrRun)
+            {
+                referenceObjectPosition = target.position;
+                IsFirsrRun = false;
+            }
+            else
+            {
+                //追蹤方式為 攝影機追虛擬參考物(無平滑效果) 虛擬參考物追 Player (有平滑效果)
+                //得到虛擬參考物的位置，因為最後有對 transform.position 加上 referenceObjectToCameraOffset，所以這邊要減回來才是 虛擬參考物應該在的位置
+                referenceObjectPosition = Vector3.SmoothDamp(transform.position - referenceObjectToCameraOffset, target.position, ref currentVelocity, smoothMoveTime);
+                #region //SmoothDamp() 平滑阻尼函數 : 進行跟隨移動，可以使跟隨看起來很平滑，而不顯得突兀    
+                /*
+                static function SmoothDamp (current : Vector3, target : Vector3, ref currentVelocity : Vector3, smoothTime : float, maxSpeed : float = Mathf.Infinity, deltaTime : float = Time.deltaTime) : Vector3
+                參數含義：
+                1.current 當前物體位置
+                2.target 目標物體位置
+                3.ref currentVelocity 當前速度，這個值由你每次調用這個函數時被修改（因為使用 ref 關鍵字，所以函數會真的改變 currentVelocity 這個變數，這代表可以在讓何時刻得到物體當前的速度 currentVelocity）
+                  注意 : 變數 currentVelocity 要使用全局變量，如果定義為局部?量移動效果會出問題，參閱文章 <Unity中Lerp與SmoothDamp函數使用誤區淺析> : https://www.jianshu.com/p/8a5341c6d5a6
+                4.smoothTime 到達目標的時間，較小的值將快速到達目標
+                5.maxSpeed 所允許的最大速度，默認無窮大
+                6.deltaTime 自上次調用這個函數的時間，默認為Time.deltaTime
+                */
+                #endregion
+            }
 
             referenceObjectPosition.y = HeightOffset; //指定虛擬參考物的高度為 HeightOffset (不受 Player 跳起來而改變)
             referenceObjectToCameraOffset = Quaternion.Euler(CameraAngle_Y, CameraAngle_X, 0) * new Vector3(0, 0, -cameraToTargetDistance); // Quaternion.Euler 可以乘 Vector3 ，結果為往那個方向的向量長度!!! 

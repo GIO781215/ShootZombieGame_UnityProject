@@ -29,8 +29,7 @@ public class SpawnWall_1 : MonoBehaviour //鲤_1 竲セ
     {
         for(int i = 0; i < spawnAmoint; i++)
         {
-            int index = Random.Range(0, spawnPoint.Length); // Random.Range() 繦诀玻ネ俱计絛瞅 : 程 ~ 程(ぃ)
-            print(index);
+            int index = Random.Range(0, spawnPoint.Length); // Random.Range(int 程int 程) : 繦诀玻ネ俱计絛瞅琌 程 ~ 程(ぃ)  Random.Rang(float 程float 程) : 繦诀玻ネ疊翴计絛瞅琌 程 ~ 程() 
             Instantiate(Zombie, spawnPoint[index].position, spawnPoint[index].rotation);
             yield return new WaitForSeconds(spawnTime);
         }
