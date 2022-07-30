@@ -105,14 +105,14 @@ public class PlayerController : MonoBehaviour
     {
         if (IsOnGround())
         {
-            if (inputController.GetMouseLeftKeyDown() || inputController.GetSpaceInputDowu())
+            if (inputController.GetMouseLeftKeyDown() || inputController.GetSpaceInputDown())
             {
                 IsAim = true;
                 animatorController.SetBool("IsAim", IsAim);
                 onAim?.Invoke(IsAim); //更改 PlayerWeaponController 的 isAim 變數
             }
 
-            if (inputController.GetMouseRightKeyDown())
+            if (inputController.GetMouseRightKeyDown() || inputController.GetKeyCInputDown())
             {
                 IsAim = !IsAim;
                 animatorController.SetBool("IsAim", IsAim);
@@ -144,7 +144,7 @@ public class PlayerController : MonoBehaviour
         {
             playerGoalSpeed = 0f; //Player 移動速度設為 0 -> 閒置狀態
         }
-        else if (inputController.GetKeyZInput() && !IsAim) //是否按下 Z 加速，並且不在瞄準模式
+        else if (inputController.GetKeyZInputHold() && !IsAim) //是否按下 Z 加速，並且不在瞄準模式
         {
             moveDirection *= SpeedMultipler;
             playerGoalSpeed = 1f;  //Player 移動速度設為 1 -> 跑步狀態
@@ -261,7 +261,7 @@ public class PlayerController : MonoBehaviour
     private void jumpBehaviour()
     {
         //Debug.DrawRay(transform.position, Vector3.down* distanceToGround, Color.red); //可看出有效接觸地板的距離
-        if (inputController.GetKeyXInput() && IsOnGround() && CanJumpAgain)
+        if (inputController.GetKeyXInputDown() && IsOnGround() && CanJumpAgain)
         {
             jumpDirection = Vector3.zero;
             jumpDirection += jumpForce * Vector3.up;

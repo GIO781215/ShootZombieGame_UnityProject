@@ -111,7 +111,7 @@ public class InputController : MonoBehaviour
 
 
 
-    public bool GetSpaceInputDowu() //是否按下 Space 鍵
+    public bool GetSpaceInputDown() //是否按下 Space 鍵
     {
         if (canInput)
         {
@@ -120,7 +120,7 @@ public class InputController : MonoBehaviour
         return false;
     }
 
-    public bool GetSpaceInput() //是否按住 Space 鍵
+    public bool GetSpaceInputHold() //是否按住 Space 鍵
     {
         if (canInput)
         {
@@ -129,7 +129,7 @@ public class InputController : MonoBehaviour
         return false;
     }
 
-    public bool GetKeyZInput() //是否按住 Z 鍵
+    public bool GetKeyZInputHold() //是否按住 Z 鍵
     {
         if (canInput)
         {
@@ -142,35 +142,42 @@ public class InputController : MonoBehaviour
 
 
 
-    public bool GetKeyXInput() //是否按下 X 鍵
+    public bool GetKeyXInputDown() //是否按下 X 鍵
     {
         if (canInput)
             return Input.GetKeyDown(KeyCode.X);
         return false;
     }
 
-    public bool GetKeyCInput() //是否按下 C 鍵
+    public bool GetKeyCInputDown() //是否按下 C 鍵
     {
         if (canInput)
             return Input.GetKeyDown(KeyCode.C);
         return false;
     }
 
-    public bool GetKeyVInput() //是否按下 V 鍵
+    public bool GetKeyVInputDown() //是否按下 V 鍵
     {
         if (canInput)
             return Input.GetKeyDown(KeyCode.V);
         return false;
     }
 
-    public bool GetKeyRInput() //是否按下 R 鍵
+    public bool GetKeyBInputDown() //是否按下 B 鍵
+    {
+        if (canInput)
+            return Input.GetKeyDown(KeyCode.B);
+        return false;
+    }
+
+    public bool GetKeyRInputDown() //是否按下 R 鍵
     {
         if (canInput)
             return Input.GetKeyDown(KeyCode.R);
         return false;
     }
 
-    public bool GetShiftInput() //是否有按住 Shift 鍵
+    public bool GetShiftInputHold() //是否有按住 Shift 鍵
     {
         if(canInput)
         {
