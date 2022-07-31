@@ -68,6 +68,7 @@ public class PlayerController : MonoBehaviour
         health.InitHealth(100, 100);
         health.onDamage += OnDamage; //將自己的函數 OnDamage() 丟進 health 的事件委派容器 onDamage 中
         health.onDie += OnDie; //將自己的函數 OnDie() 丟進 health 的事件委派容器 onDie 中
+        health.onHealed += OnHealed;
     }
 
  
@@ -297,8 +298,10 @@ public class PlayerController : MonoBehaviour
         animatorController.SetTrigger("IsDead"); //播放死亡動畫
     }
 
+    void OnHealed()
+    {
 
-
+    }
 
 
     //獲得當前相機的正前方方向

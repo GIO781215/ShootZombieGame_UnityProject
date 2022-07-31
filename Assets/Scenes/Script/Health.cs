@@ -65,7 +65,7 @@ public class Health : MonoBehaviour
 
         currentHealth -= damage;
         currentHealth = Mathf.Max(currentHealth, 0); //避免扣血完血量變負值
-        if(currentHealth <= 0)
+        if (currentHealth <= 0)
         {
             isDead = true;
             onDie?.Invoke();
@@ -74,10 +74,22 @@ public class Health : MonoBehaviour
 
     }
 
+    //受到治癒
+    public void TakeHealed(float health)
+    {
+        if (isDead) return;
 
-
-
-
+        if (currentHealth > 0)
+        {
+            onHealed?.Invoke();
+        }
+        //currentHealth += health;
+        if(currentHealth != maxHealth)
+        {
+            currentHealth = 99.999f;
+        }
+        currentHealth = Mathf.Min(currentHealth, maxHealth);
+    }
 
 
 
