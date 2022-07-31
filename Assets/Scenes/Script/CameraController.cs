@@ -65,7 +65,7 @@ public class CameraController : MonoBehaviour
             if (inputController.GetDInputHold())
             {
                 D_value += WSAD_move_Speed * Time.deltaTime * 1.2f;
-                D_value = Mathf.Clamp(D_value, 0, 0.3f);
+                D_value = Mathf.Clamp(D_value, 0, 0.2f);
             }
             else
             {
@@ -76,7 +76,7 @@ public class CameraController : MonoBehaviour
             if (inputController.GetAInputHold())
             {
                 A_value += WSAD_move_Speed * Time.deltaTime * 1.2f;
-                A_value = Mathf.Clamp(A_value, 0, 0.3f);
+                A_value = Mathf.Clamp(A_value, 0, 0.2f);
             }
             else
             {
@@ -95,24 +95,24 @@ public class CameraController : MonoBehaviour
             if (inputController.GetWInputHold())
             {
                 W_value += WSAD_move_Speed * Time.deltaTime * 1.2f;
-                W_value = Mathf.Clamp(W_value, 0, 0.3f);
+                W_value = Mathf.Clamp(W_value, 0, 0.2f);
             }
             else
             {
                 W_value = 0;
             }
-            CameraAngle_Y += W_value;
+            CameraAngle_Y -= W_value;
 
             if (inputController.GetSInputHold())
             {
                 S_value += WSAD_move_Speed * Time.deltaTime * 1.2f;
-                S_value = Mathf.Clamp(S_value, 0, 0.3f);
+                S_value = Mathf.Clamp(S_value, 0, 0.2f);
             }
             else
             {
                 S_value = 0;
             }
-            CameraAngle_Y -= S_value;
+            CameraAngle_Y += S_value;
             //------------------------------
             CameraAngle_Y = Mathf.Clamp(CameraAngle_Y, minVerticalAngle, maxVerticalAngle); //限制 CameraAngle_Y 的最大角度與最小角度
             transform.rotation = Quaternion.Euler(CameraAngle_Y, CameraAngle_X, 0);
