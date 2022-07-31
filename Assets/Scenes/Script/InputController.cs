@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class InputController : MonoBehaviour
 {
+
+    bool IsFirstTime = true; //是否為第一次執行
+
     public float vertical_value;
     [HideInInspector] public float horizontal_value;
     [HideInInspector] private bool canInput;
@@ -19,12 +22,30 @@ public class InputController : MonoBehaviour
 
     void Update()
     {
+        if(IsFirstTime)
+        {
+            IsFirstTime=false;
+            Invoke("StartMessage", 1f);
+        }
+
         checkCursorState();
 
         //不停更新 Vertical 和 Horizontal 實時的輸入的數值
         //vertical_value = Input.GetAxis("Vertical");  //得到 Unity -> Editor -> Project Settings 中 Input Manager 裡的 Axis -> Vertical 的數值
         //horizontal_value = Input.GetAxis("Horizontal"); //得到  Unity -> Editor -> Project Settings 中 Input Manager 裡的 Axis -> Horizontal 的數值
     }
+
+    void StartMessage()
+    {
+        Time.timeScale = 0; //暫停遊戲
+        pauseUI.SetActive(true);
+        Cursor.lockState = CursorLockMode.None;
+        canInput = false;
+    }
+
+
+
+
 
     private void checkCursorState()
     {
@@ -243,4 +264,6 @@ public class InputController : MonoBehaviour
         }
         return false;
     }
+
+ 
 }
