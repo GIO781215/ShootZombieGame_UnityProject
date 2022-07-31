@@ -48,7 +48,7 @@ public class PlayerController : MonoBehaviour
 
     InputController inputController;
     CharacterController characterController;
-    Health health; //用來獲得自己的血量系統物件
+    public Health health; //用來獲得自己的血量系統物件
     PlayerWeaponController playerWeaponController;
 
 

@@ -18,7 +18,7 @@ public class ZombieController : MonoBehaviour
     float viewDistance = 15f; //殭屍視野範圍
     float confuseDelayTime = 0f; //玩家在殭屍的視野範圍消失後到困惑的延遲時間  (解決殭屍會一起困惑太整齊的問題)
     bool InConfuseBehaviour = false; //進入 InConfuseBehaviour 的旗標
-    float confuseTime = 3.2f; //當玩家在殭屍的視野範圍內消失後殭屍的困惑時間
+    float confuseTime = 3f; //當玩家在殭屍的視野範圍內消失後殭屍的困惑時間
     float timeSinceLastSawPlayer = Mathf.Infinity; //初始值設為無限大
 
 
@@ -38,16 +38,18 @@ public class ZombieController : MonoBehaviour
 
 
     //-------------------攻擊相關的參數-------------------
-    float AttackRangeRadius = 1f; //攻擊範圍半徑
+    float AttackRangeRadius = 2f; //攻擊範圍半徑
     float timeSinceLastAttack = Mathf.Infinity; //上次攻擊後經過的時間
     float timeBetweenAttack = 1.1f; //能再次攻擊的時間間隔
     bool IsAttacking = false; //是否正在攻擊中
     //----------------------------------------------------
 
 
-    
-    AnimatorStateInfo BaseLayer;
+    public bool alwaysPatrol = true; //殭屍是否會一直巡邏
+    public bool OnDamageIsChasing = true; //殭屍被打到時是否會追玩家
+    //要殭屍生成時是否會立刻追玩家的話，呼叫 keepChasing() 就好
 
+    AnimatorStateInfo BaseLayer;
 
     void Start()
     {
@@ -63,7 +65,10 @@ public class ZombieController : MonoBehaviour
 
         //為參數添加一些隨機值，讓每隻殭屍的基本能力有些不一樣
         viewDistance  +=  UnityEngine.Random.Range(0, 5f); // 僵屍的視野範圍在 15~ 20 之間
-        confuseDelayTime +=  UnityEngine.Random.Range(0, 1f);
+        confuseDelayTime +=  UnityEngine.Random.Range(0, 0.5f);
+
+
+        GoalPatrolPoint = patrolPath.GetNextRandomPatrolPointNumber();
     }
 
 
@@ -102,9 +107,6 @@ public class ZombieController : MonoBehaviour
         timeSinceLastAttack += Time.deltaTime;
         timeSinceLastSawPlayer += Time.deltaTime;
         if (InConfuseBehaviour) return;
-
-
-
 
 
 
@@ -178,33 +180,34 @@ public class ZombieController : MonoBehaviour
     {     
         if(IsPatrol || IsConfuseInPatrol) //巡邏中或困惑中
         {
+            print(patrolPath.PatrolOver);
             if(!IsArrivePatrolPoint() && !IsConfuseInPatrol) //如果還沒到達巡邏點，並且不在困惑中
             {
+ 
                 animatorController.SetBool("IsConfuse", false); //困惑動作                                    
                 zombieNavMeshAgent.MoveTo(patrolPath.GetPatrolPointPosition(GoalPatrolPoint), 0.2f); //移動到目標巡邏點 
 
                 //有時候會完全走不到下一個巡邏點，如果行走超過一段時間，則判定走不到，直接困惑一次並結束巡邏
                 timeSinceLastStartPatrol += Time.deltaTime;
-                if (timeSinceLastStartPatrol > 8f) //如果走了八秒還到不了
+                if (timeSinceLastStartPatrol > 10f) //如果走了十秒還到不了
                 {
+                    print("stop");
                     IsPatrol = false; //直接結束巡邏
+                    patrolPath.ResethasBeenPatrol();
                     zombieNavMeshAgent.CancelMove();
                     zombieNavMeshAgent.SetNavMeshAgentSpeed(0); //將控制動畫的變數 WalkSpeed 設為 0 才會播放 idle 動畫
                     timeSinceLastStartPatrol = 0;
-                    GoalPatrolPoint = 0;
                 }
             }
             else if(IsArrivePatrolPoint()) //剛到達目標巡邏點，開始困惑
             {
+ 
                 zombieNavMeshAgent.CancelMove(); //停止移動 
                 IsConfuseInPatrol = true;
                 animatorController.SetBool("IsConfuse", true); //開始困惑動畫
 
-
-
-                GoalPatrolPoint = patrolPath.GetNextPatrolPointNumber(GoalPatrolPoint); //將目標轉向下一個巡邏點
-                                                                                        
-
+                //GoalPatrolPoint = patrolPath.GetNextPatrolPointNumber(GoalPatrolPoint); //將目標轉向下一個巡邏點
+                GoalPatrolPoint = patrolPath.GetNextRandomPatrolPointNumber();
 
                 timeSinceLastArrivePatrolPoint = 0;  //重置開始困惑時間
                 timeSinceLastStartPatrol = 0; //重置開始巡邏經過時間
@@ -213,10 +216,16 @@ public class ZombieController : MonoBehaviour
                 {
                     IsPatrol = false; //巡邏完了
                     zombieNavMeshAgent.SetNavMeshAgentSpeed(0); //將控制動畫的變數 WalkSpeed 設為 0 才會播放 idle 動畫
+                    if (alwaysPatrol == true) //如果殭屍設定為會一直巡邏
+                    {
+                        IsPatrol = true;
+                        patrolPath.PatrolOver = false;
+                    }
                 }
             } //困惑中
             else 
             {
+ 
                 timeSinceLastArrivePatrolPoint = timeSinceLastArrivePatrolPoint + Time.deltaTime; //累積困惑時間
                 if (timeSinceLastArrivePatrolPoint > 3f) //如果困惑時間已經大於3秒，才解除困惑繼續巡邏
                 {
@@ -227,6 +236,7 @@ public class ZombieController : MonoBehaviour
         }
         else 
         {
+ 
             //進入完全呆滯狀態 
         }
     }
@@ -252,24 +262,32 @@ public class ZombieController : MonoBehaviour
 
     private bool InAttackRange()
     {
-        return Vector3.Distance(this.transform.position + this.transform.TransformDirection(Vector3.forward * 1f), player.transform.position) < AttackRangeRadius;
+        return Vector3.Distance(this.transform.position + this.transform.TransformDirection(Vector3.forward * 1.5f), player.transform.position) < AttackRangeRadius;
     }
 
 
 
     void OnDamage()
     {
-        //受到攻擊時的動畫、叫聲等等
-
+        if(OnDamageIsChasing)
+          StartCoroutine(keepChasing(10f));
+        //可以再添加受到攻擊時的動畫、叫聲等等
     }
 
     void OnDie()
     {
         //死亡叫一下
+
         zombieNavMeshAgent.CancelMove(); //停止移動 
         animatorController.SetTrigger("IsDead"); //播放死亡動畫
-
+        Invoke("DestroyCollider", 2.5f);
     }
+    void DestroyCollider()
+    {
+        Destroy(GetComponent<CapsuleCollider>()); //銷毀碰撞組件
+    }
+
+
 
     private IEnumerator keepChasing(float time) //瘋狂追逐玩家的函數  
     {
@@ -290,7 +308,7 @@ public class ZombieController : MonoBehaviour
     private void playerDieConfuse() //玩家死掉後的困惑動作
     {
         animatorController.SetBool("IsConfuse", true); //困惑動作
-        Invoke("playerDieConfuseOver", 2.8f + UnityEngine.Random.Range(0, 0.4f));
+        Invoke("playerDieConfuseOver", 2.5f + UnityEngine.Random.Range(0, 0.5f));
     }
     private void playerDieConfuseOver()  
     {
@@ -308,7 +326,7 @@ public class ZombieController : MonoBehaviour
             //Gizmos.DrawLine(GetPatrolPointPosition(i), GetPatrolPointPosition(j)); //畫線
             //Gizmos.DrawSphere(GetPatrolPointPosition(i), CircleRadius); //畫球
             Handles.color = Color.green;
-            Handles.DrawWireDisc(this.transform.position  + this.transform.TransformDirection(Vector3.forward * 1f), new Vector3(0, 1, 0), AttackRangeRadius); //畫圓，參數: 圓盤中心、圓盤法線、圓盤半徑 (須 using UnityEditor)
+            Handles.DrawWireDisc(this.transform.position  + this.transform.TransformDirection(Vector3.forward * 1.5f), new Vector3(0, 1, 0), AttackRangeRadius); //畫圓，參數: 圓盤中心、圓盤法線、圓盤半徑 (須 using UnityEditor)
             //GameObject.transform.TransformDirection(Vector3 direction) 能把向量 direction 從物件的 local 座標系轉換到世界座標系上
         }
     }

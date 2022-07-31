@@ -68,6 +68,10 @@ public class PlayerWeaponController : MonoBehaviour
 
     void Update()
     {
+        if (playerController.health.currentHealth == 0) 
+            return;
+
+
         hasSwitchWeaponInput(); //判斷有沒有按下切換武器鍵要切換武器
 
         //處理射擊

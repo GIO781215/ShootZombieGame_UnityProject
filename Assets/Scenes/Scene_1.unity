@@ -38294,6 +38294,7 @@ MonoBehaviour:
   rotationSpeed: 5
   jumpForce: 13
   gravityForce: 50
+  health: {fileID: 0}
 --- !u!143 &2098220447
 CharacterController:
   m_ObjectHideFlags: 0

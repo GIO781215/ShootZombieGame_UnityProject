@@ -12,8 +12,8 @@ public class PatrolPath : MonoBehaviour
     bool hasBeenPatrol_2 = false;
     bool hasBeenPatrol_3 = false;
     bool hasBeenPatrol_4 = false;
-    public bool PatrolOver = false; //結束巡邏旗標
 
+    [HideInInspector] public bool PatrolOver = false; //結束巡邏旗標
 
 
 
@@ -22,39 +22,120 @@ public class PatrolPath : MonoBehaviour
     {
         if(PatrolPointNumber + 1 > transform.childCount-1) //PatrolPointNumber 會給陣列索引值，所以這邊給他加 1
         {
-            PatrolOver = true;
+            //PatrolOver = true; //被畫圖功能影響到了 (debug de半天就是你害的.....
             return 0; //超過子物件數量回傳 0 重新數起
         }
         return PatrolPointNumber + 1;
     }
 
-    /*
-    public int GetRandomPatrolPointNumber(int PatrolPointNumber)                 //這邊做一個巡邏點為隨機的處理
 
+    public int GetNextRandomPatrolPointNumber() //隨機得到下一個巡邏點 
     {
-        if (PatrolPointNumber + 1 > transform.childCount - 1) //PatrolPointNumber 會給陣列索引值，所以這邊給他加 1
+
+        if (hasBeenPatrol_1 == false && hasBeenPatrol_2 == false && hasBeenPatrol_3 == false) //第一次進來
         {
-            confuseDelayTime += UnityEngine.Random.Range(0, 1f);
+            int i = Random.Range(0, 3);
 
+            if (i == 0)
+            {
+                print("A");
+                hasBeenPatrol_1 = true;
+                return 0;
+            }
+            if (i == 1)
+            {
+                print("B");
 
+                hasBeenPatrol_2 = true;
+                return 1;
+            }
+            if (i == 2)
+            {
+                print("C");
 
+                hasBeenPatrol_3 = true;
+                return 2;
+            }
 
-
-            return 0; //超過子物件數量回傳 0 重新數起
+           
         }
-        return PatrolPointNumber + 1;
+
+
+        //一開始是 0 的情況
+        if (hasBeenPatrol_1 == true && hasBeenPatrol_2 == false && hasBeenPatrol_3 == false)
+        {
+            print("AA");
+            hasBeenPatrol_2 = true;
+            return 1;
+        }
+        if (hasBeenPatrol_1 == true && hasBeenPatrol_2 == true && hasBeenPatrol_3 == false)
+        {
+            print("AAA");
+
+            hasBeenPatrol_3 = true;
+            return 2;
+        }
+
+
+        //一開始是 1 的情況
+        if (hasBeenPatrol_1 == false && hasBeenPatrol_2 == true && hasBeenPatrol_3 == false)
+        {
+            print("BB");
+
+            hasBeenPatrol_3 = true;
+            return 2;
+        }
+        if (hasBeenPatrol_1 == false && hasBeenPatrol_2 == true && hasBeenPatrol_3 == true)//一開始是 2 的情況
+        {
+            print("BBB");
+
+            hasBeenPatrol_1 = true;
+            return 0;
+        }
+
+
+        //一開始是 2 的情況
+        if (hasBeenPatrol_1 == false && hasBeenPatrol_2 == false && hasBeenPatrol_3 == true)
+        {
+            print("CC");
+
+            hasBeenPatrol_1 = true;
+            return 0;
+        }
+        if (hasBeenPatrol_1 == true && hasBeenPatrol_2 == false && hasBeenPatrol_3 == true)//一開始是 2 的情況
+        {
+            print("CCC");
+            hasBeenPatrol_2 = true;
+            return 1;
+        }
+
+
+        //---------------------------------
+        if (hasBeenPatrol_1 == true && hasBeenPatrol_2 == true && hasBeenPatrol_3 == true && hasBeenPatrol_4 == false)
+        {
+            hasBeenPatrol_4 = true;
+            print("D");
+            return 3;
+        }
+
+        if (hasBeenPatrol_1 == true && hasBeenPatrol_2 == true && hasBeenPatrol_3 == true && hasBeenPatrol_4 == true)
+        {
+            ResethasBeenPatrol();
+        }
+        return 0;
+
     }
 
-    */
-
-
-
-
-
-    public int aaa()
+    public void ResethasBeenPatrol()
     {
-        return 10;
+        hasBeenPatrol_1 = false;
+        hasBeenPatrol_2 = false;
+        hasBeenPatrol_3 = false;
+        hasBeenPatrol_4 = false;
+        PatrolOver = true;
     }
+
+
 
     //獲得子物件(巡邏點)的位置
     public Vector3 GetPatrolPointPosition(int PatrolPointNumber) //參數為巡邏點編號，從 0 開始
