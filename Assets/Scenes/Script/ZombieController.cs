@@ -15,8 +15,10 @@ public class ZombieController : MonoBehaviour
     float timeSinceLastGameOver = 0;
 
 
-    float viewDistance = 10f; //殭屍視野範圍
-    float confuseTime = 3f; //當玩家在殭屍的視野範圍內消失後殭屍的困惑時間
+    float viewDistance = 15f; //殭屍視野範圍
+    float confuseDelayTime = 0f; //玩家在殭屍的視野範圍消失後到困惑的延遲時間  (解決殭屍會一起困惑太整齊的問題)
+    bool InConfuseBehaviour = false; //進入 InConfuseBehaviour 的旗標
+    float confuseTime = 3.2f; //當玩家在殭屍的視野範圍內消失後殭屍的困惑時間
     float timeSinceLastSawPlayer = Mathf.Infinity; //初始值設為無限大
 
 
@@ -58,6 +60,10 @@ public class ZombieController : MonoBehaviour
         health.onDamage += OnDamage; //將自己的函數 OnDamage() 丟進 health 的事件委派容器 onDamage 中
         health.onDie += OnDie; //將自己的函數 OnDie() 丟進 health 的事件委派容器 onDie 中
 
+
+        //為參數添加一些隨機值，讓每隻殭屍的基本能力有些不一樣
+        viewDistance  +=  UnityEngine.Random.Range(0, 5f); // 僵屍的視野範圍在 15~ 20 之間
+        confuseDelayTime +=  UnityEngine.Random.Range(0, 1f);
     }
 
 
@@ -65,17 +71,18 @@ public class ZombieController : MonoBehaviour
 
     void Update()
     {
- 
+        
+        if(Input.GetKeyDown(KeyCode.P))
+        {
+            StartCoroutine(keepChasing(5f));
+
+        }
+
 
 
 
         if(gameOver == true )
         {
-            timeSinceLastGameOver += Time.deltaTime;
-            if (timeSinceLastGameOver > 3f && timeSinceLastGameOver <= 3f + Time.deltaTime)  //最後一次困惑結束
-            {
-                animatorController.SetBool("IsConfuse", false);
-            }
             return;
         }
         if ((this.health.IsDead() || player.GetComponent<Health>().IsDead()))  //如果殭屍或玩家已經死了那就什麼都不做了
@@ -83,10 +90,19 @@ public class ZombieController : MonoBehaviour
             zombieNavMeshAgent.CancelMove(); //停止移動 
             zombieNavMeshAgent.SetNavMeshAgentSpeed(0); //將控制動畫的變數 WalkSpeed 設為 0 才會播放 idle 動畫
             animatorController.SetBool("IsAttack", false); //解除攻擊動畫
-            animatorController.SetBool("IsConfuse", true); //最後困惑一下
+            Invoke("playerDieConfuse", confuseDelayTime);  //最後困惑一下
             gameOver = true;
             return;
         }
+
+
+
+
+
+        timeSinceLastAttack += Time.deltaTime;
+        timeSinceLastSawPlayer += Time.deltaTime;
+        if (InConfuseBehaviour) return;
+
 
 
 
@@ -97,28 +113,27 @@ public class ZombieController : MonoBehaviour
         {
             timeSinceLastSawPlayer = 0;
             AttackBehaviour(); //攻擊行為
+      
         }
         else if (InViewRange() && !IsAttacking) //如果在殭屍的視野範圍內
         {
             animatorController.SetBool("IsConfuse", false); //解除困惑動作                                   
             timeSinceLastSawPlayer = 0;
+   
             zombieNavMeshAgent.MoveTo(player.transform.position, 1); //移動到玩家位置
             patrolPath.transform.position = this.transform.position; //巡邏點也會一直跟著殭屍移動，直到殭屍停下來才不會再一起動
             patrolPath.transform.rotation = this.transform.rotation;
         }
-        else if ((timeSinceLastSawPlayer < confuseTime) && !IsAttacking)
+        else if ((timeSinceLastSawPlayer < confuseTime) && !IsAttacking)   
         {
+            InConfuseBehaviour = true;
             ConfuseBehaviour(); //困惑行為
-            IsPatrol = true; //困惑完後就可以巡邏了
         }
         else if(!IsAttacking)
         {
             PatrolBehaviour(); //巡邏行為
         }
 
-
-        timeSinceLastAttack += Time.deltaTime;
-        timeSinceLastSawPlayer += Time.deltaTime;
 
 
     }
@@ -184,11 +199,17 @@ public class ZombieController : MonoBehaviour
                 zombieNavMeshAgent.CancelMove(); //停止移動 
                 IsConfuseInPatrol = true;
                 animatorController.SetBool("IsConfuse", true); //開始困惑動畫
-                GoalPatrolPoint = patrolPath.GetNextPatrolPointNumber(GoalPatrolPoint); //將目標轉向下一個巡邏點         
+
+
+
+                GoalPatrolPoint = patrolPath.GetNextPatrolPointNumber(GoalPatrolPoint); //將目標轉向下一個巡邏點
+                                                                                        
+
+
                 timeSinceLastArrivePatrolPoint = 0;  //重置開始困惑時間
                 timeSinceLastStartPatrol = 0; //重置開始巡邏經過時間
 
-                if (GoalPatrolPoint == 0) //如果所有點都巡邏完，索引值又回到 0 了
+                if (patrolPath.PatrolOver == true) //如果所有點都巡邏完，索引值又回到 0 了
                 {
                     IsPatrol = false; //巡邏完了
                     zombieNavMeshAgent.SetNavMeshAgentSpeed(0); //將控制動畫的變數 WalkSpeed 設為 0 才會播放 idle 動畫
@@ -219,8 +240,9 @@ public class ZombieController : MonoBehaviour
     private void ConfuseBehaviour()
     {
         zombieNavMeshAgent.CancelMove(); //停止移動 
+        zombieNavMeshAgent.SetNavMeshAgentSpeed(0); //將控制動畫的變數 WalkSpeed 設為 0 才會播放 idle 動畫
         animatorController.SetBool("IsAttack", false); //停止攻擊
-        animatorController.SetBool("IsConfuse", true); //困惑動作                                    
+        Invoke("ConfuseBehaviour_", confuseDelayTime); //經過 confuseDelayTime 時間延遲後才會去執行函數 ConfuseDelayTime()                   
     }
 
     private bool InViewRange()
@@ -249,7 +271,33 @@ public class ZombieController : MonoBehaviour
 
     }
 
+    private IEnumerator keepChasing(float time) //瘋狂追逐玩家的函數  
+    {
+        float _viewDistance = viewDistance;
+        viewDistance = 10000;
+        yield return new WaitForSeconds(time); //等待 time 秒後
+        viewDistance = _viewDistance;
+    }
 
+    private void ConfuseBehaviour_() //延遲函數 (玩家在殭屍的視野範圍消失後到困惑的延遲時間)
+    {
+        animatorController.SetBool("IsConfuse", true); //困惑動作
+        InConfuseBehaviour = false;
+        IsPatrol = true; //困惑完後就可以巡邏了     
+        patrolPath.PatrolOver = false;
+    }
+
+    private void playerDieConfuse() //玩家死掉後的困惑動作
+    {
+        animatorController.SetBool("IsConfuse", true); //困惑動作
+        Invoke("playerDieConfuseOver", 2.8f + UnityEngine.Random.Range(0, 0.4f));
+    }
+    private void playerDieConfuseOver()  
+    {
+        animatorController.SetBool("IsConfuse", false);
+    }
+
+    //-------------------------------------------------------------------------------
 
     //畫圖功能 Debug 用 
     void OnDrawGizmos()
@@ -291,9 +339,9 @@ public class ZombieController : MonoBehaviour
             print("attack");
         }
     }
- //----------------------------------------------------------------------------------------
+    //----------------------------------------------------------------------------------------
 
 
-
+    
 
 }

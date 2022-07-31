@@ -452,7 +452,6 @@ public class MutantController : MonoBehaviour
         yield return new WaitForSeconds(time); //等待 time 秒後
         viewDistance = _viewDistance;
         print(viewDistance);
-
     }
 
     void OnDamage()

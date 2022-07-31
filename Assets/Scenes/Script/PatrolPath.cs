@@ -7,16 +7,48 @@ public class PatrolPath : MonoBehaviour
 {
     [SerializeField] public float CircleRadius = 0.5f;
 
+    //隨機巡邏點要用到的變數
+    bool hasBeenPatrol_1 = false;
+    bool hasBeenPatrol_2 = false;
+    bool hasBeenPatrol_3 = false;
+    bool hasBeenPatrol_4 = false;
+    public bool PatrolOver = false; //結束巡邏旗標
+
+
+
 
     //獲得下一個巡邏點編號
     public int GetNextPatrolPointNumber(int PatrolPointNumber) //參數為巡邏點編號，從 0 開始
     {
         if(PatrolPointNumber + 1 > transform.childCount-1) //PatrolPointNumber 會給陣列索引值，所以這邊給他加 1
         {
+            PatrolOver = true;
             return 0; //超過子物件數量回傳 0 重新數起
         }
         return PatrolPointNumber + 1;
     }
+
+    /*
+    public int GetRandomPatrolPointNumber(int PatrolPointNumber)                 //這邊做一個巡邏點為隨機的處理
+
+    {
+        if (PatrolPointNumber + 1 > transform.childCount - 1) //PatrolPointNumber 會給陣列索引值，所以這邊給他加 1
+        {
+            confuseDelayTime += UnityEngine.Random.Range(0, 1f);
+
+
+
+
+
+            return 0; //超過子物件數量回傳 0 重新數起
+        }
+        return PatrolPointNumber + 1;
+    }
+
+    */
+
+
+
 
 
     public int aaa()
