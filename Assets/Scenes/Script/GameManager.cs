@@ -30,6 +30,27 @@ public class GameManager : MonoBehaviour
     {
 
 
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            //銷毀場景裡的所有角色
+            cameraController.target = this.transform;
+            Destroy(Game_Scence);
+            if (Game_Scence == null)
+            {
+                Destroy(GameObject.FindGameObjectsWithTag("Scence_Prefab_")[0]);
+            }
+
+
+        }
+
+
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            //重建場景裡的所有角色
+            GameObject gameScence = Instantiate(Game_Scence_Prefab, Game_Scence_Root.transform.position, Game_Scence_Root.transform.rotation, GameObject.FindGameObjectsWithTag("Scence_Prefab")[0].transform); //生成僵屍的巡邏路徑，第四個參數是生成的實體要把誰當作父對象
+            cameraController.target = GameObject.FindGameObjectsWithTag("Player")[0].transform;
+
+        }
 
 
 
