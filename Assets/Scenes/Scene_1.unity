@@ -1097,7 +1097,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 24
+    m_FontSize: 20
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 2
@@ -1108,7 +1108,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "\u672C\u9801\u9762\u7D71\u5408\u8655\u7406\u5404\u7DAD\u57FA\u8A08\u5283\u5168\u57DF\u8F49\u63DB\u548C\u4E2D\u6587\u7DAD\u57FA\u767E\u79D1\u672C\u5730\u5168\u5C40\u8F49"
+  m_Text: "    \u8DF3\u8E8D : X \u9375                              \u5C04\u64CA
+    : \u7A7A\u767D\u9375  \u3001\u6216\u6ED1\u9F20\u5DE6\u9375"
 --- !u!222 &64784007
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1658,7 +1659,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "\u672C\u9801\u9762\u7D71\u5408\u8655\u7406\u5404\u7DAD\u57FA\u8A08\u5283\u5168\u57DF\u8F49\u63DB\u548C\u4E2D\u6587\u7DAD\u57FA\u767E\u79D1\u672C\u5730\u5168\u5C40\u8F49\n"
+  m_Text: 
 --- !u!222 &91018621
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -15780,7 +15781,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 24
+    m_FontSize: 20
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 2
@@ -15791,7 +15792,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "\u672C\u9801\u9762\u7D71\u5408\u8655\u7406\u5404\u7DAD\u57FA\u8A08\u5283\u5168\u57DF\u8F49\u63DB\u548C\u4E2D\u6587\u7DAD\u57FA\u767E\u79D1\u672C\u5730\u5168\u5C40\u8F49"
+  m_Text: "    \u885D\u523A :  \u6309\u4F4F Z \u9375                     \u7784\u6E96
+    / \u89E3\u9664\u7784\u6E96 : C \u9375   \u3001\u6216\u6ED1\u9F20\u53F3\u9375"
 --- !u!222 &381924296
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -19541,7 +19543,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 24
+    m_FontSize: 20
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 2
@@ -19552,7 +19554,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "\u672C\u9801\u9762\u7D71\u5408\u8655\u7406\u5404\u7DAD\u57FA\u8A08\u5283\u5168\u57DF\u8F49\u63DB\u548C\u4E2D\u6587\u7DAD\u57FA\u767E\u79D1\u672C\u5730\u5168\u5C40\u8F49"
+  m_Text: '---------------------------------------------------------------------------------------------------
+
+'
 --- !u!222 &629132356
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -19743,7 +19747,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2050703399}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 270}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
@@ -23984,15 +23988,15 @@ MonoBehaviour:
     m_FontSize: 24
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 2
-    m_MaxSize: 40
+    m_MinSize: 1
+    m_MaxSize: 300
     m_Alignment: 0
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "\u672C\u9801\u9762\u7D71\u5408\u8655\u7406\u5404\u7DAD\u57FA\u8A08\u5283\u5168\u57DF\u8F49\u63DB\u548C\u4E2D\u6587\u7DAD\u57FA\u767E\u79D1\u672C\u5730\u5168\u5C40\u8F49\n"
+  m_Text: "                                 \u66AB\u505C / \u7E7C\u7E8C : ESC \u9375\r\n"
 --- !u!222 &949717183
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -26222,9 +26226,10 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 1745455040}
   - {fileID: 1823267471}
   m_Father: {fileID: 2050703399}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -42106,7 +42111,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 24
+    m_FontSize: 20
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 2
@@ -42117,7 +42122,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "\u672C\u9801\u9762\u7D71\u5408\u8655\u7406\u5404\u7DAD\u57FA\u8A08\u5283\u5168\u57DF\u8F49\u63DB\u548C\u4E2D\u6587\u7DAD\u57FA\u767E\u79D1\u672C\u5730\u5168\u5C40\u8F49"
+  m_Text: "    \u5207\u63DB\u6B66\u5668 : V  \u3001B \u9375\r               \u958B\u555F
+    / \u95DC\u9589\u5C0F\u5730\u5716 : F \u9375\n"
 --- !u!222 &1389857680
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -49983,7 +49989,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 24
+    m_FontSize: 20
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 2
@@ -49994,7 +50000,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "\u672C\u9801\u9762\u7D71\u5408\u8655\u7406\u5404\u7DAD\u57FA\u8A08\u5283\u5168\u57DF\u8F49\u63DB\u548C\u4E2D\u6587\u7DAD\u57FA\u767E\u79D1\u672C\u5730\u5168\u5C40\u8F49"
+  m_Text: "    \u89D2\u8272\u79FB\u52D5 : \u9375\u76E4\u65B9\u5411\u9375           
+    \u8996\u89D2\u79FB\u52D5 : W S A D \u9375  \u3001\u6216\u79FB\u52D5\u6ED1\u9F20 "
 --- !u!222 &1617210584
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -51900,7 +51907,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1745455040
 RectTransform:
   m_ObjectHideFlags: 0
@@ -51908,13 +51915,13 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1745455039}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1840324979}
-  m_Father: {fileID: 2050703399}
-  m_RootOrder: 3
+  m_Father: {fileID: 1075124876}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -53147,7 +53154,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1823267471
 RectTransform:
   m_ObjectHideFlags: 0
@@ -53160,7 +53167,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1075124876}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -61722,9 +61729,8 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 1237041064}
-  - {fileID: 1075124876}
   - {fileID: 636601661}
-  - {fileID: 1745455040}
+  - {fileID: 1075124876}
   m_Father: {fileID: 447456854}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -67326,6 +67332,7 @@ MonoBehaviour:
   jumpForce: 13
   gravityForce: 50
   health: {fileID: 0}
+  LittleMapUI: {fileID: 636601660}
 --- !u!143 &2098220447
 CharacterController:
   m_ObjectHideFlags: 0
@@ -67482,7 +67489,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 24
+    m_FontSize: 20
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 2
@@ -67493,7 +67500,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "\u672C\u9801\u9762\u7D71\u5408\u8655\u7406\u5404\u7DAD\u57FA\u8A08\u5283\u5168\u57DF\u8F49\u63DB\u548C\u4E2D\u6587\u7DAD\u57FA\u767E\u79D1\u672C\u5730\u5168\u5C40\u8F49"
+  m_Text: 
 --- !u!222 &2101081451
 CanvasRenderer:
   m_ObjectHideFlags: 0

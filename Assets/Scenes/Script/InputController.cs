@@ -198,6 +198,13 @@ public class InputController : MonoBehaviour
         return false;
     }
 
+    public bool GetKeyFInputDown() //是否按下 F 鍵
+    {
+        if (canInput)
+            return Input.GetKeyDown(KeyCode.F);
+        return false;
+    }
+
     public bool GetShiftInputHold() //是否有按住 Shift 鍵
     {
         if(canInput)
