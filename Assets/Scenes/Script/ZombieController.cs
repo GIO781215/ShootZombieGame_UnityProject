@@ -42,12 +42,15 @@ public class ZombieController : MonoBehaviour
     float timeSinceLastAttack = Mathf.Infinity; //上次攻擊後經過的時間
     float timeBetweenAttack = 1.1f; //能再次攻擊的時間間隔
     bool IsAttacking = false; //是否正在攻擊中
-    //----------------------------------------------------
+                              //----------------------------------------------------
 
 
-    public bool alwaysPatrol = true; //殭屍是否會一直巡邏
-    public bool OnDamageIsChasing = true; //殭屍被打到時是否會追玩家
+    bool IsTrapped = false; //殭屍莫名狀況卡住時的旗標
+    public bool alwaysPatrol = false; //殭屍是否會一直巡邏
+    public bool OnDamageIsChasing = false; //殭屍被打到時是否會追玩家
     //要殭屍生成時是否會立刻追玩家的話，呼叫 keepChasing() 就好
+
+
 
     AnimatorStateInfo BaseLayer;
 
@@ -121,7 +124,7 @@ public class ZombieController : MonoBehaviour
         {
             animatorController.SetBool("IsConfuse", false); //解除困惑動作                                   
             timeSinceLastSawPlayer = 0;
-   
+            IsTrapped = false; //解除卡住旗標
             zombieNavMeshAgent.MoveTo(player.transform.position, 1); //移動到玩家位置
             patrolPath.transform.position = this.transform.position; //巡邏點也會一直跟著殭屍移動，直到殭屍停下來才不會再一起動
             patrolPath.transform.rotation = this.transform.rotation;
@@ -196,6 +199,7 @@ public class ZombieController : MonoBehaviour
                     patrolPath.ResethasBeenPatrol();
                     zombieNavMeshAgent.CancelMove();
                     zombieNavMeshAgent.SetNavMeshAgentSpeed(0); //將控制動畫的變數 WalkSpeed 設為 0 才會播放 idle 動畫
+                    IsTrapped = true;
                     timeSinceLastStartPatrol = 0;
                 }
             }
@@ -234,10 +238,11 @@ public class ZombieController : MonoBehaviour
                 }
             }
         }
-        else 
+        else
         {
- 
             //進入完全呆滯狀態 
+            //如果有設定要一直巡邏才會繼續巡邏
+            if (alwaysPatrol == true && IsTrapped == false) IsPatrol = true;
         }
     }
 
