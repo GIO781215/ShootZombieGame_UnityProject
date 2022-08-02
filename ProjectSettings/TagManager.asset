@@ -9,6 +9,7 @@ TagManager:
   - Zombie
   - Mutant
   - PatroPathCollection
+  - SpawnWall
   layers:
   - Default
   - TransparentFX

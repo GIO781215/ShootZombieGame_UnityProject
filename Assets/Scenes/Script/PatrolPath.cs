@@ -38,21 +38,16 @@ public class PatrolPath : MonoBehaviour
 
             if (i == 0)
             {
-                print("A");
                 hasBeenPatrol_1 = true;
                 return 0;
             }
             if (i == 1)
             {
-                print("B");
-
                 hasBeenPatrol_2 = true;
                 return 1;
             }
             if (i == 2)
             {
-                print("C");
-
                 hasBeenPatrol_3 = true;
                 return 2;
             }
@@ -63,15 +58,11 @@ public class PatrolPath : MonoBehaviour
 
         //一開始是 0 的情況
         if (hasBeenPatrol_1 == true && hasBeenPatrol_2 == false && hasBeenPatrol_3 == false)
-        {
-            print("AA");
-            hasBeenPatrol_2 = true;
+        {            hasBeenPatrol_2 = true;
             return 1;
         }
         if (hasBeenPatrol_1 == true && hasBeenPatrol_2 == true && hasBeenPatrol_3 == false)
         {
-            print("AAA");
-
             hasBeenPatrol_3 = true;
             return 2;
         }
@@ -80,15 +71,11 @@ public class PatrolPath : MonoBehaviour
         //一開始是 1 的情況
         if (hasBeenPatrol_1 == false && hasBeenPatrol_2 == true && hasBeenPatrol_3 == false)
         {
-            print("BB");
-
             hasBeenPatrol_3 = true;
             return 2;
         }
         if (hasBeenPatrol_1 == false && hasBeenPatrol_2 == true && hasBeenPatrol_3 == true)//一開始是 2 的情況
         {
-            print("BBB");
-
             hasBeenPatrol_1 = true;
             return 0;
         }
@@ -97,14 +84,11 @@ public class PatrolPath : MonoBehaviour
         //一開始是 2 的情況
         if (hasBeenPatrol_1 == false && hasBeenPatrol_2 == false && hasBeenPatrol_3 == true)
         {
-            print("CC");
-
             hasBeenPatrol_1 = true;
             return 0;
         }
         if (hasBeenPatrol_1 == true && hasBeenPatrol_2 == false && hasBeenPatrol_3 == true)//一開始是 2 的情況
         {
-            print("CCC");
             hasBeenPatrol_2 = true;
             return 1;
         }
@@ -114,7 +98,6 @@ public class PatrolPath : MonoBehaviour
         if (hasBeenPatrol_1 == true && hasBeenPatrol_2 == true && hasBeenPatrol_3 == true && hasBeenPatrol_4 == false)
         {
             hasBeenPatrol_4 = true;
-            print("D");
             return 3;
         }
 

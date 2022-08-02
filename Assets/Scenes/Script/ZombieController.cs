@@ -15,7 +15,7 @@ public class ZombieController : MonoBehaviour
     float timeSinceLastGameOver = 0;
 
 
-    float viewDistance = 15f; //殭屍視野範圍
+    public float viewDistance = 15f; //殭屍視野範圍
     float confuseDelayTime = 0f; //玩家在殭屍的視野範圍消失後到困惑的延遲時間  (解決殭屍會一起困惑太整齊的問題)
     bool InConfuseBehaviour = false; //進入 InConfuseBehaviour 的旗標
     float confuseTime = 3f; //當玩家在殭屍的視野範圍內消失後殭屍的困惑時間
@@ -48,7 +48,6 @@ public class ZombieController : MonoBehaviour
     bool IsTrapped = false; //殭屍莫名狀況卡住時的旗標
     public bool alwaysPatrol = false; //殭屍是否會一直巡邏
     public bool OnDamageIsChasing = false; //殭屍被打到時是否會追玩家
-    //要殭屍生成時是否會立刻追玩家的話，呼叫 keepChasing() 就好
 
 
 
@@ -79,12 +78,6 @@ public class ZombieController : MonoBehaviour
 
     void Update()
     {
-        
-        if(Input.GetKeyDown(KeyCode.P))
-        {
-            StartCoroutine(keepChasing(5f));
-
-        }
 
 
 
@@ -183,7 +176,6 @@ public class ZombieController : MonoBehaviour
     {     
         if(IsPatrol || IsConfuseInPatrol) //巡邏中或困惑中
         {
-            print(patrolPath.PatrolOver);
             if(!IsArrivePatrolPoint() && !IsConfuseInPatrol) //如果還沒到達巡邏點，並且不在困惑中
             {
  
@@ -194,7 +186,6 @@ public class ZombieController : MonoBehaviour
                 timeSinceLastStartPatrol += Time.deltaTime;
                 if (timeSinceLastStartPatrol > 10f) //如果走了十秒還到不了
                 {
-                    print("stop");
                     IsPatrol = false; //直接結束巡邏
                     patrolPath.ResethasBeenPatrol();
                     zombieNavMeshAgent.CancelMove();
