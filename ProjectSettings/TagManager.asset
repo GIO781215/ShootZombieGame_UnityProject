@@ -10,6 +10,8 @@ TagManager:
   - Mutant
   - PatroPathCollection
   - SpawnWall
+  - Scence_Prefab
+  - Scence_Prefab_
   layers:
   - Default
   - TransparentFX

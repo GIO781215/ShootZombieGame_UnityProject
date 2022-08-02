@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
 
     public static GameManager Instance;
     public InputController inputController;
+    [SerializeField] GameObject GameScence;
 
 
     void Awake()
@@ -24,7 +25,17 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-     
+        if(Input.GetKeyDown(KeyCode.P))
+        {
+            Destroy(GameScence);
+
+        }
+
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            GameObject gameScence = Instantiate(GameScence, GameScence.transform.position  , GameScence.transform.rotation, GameObject.FindGameObjectsWithTag("Scence_Prefab")[0].transform); //生成僵屍的巡邏路徑，第四個參數是生成的實體要把誰當作父對象
+
+        }
     }
 
 
