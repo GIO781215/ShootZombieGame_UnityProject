@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
 
     public static GameManager Instance;
     public InputController inputController;
+    public CameraController cameraController;
     [SerializeField] GameObject GameScence;
 
 
@@ -27,6 +28,8 @@ public class GameManager : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.P))
         {
+
+            cameraController.target = this.transform;
             Destroy(GameScence);
 
         }

@@ -8,7 +8,9 @@ public class CameraController : MonoBehaviour
     InputController inputController;
 
     [Header("相機跟隨的目標")]
-    [SerializeField] private Transform target; //private 可省略，預設就是 private
+    public Transform target; //private 可省略，預設就是 private
+    //[SerializeField] private Transform target_temp; //刪除玩家時攝影機要變更的追隨目標
+
     [SerializeField] GameObject player; //做受傷特效用，要得到玩家的血量系統
     [SerializeField] ParticleSystem behitEffect; //受傷時的特效
     [SerializeField] ParticleSystem rushEffect; //衝刺時的特效
@@ -51,10 +53,15 @@ public class CameraController : MonoBehaviour
         inputController = GameManager.Instance.inputController;
         player.GetComponent<Health>().onDamage += OnDamage;
         player.GetComponent<PlayerController>().onSprint += OnSprint;
+     }
 
+
+    private void Update()  
+    {
+  
     }
 
-    private void LateUpdate() //在 Update 後執行
+        private void LateUpdate() //在 Update 後執行
     {
         if(Cursor.lockState == CursorLockMode.Locked)
         {
