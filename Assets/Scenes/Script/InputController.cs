@@ -44,7 +44,10 @@ public class InputController : MonoBehaviour
     {
         audioSource.PlayOneShot(sound_Stop);
         Time.timeScale = 0; //暫停遊戲
-        pauseUI.SetActive(true);
+        if (pauseUI != null)
+        {
+            pauseUI.SetActive(true);
+        }
         Cursor.lockState = CursorLockMode.None;
         canInput = false;
     }
@@ -62,7 +65,10 @@ public class InputController : MonoBehaviour
                 audioSource.PlayOneShot(sound_Stop);
 
                 Time.timeScale = 0; //暫停遊戲
-                pauseUI.SetActive(true);
+                if (pauseUI != null)
+                {
+                    pauseUI.SetActive(true);
+                }
                 Cursor.lockState = CursorLockMode.None;
                 canInput = false;
             }
@@ -71,7 +77,10 @@ public class InputController : MonoBehaviour
                 audioSource.PlayOneShot(sound_Stop);
 
                 Time.timeScale = 1; //繼續遊戲 (恢復遊戲運行數度)
-                pauseUI.SetActive(false);
+                if(pauseUI != null)
+                {
+                    pauseUI.SetActive(false);
+                }
                 Cursor.lockState = CursorLockMode.Locked;
                 canInput = true;
             }

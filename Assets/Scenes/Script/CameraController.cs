@@ -53,21 +53,21 @@ public class CameraController : MonoBehaviour
         inputController = GameManager.Instance.inputController;
         player.GetComponent<Health>().onDamage += OnDamage;
         player.GetComponent<PlayerController>().onSprint += OnSprint;
-     }
-
-
-    private void Update()  
-    {
-  
     }
 
-        private void LateUpdate() //在 Update 後執行
+
+    private void Update()
     {
-        if(Cursor.lockState == CursorLockMode.Locked)
+
+    }
+
+    private void LateUpdate() //在 Update 後執行
+    {
+        if (Cursor.lockState == CursorLockMode.Locked)
         {
             //設置攝影機角度
             //滑鼠輸入
-            CameraAngle_X += inputController.GetMouseX() * sensitivity_X ; 
+            CameraAngle_X += inputController.GetMouseX() * sensitivity_X;
             //鍵盤輸入
             if (inputController.GetDInputHold())
             {
@@ -139,7 +139,7 @@ public class CameraController : MonoBehaviour
             }
             cameraToTargetDistance = Mathf.Clamp(cameraToTargetDistance, cameraToTargetMinDistance, cameraToTargetMaxDistance);
 
-            if(IsFirsrRun)
+            if (IsFirsrRun)
             {
                 referenceObjectPosition = target.position;
                 IsFirsrRun = false;
@@ -167,13 +167,13 @@ public class CameraController : MonoBehaviour
             referenceObjectPosition.y = HeightOffset; //指定虛擬參考物的高度為 HeightOffset (不受 Player 跳起來而改變)
             referenceObjectToCameraOffset = Quaternion.Euler(CameraAngle_Y, CameraAngle_X, 0) * new Vector3(0, 0, -cameraToTargetDistance); // Quaternion.Euler 可以乘 Vector3 ，結果為往那個方向的向量長度!!! 
             transform.position = referenceObjectPosition + referenceObjectToCameraOffset; //從虛擬參考物的位置(受 SmoothDamp() 效果影響) 在加上 referenceObjectToCameraOffset 即為攝影機該在的位置
-            
+
         }
     }
 
     private void OnDamage()
     {
-        if(behitEffect != null)
+        if (behitEffect != null)
         {
             behitEffect.Play();
         }
@@ -189,7 +189,22 @@ public class CameraController : MonoBehaviour
     }
 
 
-
+    public void resetCamera()
+    {
+       HeightOffset = 3; //攝影機的高度
+       CameraAngle_X = 0; //攝影機左右起始角度
+       CameraAngle_Y = 15; //攝影機上下起始角度
+       sensitivity_X = 2; //滑鼠控制攝影機左右移動的靈敏度
+       sensitivity_Y = 2; //滑鼠控制攝影機上下移動的靈敏度
+       sensitivity_ScrollWheel = 5; //滑鼠控制攝影機前後移動的靈敏度
+       minVerticalAngle = -10; //攝影機上下移動的最小角度 (其實是往上仰視的最大角度，因為在 Unity 裡的 Edir -> Project Setting -> Input Manager -> Mouse Y 有勾選 Invert，所以上下有相反)
+       maxVerticalAngle = 20; //攝影機上下移動的最大角度 (其實是往下俯視的最大角度，因為在 Unity 裡的 Edir -> Project Setting -> Input Manager -> Mouse Y 有勾選 Invert，所以上下有相反)
+       cameraToTargetDistance = 10; //攝影機與目標的起始距離
+       cameraToTargetMinDistance = 5; //攝影機與目標的最小距離
+       cameraToTargetMaxDistance = 15; //攝影機與目標的最大距離
+       CameraAngle_Offset = 270; //攝影機 Y 軸的起始旋轉角度
+       IsFirsrRun = true; //第一次執行 LateUpdate() 的旗標
+    }
 
 
 

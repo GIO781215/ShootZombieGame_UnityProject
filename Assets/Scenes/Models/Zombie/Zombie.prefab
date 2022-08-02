@@ -1,5 +1,17 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &6724296493756906301
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5877454633364477681}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a5e5b2d57c5f584dae9587f97a753e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6724296492845888908
 GameObject:
   m_ObjectHideFlags: 0
@@ -49,7 +61,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82330aa39688e5045a33949245c5d476, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  zombiePatrolPath: {fileID: 0}
+  viewDistance: 15
+  patrolPath: {fileID: 0}
+  alwaysPatrol: 0
+  OnDamageIsChasing: 0
 --- !u!114 &6724296492845888907
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -112,18 +127,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   currentHealth: 0
---- !u!114 &6724296493756906301
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5877454633364477681}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a5e5b2d57c5f584dae9587f97a753e6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1328248720315697190
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -183,6 +186,18 @@ PrefabInstance:
       propertyPath: health
       value: 
       objectReference: {fileID: 6724296492845888902}
+    - target: {fileID: 5710391862285317274, guid: bf1e588c7c7ad2440ab5125c416c5f0d, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5710391862285317274, guid: bf1e588c7c7ad2440ab5125c416c5f0d, type: 3}
+      propertyPath: m_Color.g
+      value: 0.03529412
+      objectReference: {fileID: 0}
+    - target: {fileID: 5710391862285317274, guid: bf1e588c7c7ad2440ab5125c416c5f0d, type: 3}
+      propertyPath: m_Color.r
+      value: 0.7254902
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bf1e588c7c7ad2440ab5125c416c5f0d, type: 3}
 --- !u!4 &6724296494519631320 stripped
