@@ -28,13 +28,15 @@ public class PlayerWeaponController : MonoBehaviour
     PlayerController playerController;
     InputController inputController;
 
+    [SerializeField] AudioClip sound_SwtichWeapon; //切換武器的音效
+    AudioSource audioSource;
 
 
 
 
     void Start()
     {
-
+        audioSource = GetComponent<AudioSource>();
         inputController = GameManager.Instance.inputController;
         playerController = GetComponent<PlayerController>();
         playerController.onAim += OnAim;
@@ -68,7 +70,7 @@ public class PlayerWeaponController : MonoBehaviour
 
     void Update()
     {
-        if (playerController.health.currentHealth == 0) 
+        if (playerController.health.currentHealth == 0)
             return;
 
 
@@ -174,7 +176,7 @@ public class PlayerWeaponController : MonoBehaviour
         {
             //往右移動 index
             currentWeaponSlotIndex += 1;
-            if (currentWeaponSlotIndex > PlayerWeaponSlot.Length - 1) 
+            if (currentWeaponSlotIndex > PlayerWeaponSlot.Length - 1)
                 currentWeaponSlotIndex = -1;
             if (currentWeaponSlotIndex != -1 && PlayerWeaponSlot[currentWeaponSlotIndex] == null)
                 currentWeaponSlotIndex = -1;
@@ -182,6 +184,7 @@ public class PlayerWeaponController : MonoBehaviour
             //如果已經在瞄準動作 無法切成不拿槍的狀態 <--- 我這樣寫是預設了永遠都會有一把武器，可能不太好，以後要改再說
             if (currentWeaponSlotIndex == -1 && isAim)
                 currentWeaponSlotIndex += 1;
+            audioSource.PlayOneShot(sound_SwtichWeapon);
 
             switchWeapon(currentWeaponSlotIndex); //切換成那把武器
         }
@@ -189,7 +192,7 @@ public class PlayerWeaponController : MonoBehaviour
         {
             //往左移動 index
             currentWeaponSlotIndex -= 1;
-            if (currentWeaponSlotIndex <  -1)
+            if (currentWeaponSlotIndex < -1)
                 currentWeaponSlotIndex = PlayerWeaponSlot.Length - 1;
             while (currentWeaponSlotIndex != -1 && PlayerWeaponSlot[currentWeaponSlotIndex] == null) //跳過空槽
             {
@@ -203,6 +206,7 @@ public class PlayerWeaponController : MonoBehaviour
             {
                 currentWeaponSlotIndex -= 1;
             }
+            audioSource.PlayOneShot(sound_SwtichWeapon);
 
             switchWeapon(currentWeaponSlotIndex); //切換成那把武器
         }
@@ -243,7 +247,7 @@ public class PlayerWeaponController : MonoBehaviour
                     machinegunUI[0].transform.localScale = new Vector3(1f, 1f, 1f);
                     machinegunUI[1].color = Color.white;
                 }
-                else if(PlayerWeaponSlot[index].weaponType == WeaponType.flamethrower)
+                else if (PlayerWeaponSlot[index].weaponType == WeaponType.flamethrower)
                 {
                     flamethrowerUI[0].transform.localScale = new Vector3(1f, 1f, 1f);
                     flamethrowerUI[1].color = Color.white;
@@ -253,14 +257,15 @@ public class PlayerWeaponController : MonoBehaviour
             {
                 //print("不拿武器 " );
             }
+
         }
     }
 
 
 
-    private void  OnAim(bool value)
+    private void OnAim(bool value)
     {
-        if(isAim == false && value == true) //如果剛剛不是瞄準動作，突然變成瞄準動作
+        if (isAim == false && value == true) //如果剛剛不是瞄準動作，突然變成瞄準動作
         {
             toAim = true;
         }
@@ -281,18 +286,39 @@ public class PlayerWeaponController : MonoBehaviour
 
 
     public void PickUpWeapon(GameObject gameObject)
-    {     
-        if (gameObject != null  )
+    {
+        if (gameObject != null)
         {
             PickUpItem pickUpItem = gameObject.GetComponent<PickUpItem>();
-            if(pickUpItem != null )
+            if (pickUpItem != null)
             {
-                if(pickUpItem.weaponType == WeaponType.flamethrower)
+                if (pickUpItem.weaponType == WeaponType.flamethrower)
                 {
                     AddWeapon(AllWeaponsList[1]); //撿到火焰槍 -> 加入武器 flamethrower
                 }
             }
         }
+    }
+
+
+    public void SwitchWeaponToFlamethrower() //直接切換成火焰槍
+    {
+        int index = 0;
+
+        foreach (Weapon PWS_weapon in PlayerWeaponSlot)
+        {
+            if (PWS_weapon != null && PWS_weapon.weaponType == WeaponType.flamethrower)
+            {
+                break;
+            }
+            index++;
+        }
+        if (index >= PlayerWeaponSlot.Length) return;
+
+        currentWeaponSlotIndex = index;
+        audioSource.PlayOneShot(sound_SwtichWeapon);
+        switchWeapon(currentWeaponSlotIndex);
+
     }
 
 

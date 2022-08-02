@@ -62,11 +62,14 @@ public class MutantController : MonoBehaviour
     //----------------------------------------------------
     AnimatorStateInfo BaseLayer;
 
- 
+    [SerializeField] AudioClip sound_Attack; //攻擊音效
+    [SerializeField] AudioClip sound_JumpAttack; //跳躍攻擊音效
+    AudioSource audioSource;
 
-   
 
- 
+
+
+
 
 
 
@@ -84,6 +87,7 @@ public class MutantController : MonoBehaviour
         health.onDamage += OnDamage; //將自己的函數 OnDamage() 丟進 health 的事件委派容器 onDamage 中
         health.onDie += OnDie; //將自己的函數 OnDie() 丟進 health 的事件委派容器 onDie 中
 
+        audioSource = GetComponent<AudioSource>();
 
         viewDistance = startDistance;
     }
@@ -365,15 +369,11 @@ public class MutantController : MonoBehaviour
             yield return new WaitForSeconds(0.001f);
         }
     }
-     
-
-
-
-
 
 
     public void AtHitAttack()
     {
+
         if (InHitAttackRange()) //如果這時玩家還在攻擊範圍內
         {
             if (player != null)  //玩家就扣寫
@@ -387,8 +387,15 @@ public class MutantController : MonoBehaviour
         }
     }
 
+    void PlayAttackSound() //播放攻擊音效，動畫會 trigger 這個回調函數
+    {
+        audioSource.PlayOneShot(sound_Attack);
+    }
+
     public void AtJumpAttack()
     {
+        audioSource.PlayOneShot(sound_JumpAttack);
+
         if (InJumpAttackDamageRange()) //如果這時玩家在傷害範圍內
         {
             if (player != null)  //玩家就扣寫

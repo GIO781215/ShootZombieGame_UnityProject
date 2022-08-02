@@ -12,6 +12,10 @@ public class InputController : MonoBehaviour
     [HideInInspector] private bool canInput;
     public GameObject pauseUI;
 
+    [SerializeField] AudioClip sound_Stop; //暫停音效
+    AudioSource audioSource;
+
+
     private void Awake()
     {
         Cursor.lockState = CursorLockMode.Locked; //將鼠標鎖住
@@ -28,6 +32,7 @@ public class InputController : MonoBehaviour
             Invoke("StartMessage", 1f);
         }
 
+        audioSource = GetComponent<AudioSource>();
         checkCursorState();
 
         //不停更新 Vertical 和 Horizontal 實時的輸入的數值
@@ -37,6 +42,7 @@ public class InputController : MonoBehaviour
 
     void StartMessage()
     {
+        audioSource.PlayOneShot(sound_Stop);
         Time.timeScale = 0; //暫停遊戲
         pauseUI.SetActive(true);
         Cursor.lockState = CursorLockMode.None;
@@ -53,6 +59,8 @@ public class InputController : MonoBehaviour
         {
             if (Cursor.lockState == CursorLockMode.Locked)
             {
+                audioSource.PlayOneShot(sound_Stop);
+
                 Time.timeScale = 0; //暫停遊戲
                 pauseUI.SetActive(true);
                 Cursor.lockState = CursorLockMode.None;
@@ -60,6 +68,8 @@ public class InputController : MonoBehaviour
             }
             else
             {
+                audioSource.PlayOneShot(sound_Stop);
+
                 Time.timeScale = 1; //繼續遊戲 (恢復遊戲運行數度)
                 pauseUI.SetActive(false);
                 Cursor.lockState = CursorLockMode.Locked;

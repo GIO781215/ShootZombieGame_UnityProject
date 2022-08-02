@@ -50,7 +50,10 @@ public class PickUpItem : MonoBehaviour
         if(other.gameObject.tag == "Player")
         {
             if (other.GetComponent<PlayerWeaponController>())
+            {
                 other.GetComponent<PlayerWeaponController>().PickUpWeapon(this.gameObject); //禗 Player 具(礙簀)
+                other.GetComponent<PlayerWeaponController>().SwitchWeaponToFlamethrower(); //钡琵 Player ち传Θ礙簀
+            }
 
             Destroy(this.gameObject, 0.1f); //綪反
             rootObject.GetComponent<PickUpFlamethrower>().DestroySelf(); //綪反程糷ン

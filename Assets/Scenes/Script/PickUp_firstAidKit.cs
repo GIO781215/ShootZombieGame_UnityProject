@@ -13,11 +13,22 @@ public class PickUp_firstAidKit : MonoBehaviour
 
     float i = 255;
 
+    [SerializeField] AudioClip sound_GetItem;
+    AudioSource audioSource;
+
+
+
+    private void Start()
+    {
+        audioSource = GetComponent<AudioSource>();
+
+    }
 
 
     [System.Obsolete]
     public void DestroySelf()
     {
+        audioSource.PlayOneShot(sound_GetItem);
         StartCoroutine(graduallyDisappear());
     }
 

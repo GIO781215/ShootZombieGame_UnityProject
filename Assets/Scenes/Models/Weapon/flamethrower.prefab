@@ -137,7 +137,7 @@ MonoBehaviour:
   weaponType: 1
   ShootEffectPrefab: {fileID: 1295782629849733217, guid: e964cbb9037b1fc4d9e236a19cb3da06, type: 3}
   sound_MachinegunShoot: {fileID: 0}
-  sound_FlamethrowerShoot: {fileID: 8300000, guid: 0945b72b3fde78e41b2d01139ecee2a5, type: 3}
+  sound_FlamethrowerShoot: {fileID: 8300000, guid: d306f336cc36ef54f8883382b148b4d3, type: 3}
   sound_SwitchWeapon: {fileID: 0}
 --- !u!82 &-234537182222435315
 AudioSource:
