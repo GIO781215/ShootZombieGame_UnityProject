@@ -58,7 +58,7 @@ public class InputController : MonoBehaviour
 
     private void checkCursorState()
     {
-        if(Input.GetKeyDown(KeyCode.Escape))
+        if(Input.GetKeyDown(KeyCode.Return))
         {
             if (Cursor.lockState == CursorLockMode.Locked)
             {
