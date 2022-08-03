@@ -189,7 +189,7 @@ public class CameraController : MonoBehaviour
     }
 
 
-    public void resetCamera()
+    public void resetCamera() //重新開始遊戲回會呼叫到
     {
        HeightOffset = 3; //攝影機的高度
        CameraAngle_X = 0; //攝影機左右起始角度
@@ -204,6 +204,12 @@ public class CameraController : MonoBehaviour
        cameraToTargetMaxDistance = 15; //攝影機與目標的最大距離
        CameraAngle_Offset = 270; //攝影機 Y 軸的起始旋轉角度
        IsFirsrRun = true; //第一次執行 LateUpdate() 的旗標
+
+        //重新加入衝刺與扣血的特效
+        PlayerController playerController = GameObject.FindGameObjectsWithTag("Player")[0].GetComponent<PlayerController>();
+        playerController.onSprint += OnSprint;
+        playerController.GetComponent<Health>().onDamage += OnDamage;
+ 
     }
 
 
