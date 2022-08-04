@@ -173,7 +173,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.39607844}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.3137255}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -623,6 +623,7 @@ GameObject:
   - component: {fileID: 680627906}
   - component: {fileID: 680627908}
   - component: {fileID: 680627907}
+  - component: {fileID: 680627909}
   m_Layer: 5
   m_Name: Lose
   m_TagString: Untagged
@@ -690,6 +691,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 680627905}
   m_CullTransparentMesh: 1
+--- !u!114 &680627909
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 680627905}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11aaab3f16df736499c0c6d127950162, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lose_pictrue: {fileID: 968094115}
+  lose_background: {fileID: 982715059}
+  restart: {fileID: 2029290105}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -987,9 +1003,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 046e9b2b1a6ac6248a5171ffdb5e4b9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sound_BGM: {fileID: 8300000, guid: fd0b9886f5fc17b499bac335ae8a02a9, type: 3}
-  sound_Win: {fileID: 8300000, guid: 661d14a14cb6fd746952cdb49ca9772a, type: 3}
-  sound_Lose: {fileID: 8300000, guid: d40d263c18ca01e40bc0e39e186d08c9, type: 3}
 --- !u!20 &963194227
 Camera:
   m_ObjectHideFlags: 0
@@ -1061,8 +1074,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f46de8fa896d1145a3128d640b8bd75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Victory_UI: {fileID: 1696074421}
+  Lose_UI: {fileID: 680627905}
+  sound_BGM: {fileID: 8300000, guid: fd0b9886f5fc17b499bac335ae8a02a9, type: 3}
+  sound_Restart: {fileID: 8300000, guid: a31e70bf03c9742408695ead2b59fa84, type: 3}
+  sound_Victory: {fileID: 8300000, guid: 661d14a14cb6fd746952cdb49ca9772a, type: 3}
+  sound_Lose: {fileID: 8300000, guid: 5fa9905bf6a59754c8d8197d73162ba8, type: 3}
   target: {fileID: 2098220445}
   player: {fileID: 2098220444}
+  mutant: {fileID: 1888003793}
   behitEffect: {fileID: 865288178}
   rushEffect: {fileID: 69868303}
   HeightOffset: 3
@@ -1176,7 +1196,7 @@ GameObject:
   - component: {fileID: 968094116}
   - component: {fileID: 968094115}
   m_Layer: 5
-  m_Name: victory_picture
+  m_Name: lose_picture
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1422,7 +1442,7 @@ GameObject:
   - component: {fileID: 982715060}
   - component: {fileID: 982715059}
   m_Layer: 5
-  m_Name: victory_background
+  m_Name: lose_background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1892,6 +1912,7 @@ GameObject:
   - component: {fileID: 1696074422}
   - component: {fileID: 1696074424}
   - component: {fileID: 1696074423}
+  - component: {fileID: 1696074425}
   m_Layer: 5
   m_Name: Victory
   m_TagString: Untagged
@@ -1959,6 +1980,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1696074421}
   m_CullTransparentMesh: 1
+--- !u!114 &1696074425
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1696074421}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa9a02d4baee5d642a76e719a3775d33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  victory_pictrue: {fileID: 1892260909}
+  victory_background: {fileID: 7045688}
+  restart: {fileID: 1221242867}
 --- !u!1 &1874730930
 GameObject:
   m_ObjectHideFlags: 0
@@ -2025,6 +2061,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1888003793 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2758383476896491629, guid: 3ebe1bdbc4447e94998d524152bccd56, type: 3}
+  m_PrefabInstance: {fileID: 2758383477017999002}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1892260907
 GameObject:
   m_ObjectHideFlags: 0

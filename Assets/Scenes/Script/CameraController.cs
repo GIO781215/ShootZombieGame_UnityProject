@@ -6,12 +6,24 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     InputController inputController;
+    [SerializeField] GameObject Victory_UI;
+    [SerializeField] GameObject Lose_UI;
+
+
+    [SerializeField] AudioClip sound_BGM; //BGM
+    [SerializeField] AudioClip sound_Restart; //重新開始音效
+    [SerializeField] AudioClip sound_Victory; //勝利音效
+    [SerializeField] AudioClip sound_Lose; //失敗音效
+    AudioSource audioSource;
+
 
     [Header("相機跟隨的目標")]
     public Transform target; //private 可省略，預設就是 private
     //[SerializeField] private Transform target_temp; //刪除玩家時攝影機要變更的追隨目標
 
     [SerializeField] GameObject player; //做受傷特效用，要得到玩家的血量系統
+    [SerializeField] GameObject mutant; //判別打倒魔王後跳出勝利UI用的
+
     [SerializeField] ParticleSystem behitEffect; //受傷時的特效
     [SerializeField] ParticleSystem rushEffect; //衝刺時的特效
 
@@ -46,13 +58,32 @@ public class CameraController : MonoBehaviour
     float A_value = 0;
     float D_value = 0;
 
+ 
+
 
 
     void Start()
     {
         inputController = GameManager.Instance.inputController;
         player.GetComponent<Health>().onDamage += OnDamage;
+        player.GetComponent<Health>().onDie += OnDie_Player;
         player.GetComponent<PlayerController>().onSprint += OnSprint;
+
+        mutant.GetComponent<Health>().onDie += OnDie_Mutant;
+        audioSource = GetComponent<AudioSource>();
+
+        //設置勝利與失敗的UI
+        Victory_UI.SetActive(true);
+        Victory_UI.GetComponent<Victory_UI_Controller>().Hied();
+        Lose_UI.SetActive(true);
+        Lose_UI.GetComponent<Lose_UI_Controller>().Hied();
+
+        //一開始先播放 BGM
+        audioSource.volume = 0.5f;
+        audioSource.loop = true;
+        audioSource.clip = sound_BGM;
+        audioSource.Play();
+
     }
 
 
@@ -179,6 +210,31 @@ public class CameraController : MonoBehaviour
         }
     }
 
+    private void OnDie_Player()
+    {
+        Invoke("playLoseSound", 1.5f);
+        Lose_UI.GetComponent<Lose_UI_Controller>().Show();
+    }
+
+    void playLoseSound()
+    {
+        audioSource.Stop();
+        audioSource.PlayOneShot(sound_Lose);
+    }
+
+    private void OnDie_Mutant()
+    {
+        Invoke("playVictorySound", 1.5f);
+        Victory_UI.GetComponent<Victory_UI_Controller>().Show();
+    }
+
+    void playVictorySound()
+    {
+        audioSource.Stop();
+        audioSource.volume = 0.35f;
+        audioSource.PlayOneShot(sound_Victory);
+    }
+
     private void OnSprint()
     {
         if (rushEffect != null)
@@ -187,6 +243,21 @@ public class CameraController : MonoBehaviour
             rushEffect.Play();
         }
     }
+
+
+
+
+
+    //--------音效控制放這裡好像不太對.........
+    public void Stop_Background_Music()
+    {
+
+    }
+    public void Play_Background_Music()
+    {
+
+    }
+
 
 
     public void resetCamera() //重新開始遊戲回會呼叫到
@@ -205,11 +276,26 @@ public class CameraController : MonoBehaviour
        CameraAngle_Offset = 270; //攝影機 Y 軸的起始旋轉角度
        IsFirsrRun = true; //第一次執行 LateUpdate() 的旗標
 
-        //重新加入衝刺與扣血的特效
+        //重新對玩家物件加入委託事件的函數
         PlayerController playerController = GameObject.FindGameObjectsWithTag("Player")[0].GetComponent<PlayerController>();
         playerController.onSprint += OnSprint;
         playerController.GetComponent<Health>().onDamage += OnDamage;
- 
+        playerController.GetComponent<Health>().onDie += OnDie_Player;
+        //重新對魔王物件加入委託事件的函數
+        MutantController mutantController = GameObject.FindGameObjectsWithTag("Mutant")[0].GetComponent<MutantController>();
+        mutantController.GetComponent<Health>().onDie += OnDie_Mutant;
+
+        //隱藏勝利與失敗的UI
+        Victory_UI.GetComponent<Victory_UI_Controller>().Hied();
+        Lose_UI.GetComponent<Lose_UI_Controller>().Hied();
+
+        //播放音效
+        audioSource.PlayOneShot(sound_Restart);
+
+        audioSource.volume = 0.5f;
+        audioSource.loop = true;
+        audioSource.clip = sound_BGM;
+        audioSource.Play();
     }
 
 

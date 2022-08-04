@@ -98,12 +98,12 @@ public class MutantController : MonoBehaviour
     void Update()
     {
 
-        /*//--------------------------------------------
+       //--------------------------------------------
         if (Input.GetKeyDown(KeyCode.O))
         {
-              health.TakeDamage(600);
+              health.TakeDamage(1000);
         }
-        *///---------------------------------------------
+         //---------------------------------------------
 
 
 

@@ -26,6 +26,8 @@ public class GameManager : MonoBehaviour
         }
     }
 
+ 
+
     void Update()
     {
 
@@ -52,6 +54,7 @@ public class GameManager : MonoBehaviour
         cameraController.resetCamera();
 
     }
+
 
 
     /*---------不喜歡這樣寫------------

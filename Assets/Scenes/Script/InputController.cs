@@ -53,9 +53,6 @@ public class InputController : MonoBehaviour
     }
 
 
-
-
-
     private void checkCursorState()
     {
         if(Input.GetKeyDown(KeyCode.Return))
