@@ -6,11 +6,12 @@ public class GameManager : MonoBehaviour
 {
 
     public static GameManager Instance;
-    public InputController inputController;
     public CameraController cameraController;
+    [HideInInspector] public InputController inputController;
     [SerializeField] GameObject Game_Scence;
     [SerializeField] GameObject Game_Scence_Root;
     [SerializeField] GameObject Game_Scence_Prefab;
+
 
 
     void Awake()
@@ -31,27 +32,32 @@ public class GameManager : MonoBehaviour
     void Update()
     {
 
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            //銷毀場景裡的所有角色
-            cameraController.target = this.transform;
-            Destroy(Game_Scence);
-            if (Game_Scence == null)
-            {
-                Destroy(GameObject.FindGameObjectsWithTag("Scence_Prefab_")[0]);
-            }
-
-            Invoke("ResetScence", 0.001f);
-        }
 
     }
+
+
+
+    public void RestartGame() //重新開始遊戲
+    {
+        cameraController.target = this.transform; //避免  cameraController.target = NULL 讓其他地方的程式出錯
+        Destroy(Game_Scence);
+        if (Game_Scence == null)
+        {
+            Destroy(GameObject.FindGameObjectsWithTag("Scence_Prefab_")[0]);
+        }
+
+        Invoke("ResetScence", 0.001f);
+
+    }
+
 
     private void ResetScence()
     {
         //重建場景裡的所有角色
         GameObject gameScence = Instantiate(Game_Scence_Prefab, Game_Scence_Root.transform.position, Game_Scence_Root.transform.rotation, GameObject.FindGameObjectsWithTag("Scence_Prefab")[0].transform); //生成僵屍的巡邏路徑，第四個參數是生成的實體要把誰當作父對象
-        cameraController.target = GameObject.FindGameObjectsWithTag("Player")[0].transform;
-        cameraController.resetCamera();
+        cameraController.target = GameObject.FindGameObjectsWithTag("Player")[0].transform; //這邊再把 cameraController.target 指定回來
+        cameraController.resetCamera(); //其他要重置的一些參數在 CameraController 中
+        cameraController.resetCamera(); //其他要重置的一些參數在 CameraController 中
 
     }
 

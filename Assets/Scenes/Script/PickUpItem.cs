@@ -12,8 +12,6 @@ public class PickUpItem : MonoBehaviour
     float verticalMoveSpeed = 1.5f; //道具上下移動的速度
     float bobbingDistance = 0.3f; //道具上下移動的距離
 
-    public event Action<GameObject> onPick;
-
     Vector3 startPosition;
 
 

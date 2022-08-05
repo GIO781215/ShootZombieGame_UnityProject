@@ -8,6 +8,7 @@ public class InputController : MonoBehaviour
     bool IsFirstTime = true; //是否為第一次執行
 
     public float vertical_value;
+    [SerializeField] CameraController cameraController;
     [HideInInspector] public float horizontal_value;
     [HideInInspector] private bool canInput;
     public GameObject pauseUI;
@@ -55,7 +56,7 @@ public class InputController : MonoBehaviour
 
     private void checkCursorState()
     {
-        if(Input.GetKeyDown(KeyCode.Return))
+        if(Input.GetKeyDown(KeyCode.Return) && !cameraController.IsPlayerDeath && !cameraController.IsMutantDeath)
         {
             if (Cursor.lockState == CursorLockMode.Locked)
             {
@@ -84,8 +85,7 @@ public class InputController : MonoBehaviour
         }
     }
 
-
-
+    
     public float GetMouseX() //得到滑鼠的左右移動輸入
     {
         if (canInput)

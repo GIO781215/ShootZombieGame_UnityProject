@@ -5,10 +5,13 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
+    GameManager gameManager;
     InputController inputController;
     [SerializeField] GameObject Victory_UI;
     [SerializeField] GameObject Lose_UI;
 
+    public bool IsPlayerDeath = false; //玩家是否死亡旗標
+    public bool IsMutantDeath = false; //魔王是否死亡旗標
 
     [SerializeField] AudioClip sound_BGM; //BGM
     [SerializeField] AudioClip sound_Restart; //重新開始音效
@@ -89,7 +92,10 @@ public class CameraController : MonoBehaviour
 
     private void Update()
     {
-
+        if (Input.GetKeyDown(KeyCode.Return) && (IsPlayerDeath || IsMutantDeath))
+        {
+            GameManager.Instance.RestartGame();
+        }
     }
 
     private void LateUpdate() //在 Update 後執行
@@ -212,27 +218,37 @@ public class CameraController : MonoBehaviour
 
     private void OnDie_Player()
     {
+        IsPlayerDeath = true;
         Invoke("playLoseSound", 1.5f);
         Lose_UI.GetComponent<Lose_UI_Controller>().Show();
     }
 
     void playLoseSound()
     {
-        audioSource.Stop();
-        audioSource.PlayOneShot(sound_Lose);
+        if (IsPlayerDeath == true)
+        {
+            audioSource.Stop();
+            audioSource.PlayOneShot(sound_Lose);
+            Cursor.lockState = CursorLockMode.None; //解放滑鼠
+        }
     }
 
     private void OnDie_Mutant()
     {
+        IsMutantDeath = true;
         Invoke("playVictorySound", 1.5f);
         Victory_UI.GetComponent<Victory_UI_Controller>().Show();
     }
 
     void playVictorySound()
     {
-        audioSource.Stop();
-        audioSource.volume = 0.35f;
-        audioSource.PlayOneShot(sound_Victory);
+        if (IsMutantDeath == true)
+        {
+            audioSource.Stop();
+            audioSource.volume = 0.35f;
+            audioSource.PlayOneShot(sound_Victory);
+            Cursor.lockState = CursorLockMode.None; //解放滑鼠
+        }
     }
 
     private void OnSprint()
@@ -260,7 +276,7 @@ public class CameraController : MonoBehaviour
 
 
 
-    public void resetCamera() //重新開始遊戲回會呼叫到
+    public void resetCamera() //會被 GameManager 中重新開始遊戲的函數 RestartGame() 呼叫到
     {
        HeightOffset = 3; //攝影機的高度
        CameraAngle_X = 0; //攝影機左右起始角度
@@ -296,6 +312,12 @@ public class CameraController : MonoBehaviour
         audioSource.loop = true;
         audioSource.clip = sound_BGM;
         audioSource.Play();
+
+        //重置參數
+        IsPlayerDeath = false;
+        IsMutantDeath = false;
+        Cursor.lockState = CursorLockMode.Locked; //鎖住滑鼠
+
     }
 
 

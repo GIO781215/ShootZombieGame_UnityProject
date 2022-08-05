@@ -1076,6 +1076,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Victory_UI: {fileID: 1696074421}
   Lose_UI: {fileID: 680627905}
+  IsPlayerDeath: 0
+  IsMutantDeath: 0
   sound_BGM: {fileID: 8300000, guid: fd0b9886f5fc17b499bac335ae8a02a9, type: 3}
   sound_Restart: {fileID: 8300000, guid: a31e70bf03c9742408695ead2b59fa84, type: 3}
   sound_Victory: {fileID: 8300000, guid: 661d14a14cb6fd746952cdb49ca9772a, type: 3}
@@ -1291,8 +1293,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4c2a605d2eb0b54f90522cc448f7444, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputController: {fileID: 0}
   cameraController: {fileID: 963194229}
+  inputController: {fileID: 0}
   Game_Scence: {fileID: 830644142}
   Game_Scence_Root: {fileID: 1248242188}
   Game_Scence_Prefab: {fileID: 211246658914261405, guid: 3ebe1bdbc4447e94998d524152bccd56, type: 3}
@@ -1323,6 +1325,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   vertical_value: 0
+  cameraController: {fileID: 963194229}
   horizontal_value: 0
   pauseUI: {fileID: 637687490}
   sound_Stop: {fileID: 8300000, guid: 39f3592a6097c8548a905b8f02d24003, type: 3}

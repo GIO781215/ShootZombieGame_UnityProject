@@ -454,11 +454,9 @@ public class MutantController : MonoBehaviour
     private IEnumerator keepChasing(float time) //瘋狂追逐玩家的函數  
     {
         float _viewDistance = viewDistance;
-        print(viewDistance);
         viewDistance = 10000;
         yield return new WaitForSeconds(time); //等待 time 秒後
         viewDistance = _viewDistance;
-        print(viewDistance);
     }
 
     void OnDamage()

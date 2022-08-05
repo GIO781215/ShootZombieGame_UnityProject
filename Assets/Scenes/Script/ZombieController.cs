@@ -12,7 +12,6 @@ public class ZombieController : MonoBehaviour
     Health health; //用來獲得自己的血量系統物件
 
     bool gameOver = false;
-    float timeSinceLastGameOver = 0;
 
 
     public float viewDistance = 15f; //殭屍視野範圍
