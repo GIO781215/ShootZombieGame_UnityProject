@@ -22,7 +22,8 @@ public class InputController : MonoBehaviour
     [SerializeField] GameObject closeButtonPosition;
     GameObject pauseUI_ClolseButton;
 
-
+    [SerializeField] GameObject LittleMapUI; //小地圖，開啟關閉的功能加在此腳本
+    bool LittleMapUI_Flag = true;
 
     private void Start()
     {
@@ -44,6 +45,8 @@ public class InputController : MonoBehaviour
 
         audioSource = GetComponent<AudioSource>();
         checkCursorState();
+
+        On_Off_LittleMap(); //開關小地圖
 
         //不停更新 Vertical 和 Horizontal 實時的輸入的數值
         //vertical_value = Input.GetAxis("Vertical");  //得到 Unity -> Editor -> Project Settings 中 Input Manager 裡的 Axis -> Vertical 的數值
@@ -317,5 +320,17 @@ public class InputController : MonoBehaviour
         return false;
     }
 
- 
+
+
+
+    //開啟 / 關閉小地圖
+    void On_Off_LittleMap()
+    {
+        if (GetKeyFInputDown())
+        {
+            LittleMapUI_Flag = !LittleMapUI_Flag;
+            LittleMapUI.SetActive(LittleMapUI_Flag);
+        }
+    }
+
 }

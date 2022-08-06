@@ -14,8 +14,8 @@ public class PlayerWeaponController : MonoBehaviour
     推測是在 Unity 中可以把掛有該腳本的 GameObject 直接指定給該腳本的 class 變數，而得到的依然是這個 class 組件而不是丟給他的 GameObject
     *///---------------------------------------------------------------------------
     [SerializeField] List<Weapon> AllWeaponsList = new List<Weapon>(); //遊戲中所有種類的武器，在 Unity 中就把所有武器的 prefab 都先丟進來給他 (只要把 Weapon 腳本掛在武器模型的預製物件下，就可以直接先丟進去)
-    public Image[] machinegunUI = new Image[3];
-    public Image[] flamethrowerUI = new Image[3];
+    Image[] machinegunUI = new Image[3];
+    Image[] flamethrowerUI = new Image[3];
     //public Sprite image; //可直接放圖片資源
 
 
@@ -36,6 +36,9 @@ public class PlayerWeaponController : MonoBehaviour
 
     void Start()
     {
+
+        WeaponUI_Init();
+
         audioSource = GetComponent<AudioSource>();
         inputController = GameManager.Instance.inputController;
         playerController = GetComponent<PlayerController>();
@@ -51,19 +54,6 @@ public class PlayerWeaponController : MonoBehaviour
             AddWeapon(weapon);
         }
           */
-
-
-
-
-        //初始化武器 UI，變小變灰所有武器的 UI
-        machinegunUI[0].transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
-        flamethrowerUI[0].transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
-        machinegunUI[0].color = new Color(170f / 255f, 170f / 255f, 170f / 255f);
-        machinegunUI[1].color = new Color(170f / 255f, 170f / 255f, 170f / 255f);
-        machinegunUI[2].color = new Color(170f / 255f, 170f / 255f, 170f / 255f);
-        flamethrowerUI[0].color = new Color(170f / 255f, 170f / 255f, 170f / 255f);
-        flamethrowerUI[1].color = new Color(170f / 255f, 170f / 255f, 170f / 255f);
-        flamethrowerUI[2].color = new Color(170f / 255f, 170f / 255f, 170f / 255f);
 
     }
 
@@ -102,7 +92,33 @@ public class PlayerWeaponController : MonoBehaviour
     }
 
 
+    public void WeaponUI_Init() //初始化武器的UI
+    {
+        //初始化武器 UI，獲得武器的 UI 的 GameObject
+        machinegunUI[0] = GameObject.FindGameObjectsWithTag("machinegunUI_1")[0].GetComponent<Image>();
+        machinegunUI[1] = GameObject.FindGameObjectsWithTag("machinegunUI_2")[0].GetComponent<Image>();
+        machinegunUI[2] = GameObject.FindGameObjectsWithTag("machinegunUI_3")[0].GetComponent<Image>();
+        flamethrowerUI[0] = GameObject.FindGameObjectsWithTag("flamethrowerUI_1")[0].GetComponent<Image>();
+        flamethrowerUI[1] = GameObject.FindGameObjectsWithTag("flamethrowerUI_2")[0].GetComponent<Image>();
+        flamethrowerUI[2] = GameObject.FindGameObjectsWithTag("flamethrowerUI_3")[0].GetComponent<Image>();
 
+        //變小變灰所有武器的 UI
+        machinegunUI[0].transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
+        flamethrowerUI[0].transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
+
+        machinegunUI[0].color = new Color(170f / 255f, 170f / 255f, 170f / 255f);
+        machinegunUI[1].color = new Color(170f / 255f, 170f / 255f, 170f / 255f);
+        machinegunUI[2].color = new Color(170f / 255f, 170f / 255f, 170f / 255f);
+        flamethrowerUI[0].color = new Color(170f / 255f, 170f / 255f, 170f / 255f);
+        flamethrowerUI[1].color = new Color(170f / 255f, 170f / 255f, 170f / 255f);
+        flamethrowerUI[2].color = new Color(170f / 255f, 170f / 255f, 170f / 255f);
+
+        machinegunUI[2].enabled = true;
+        flamethrowerUI[2].enabled = true;
+
+
+        //最後再來判斷是否為手機模式需要隱藏
+    }
 
 
 

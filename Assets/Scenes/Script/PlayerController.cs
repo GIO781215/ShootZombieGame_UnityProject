@@ -55,8 +55,7 @@ public class PlayerController : MonoBehaviour
     Vector3 moveDirection; //Player 下一幀要移動到的位置
     Vector3 jumpDirection; //Player 下一幀要跳躍到的方向
 
-    [SerializeField] GameObject LittleMapUI; //小地圖，開啟關閉的功能加在此腳本
-    bool LittleMapUI_Flag = true;
+
 
 
     void Start()
@@ -81,7 +80,6 @@ public class PlayerController : MonoBehaviour
         if (health.currentHealth == 0)
             return;
 
-        On_Off_LittleMap(); //開關小地圖
 
         AimBehaviour();
         MoveBehaviour();
@@ -301,17 +299,7 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    //開啟 / 關閉小地圖
-    void On_Off_LittleMap()
-    {
-        if(inputController.GetKeyFInputDown())
-        {
-            LittleMapUI_Flag = !LittleMapUI_Flag;
-            LittleMapUI.SetActive(LittleMapUI_Flag);
-        }
-    }
-
-
+ 
 
     //獲得當前相機的正前方方向
     private Vector3 GetCurrentCameraForward()

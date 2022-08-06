@@ -14,6 +14,12 @@ TagManager:
   - Scence_Prefab_
   - closeButtonPosition
   - GameManager
+  - machinegunUI_3
+  - machinegunUI_2
+  - machinegunUI_1
+  - flamethrowerUI_1
+  - flamethrowerUI_2
+  - flamethrowerUI_3
   layers:
   - Default
   - TransparentFX
