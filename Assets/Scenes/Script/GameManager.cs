@@ -15,7 +15,10 @@ public class GameManager : MonoBehaviour
 
     GameObject restartGameScence;
 
+    public bool IsPhoneMode = false; //預設為電腦版模式(非手機模式)
 
+
+     
     void Awake()
     {
         if (Instance == null)
@@ -57,6 +60,21 @@ public class GameManager : MonoBehaviour
     }
 
 
+    public void setPhoneMode()
+    {
+        IsPhoneMode = true;
+        print(IsPhoneMode);
+        print("PhoneMode");
+
+    }
+
+
+    public void setComputerMode()
+    {
+        IsPhoneMode = false;
+        print(IsPhoneMode);
+        print("ComputerMode");
+    }
 
     /*---------不喜歡這樣寫------------
      * 
