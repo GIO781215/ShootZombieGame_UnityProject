@@ -90,6 +90,7 @@ public class MutantController : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
 
         viewDistance = startDistance;
+
     }
 
 

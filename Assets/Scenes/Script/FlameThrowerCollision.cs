@@ -43,7 +43,7 @@ public class FlameThrowerCollision : MonoBehaviour
             Health targetHealth = other.GetComponent<Health>();
             if (targetHealth != null && !targetHealth.IsDead())
             {
-                targetHealth.TakeDamage(3);
+                targetHealth.TakeDamage(5);
             }
         }
 
