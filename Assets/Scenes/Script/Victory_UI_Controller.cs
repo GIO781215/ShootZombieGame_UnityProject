@@ -16,6 +16,7 @@ public class Victory_UI_Controller : MonoBehaviour
     float startDelayTime = 2;  //過幾秒後開始淡入UI畫面
 
 
+ 
 
 
     public void Hied()
@@ -23,13 +24,13 @@ public class Victory_UI_Controller : MonoBehaviour
         black_background.color = new Color(0 / 255f, 0 / 255f, 0 / 255f, 0 / 255f);
         victory_pictrue.color = new Color(255f / 255f, 255f / 255f, 255f / 255f, 0 / 255f);
         victory_background.color = new Color(255f / 255f, 255f / 255f, 255f / 255f, 0 / 255f);
-        restart.color = new Color(255f / 255f, 255f / 255f, 255f / 255f, 0 / 255f);
         IsHied = true;
     }
 
 
      public void Show()
     {
+        restart.gameObject.SetActive(true);
         black_background.color = new Color(0 / 255f, 0 / 255f, 0 / 255f, 0 / 255f);
         victory_pictrue.color = new Color(255f / 255f, 255f / 255f, 255f / 255f, 0 / 255f);
         victory_background.color = new Color(255f / 255f, 255f / 255f, 255f / 255f, 0 / 255f);

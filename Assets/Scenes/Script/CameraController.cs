@@ -16,6 +16,8 @@ public class CameraController : MonoBehaviour
     [SerializeField] AudioClip sound_BGM; //BGM
     [SerializeField] AudioClip sound_Restart; //重新開始音效
     [SerializeField] AudioClip sound_Victory; //勝利音效
+    [SerializeField] GameObject restartButton; //重新開始的按鈕
+
     [SerializeField] AudioClip sound_Lose; //失敗音效
     AudioSource audioSource;
 
@@ -245,7 +247,7 @@ public class CameraController : MonoBehaviour
         if (IsMutantDeath == true)
         {
             audioSource.Stop();
-            audioSource.volume = 0.35f;
+            audioSource.volume = 0.3f;
             audioSource.PlayOneShot(sound_Victory);
             Cursor.lockState = CursorLockMode.None; //解放滑鼠
         }
@@ -289,9 +291,11 @@ public class CameraController : MonoBehaviour
 
         //隱藏勝利與失敗的UI
         Victory_UI.SetActive(true);
-        Victory_UI.GetComponent<Victory_UI_Controller>().Hied();
         Lose_UI.SetActive(true);
+        Victory_UI.GetComponent<Victory_UI_Controller>().Hied();
         Lose_UI.GetComponent<Lose_UI_Controller>().Hied();
+        restartButton.gameObject.SetActive(false);
+
 
         //播放音效
         audioSource.PlayOneShot(sound_Restart);

@@ -16,7 +16,13 @@ public class InputController : MonoBehaviour
 
     [SerializeField] AudioClip sound_Stop; //暫停音效
     AudioSource audioSource;
- 
+
+
+    [SerializeField] GameObject pauseUI_ClolseButton_Prefab; //為了解決用滑鼠按了關閉之後，下次再用鍵盤 Enter 鍵按關閉，會有關閉按鈕焦點已經存在所以被重複觸發兩次的問題，直接銷毀重建一個來解決
+    [SerializeField] GameObject closeButtonPosition;
+    GameObject pauseUI_ClolseButton;
+
+
 
     private void Start()
     {
@@ -54,14 +60,15 @@ public class InputController : MonoBehaviour
         }
         Cursor.lockState = CursorLockMode.None;
         canInput = false;
-    }
+        pauseUI_ClolseButton = Instantiate(pauseUI_ClolseButton_Prefab, closeButtonPosition.transform.position, closeButtonPosition.transform.rotation, GameObject.FindGameObjectsWithTag("closeButtonPosition")[0].transform);
 
+    }
 
     private void checkCursorState()
     {
         if(Input.GetKeyDown(KeyCode.Return) && !cameraController.IsPlayerDeath && !cameraController.IsMutantDeath)
         {
-            if (Cursor.lockState == CursorLockMode.Locked)
+            if (Cursor.lockState == CursorLockMode.Locked) //if (pauseUI.activeInHierarchy == false)   
             {
                 audioSource.PlayOneShot(sound_Stop);
 
@@ -72,23 +79,42 @@ public class InputController : MonoBehaviour
                 }
                 Cursor.lockState = CursorLockMode.None;
                 canInput = false;
+                pauseUI_ClolseButton = Instantiate(pauseUI_ClolseButton_Prefab, closeButtonPosition.transform.position, closeButtonPosition.transform.rotation, GameObject.FindGameObjectsWithTag("closeButtonPosition")[0].transform);
             }
             else
             {
                 audioSource.PlayOneShot(sound_Stop);
 
-                Time.timeScale = 1; //繼續遊戲 (恢復遊戲運行數度)
+                Time.timeScale = 1; //繼續遊戲 (恢復遊戲運行速度)
                 if(pauseUI != null)
                 {
                     pauseUI.SetActive(false);
                 }
                 Cursor.lockState = CursorLockMode.Locked;
                 canInput = true;
+                if(pauseUI_ClolseButton)
+                  Destroy(pauseUI_ClolseButton);
             }
         }
     }
 
-    
+    public void ContinueGame()
+    {
+
+        audioSource.PlayOneShot(sound_Stop);
+
+        Time.timeScale = 1; //繼續遊戲 (恢復遊戲運行速度)
+        if (pauseUI != null)
+        {
+            pauseUI.SetActive(false);
+        }
+        Cursor.lockState = CursorLockMode.Locked;
+        canInput = true;
+        if (pauseUI_ClolseButton)
+            Destroy(pauseUI_ClolseButton);
+    }
+
+
     public float GetMouseX() //得到滑鼠的左右移動輸入
     {
         if (canInput)

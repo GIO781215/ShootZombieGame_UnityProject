@@ -12,6 +12,8 @@ TagManager:
   - SpawnWall
   - Scence_Prefab
   - Scence_Prefab_
+  - closeButtonPosition
+  - GameManager
   layers:
   - Default
   - TransparentFX
