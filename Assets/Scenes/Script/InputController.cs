@@ -17,7 +17,7 @@ public class InputController : MonoBehaviour
     AudioSource audioSource;
 
 
-    private void Awake()
+    private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked; //±N¹«¼ÐÂê¦í
         canInput = true;
