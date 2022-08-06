@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -25,6 +26,7 @@ public class GameManager : MonoBehaviour
         {
             Debug.LogWarning("初始化時 GameManager 已經有實體，程式可能有問題請檢察");
         }
+
     }
 
  
@@ -53,10 +55,14 @@ public class GameManager : MonoBehaviour
 
     private void ResetScence()
     {
+        /*
+        InputField inputField = this.GetComponent<InputField>();
+        inputField.Select();
+        inputField.ActivateInputField();
+        */
         //重建場景裡的所有角色
         GameObject gameScence = Instantiate(Game_Scence_Prefab, Game_Scence_Root.transform.position, Game_Scence_Root.transform.rotation, GameObject.FindGameObjectsWithTag("Scence_Prefab")[0].transform); //生成僵屍的巡邏路徑，第四個參數是生成的實體要把誰當作父對象
         cameraController.target = GameObject.FindGameObjectsWithTag("Player")[0].transform; //這邊再把 cameraController.target 指定回來
-        cameraController.resetCamera(); //其他要重置的一些參數在 CameraController 中
         cameraController.resetCamera(); //其他要重置的一些參數在 CameraController 中
 
     }

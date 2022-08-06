@@ -24,7 +24,6 @@ public class Victory_UI_Controller : MonoBehaviour
         victory_pictrue.color = new Color(255f / 255f, 255f / 255f, 255f / 255f, 0 / 255f);
         victory_background.color = new Color(255f / 255f, 255f / 255f, 255f / 255f, 0 / 255f);
         restart.color = new Color(255f / 255f, 255f / 255f, 255f / 255f, 0 / 255f);
-
         IsHied = true;
     }
 

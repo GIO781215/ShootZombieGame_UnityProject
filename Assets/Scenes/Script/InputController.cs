@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class InputController : MonoBehaviour
 {
 
@@ -15,10 +16,12 @@ public class InputController : MonoBehaviour
 
     [SerializeField] AudioClip sound_Stop; //暫停音效
     AudioSource audioSource;
-
+ 
 
     private void Start()
     {
+  
+
         Cursor.lockState = CursorLockMode.Locked; //將鼠標鎖住
         canInput = true;
 

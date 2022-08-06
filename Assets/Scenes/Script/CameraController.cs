@@ -262,20 +262,6 @@ public class CameraController : MonoBehaviour
 
 
 
-
-
-    //--------音效控制放這裡好像不太對.........
-    public void Stop_Background_Music()
-    {
-
-    }
-    public void Play_Background_Music()
-    {
-
-    }
-
-
-
     public void resetCamera() //會被 GameManager 中重新開始遊戲的函數 RestartGame() 呼叫到
     {
        HeightOffset = 3; //攝影機的高度
