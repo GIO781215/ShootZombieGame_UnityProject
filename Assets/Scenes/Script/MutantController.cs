@@ -98,14 +98,14 @@ public class MutantController : MonoBehaviour
 
     void Update()
     {
-
-       //--------------------------------------------
-        if (Input.GetKeyDown(KeyCode.O))
+        /*
+       //--------------------魔王直接死 Debug 快速鍵------------------------
+        if (Input.GetKeyDown(KeyCode.P))
         {
               health.TakeDamage(1000);
         }
-         //---------------------------------------------
-
+        //---------------------------------------------
+        */
 
 
 
