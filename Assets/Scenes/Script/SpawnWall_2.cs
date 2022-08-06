@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class SpawnWall_2 : MonoBehaviour
 {
+    MutantController mutantController; //臸ン璶笵狦臸碞ぃ穦ネ穝鞮
     [SerializeField] GameObject Zombie; //鞮箇籹ン
     [SerializeField] PatrolPath ZombiePatrolPath; //鞮ǖ呸隔畖箇籹ン
     [SerializeField] Transform[] spawnPoint; //璶ネΘ竚 (Τ碭常皚柑)
@@ -92,8 +93,16 @@ public class SpawnWall_2 : MonoBehaviour
 
     IEnumerator SpawnZombieAlways()
     {
-        while(true)
+        mutantController = GameObject.FindGameObjectWithTag("Mutant").GetComponent<MutantController>();
+
+        while (true)
         {
+
+            if (mutantController.GetComponent<Health>().currentHealth <= 0) //狦臸⊿﹀碞ぃ穦ネ穝鞮
+            {
+                break;
+            }
+
             int index = Random.Range(4, 7); // Random.Range(int 程int 程) : 繦诀玻ネ俱计絛瞅琌 程 ~ 程(ぃ)  Random.Rang(float 程float 程) : 繦诀玻ネ疊翴计絛瞅琌 程 ~ 程() 
 
             float angleOffset = Random.Range(0, 360f);

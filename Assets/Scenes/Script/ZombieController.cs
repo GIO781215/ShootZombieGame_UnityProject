@@ -48,13 +48,15 @@ public class ZombieController : MonoBehaviour
     public bool alwaysPatrol = false; //殭屍是否會一直巡邏
     public bool OnDamageIsChasing = false; //殭屍被打到時是否會追玩家
 
-
+    MutantController mutantController; //魔王物件，要知道如果魔王死了自己也要死
 
     AnimatorStateInfo BaseLayer;
 
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player"); //找到在 Unity 中將標籤設置為 Player 的 GameObject 
+        mutantController = GameObject.FindGameObjectWithTag("Mutant").GetComponent<MutantController>();
+
         zombieNavMeshAgent = GetComponent<ZombieNavMeshAgent>(); //獲得自己寫的移動導航物件
         animatorController = GetComponentInChildren<Animator>();
 
@@ -95,6 +97,10 @@ public class ZombieController : MonoBehaviour
             return;
         }
 
+        if(mutantController.GetComponent<Health>().currentHealth <=0) //如果魔王沒血了自己直接扣 100 滴血死掉
+        {
+            health.TakeDamage(100);
+        }
 
 
 
