@@ -467,7 +467,7 @@ RectTransform:
   - {fileID: 2030138559}
   - {fileID: 438438513}
   m_Father: {fileID: 577101521}
-  m_RootOrder: 4
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -873,6 +873,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 977133456}
+        m_TargetAssemblyTypeName: InputController, Assembly-CSharp
+        m_MethodName: SetPhoneUI
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &438438512
 GameObject:
   m_ObjectHideFlags: 0
@@ -1098,11 +1110,11 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
+  - {fileID: 126833317}
   - {fileID: 1696074422}
   - {fileID: 680627906}
   - {fileID: 1221242866}
   - {fileID: 637687491}
-  - {fileID: 126833317}
   m_Father: {fileID: 2028909588}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1204,7 +1216,7 @@ RectTransform:
   - {fileID: 1323259292}
   - {fileID: 947174844}
   m_Father: {fileID: 577101521}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -1402,7 +1414,7 @@ RectTransform:
   - {fileID: 968094114}
   - {fileID: 982715058}
   m_Father: {fileID: 577101521}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -2333,6 +2345,8 @@ MonoBehaviour:
   pauseUI_ClolseButton_Prefab: {fileID: 6390913348496967639, guid: 0c14adb55a39b81429f268613b28b730, type: 3}
   closeButtonPosition: {fileID: 1573267919}
   LittleMapUI: {fileID: 886274332}
+  PhoneUI: {fileID: 126833316}
+  ConputgerWeaponUI: {fileID: 2072685200}
 --- !u!82 &977133457
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2916,6 +2930,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 977133456}
+        m_TargetAssemblyTypeName: InputController, Assembly-CSharp
+        m_MethodName: SetComputerUI
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1160697826
 GameObject:
   m_ObjectHideFlags: 0
@@ -3262,7 +3288,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 577101521}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -4267,7 +4293,7 @@ RectTransform:
   - {fileID: 1892260908}
   - {fileID: 7045687}
   m_Father: {fileID: 577101521}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}

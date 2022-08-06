@@ -94,6 +94,9 @@ public class PlayerWeaponController : MonoBehaviour
 
     public void WeaponUI_Init() //初始化武器的UI
     {
+        //如果剛剛是手機模式 這些被隱藏使不能了 會收不到耶怎麼辦?  最後都打開來再隱藏一次???@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+        //另外這邊要和手機版的武器UI一起處理
+
         //初始化武器 UI，獲得武器的 UI 的 GameObject
         machinegunUI[0] = GameObject.FindGameObjectsWithTag("machinegunUI_1")[0].GetComponent<Image>();
         machinegunUI[1] = GameObject.FindGameObjectsWithTag("machinegunUI_2")[0].GetComponent<Image>();

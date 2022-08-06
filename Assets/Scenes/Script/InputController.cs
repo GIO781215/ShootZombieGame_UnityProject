@@ -23,6 +23,8 @@ public class InputController : MonoBehaviour
     GameObject pauseUI_ClolseButton;
 
     [SerializeField] GameObject LittleMapUI; //小地圖，開啟關閉的功能加在此腳本
+    [SerializeField] GameObject PhoneUI;
+    [SerializeField] GameObject ConputgerWeaponUI;
     bool LittleMapUI_Flag = true;
 
     private void Start()
@@ -333,4 +335,17 @@ public class InputController : MonoBehaviour
         }
     }
 
+    public void SetComputerUI()
+    {
+        audioSource.PlayOneShot(sound_Stop);
+        ConputgerWeaponUI.SetActive(true);
+        PhoneUI.SetActive(false);
+    }
+
+    public void SetPhoneUI()
+    {
+        audioSource.PlayOneShot(sound_Stop);
+        ConputgerWeaponUI.SetActive(false);
+        PhoneUI.SetActive(true);
+    }
 }
