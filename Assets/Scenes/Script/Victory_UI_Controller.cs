@@ -7,7 +7,7 @@ public class Victory_UI_Controller : MonoBehaviour
 {
     bool IsHied = true;
 
-    Image black_background;
+    public Image black_background;
     public Image victory_pictrue;
     public Image victory_background;
     public Image restart;
@@ -20,7 +20,6 @@ public class Victory_UI_Controller : MonoBehaviour
 
     public void Hied()
     {
-        black_background = this.GetComponent<Image>();
         black_background.color = new Color(0 / 255f, 0 / 255f, 0 / 255f, 0 / 255f);
         victory_pictrue.color = new Color(255f / 255f, 255f / 255f, 255f / 255f, 0 / 255f);
         victory_background.color = new Color(255f / 255f, 255f / 255f, 255f / 255f, 0 / 255f);
@@ -32,7 +31,6 @@ public class Victory_UI_Controller : MonoBehaviour
 
      public void Show()
     {
-        black_background = this.GetComponent<Image>();
         black_background.color = new Color(0 / 255f, 0 / 255f, 0 / 255f, 0 / 255f);
         victory_pictrue.color = new Color(255f / 255f, 255f / 255f, 255f / 255f, 0 / 255f);
         victory_background.color = new Color(255f / 255f, 255f / 255f, 255f / 255f, 0 / 255f);

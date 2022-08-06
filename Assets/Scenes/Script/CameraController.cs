@@ -302,7 +302,9 @@ public class CameraController : MonoBehaviour
         mutantController.GetComponent<Health>().onDie += OnDie_Mutant;
 
         //隱藏勝利與失敗的UI
+        Victory_UI.SetActive(true);
         Victory_UI.GetComponent<Victory_UI_Controller>().Hied();
+        Lose_UI.SetActive(true);
         Lose_UI.GetComponent<Lose_UI_Controller>().Hied();
 
         //播放音效
