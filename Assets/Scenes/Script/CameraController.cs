@@ -57,13 +57,14 @@ public class CameraController : MonoBehaviour
     Vector3 referenceObjectToCameraOffset = Vector3.zero; //虛擬參考物距離攝影機的距離
 
     //用來暫存 W S A D 輸入的變數
-    float WSAD_move_Speed = 0.5f;
+    float WSAD_speed = 0.1f; // W S A D 輸入讓視角移動的快慢
+    float WSAD_Max_speed = 0.8f; // W S A D 輸入讓視角移動的最大速度
     float W_value = 0;
     float S_value = 0;
     float A_value = 0;
     float D_value = 0;
 
- 
+
 
 
 
@@ -108,7 +109,7 @@ public class CameraController : MonoBehaviour
 
             //設置攝影機角度----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-            //---------------------------------電腦版的控制---------------------------------
+             //---------------------------------電腦版的控制---------------------------------
             if (!GameManager.Instance.IsPhoneMode) 
             {
                 //滑鼠輸入
@@ -116,8 +117,7 @@ public class CameraController : MonoBehaviour
                 //鍵盤輸入
                 if (inputController.GetDInputHold())
                 {
-                    D_value += WSAD_move_Speed * Time.deltaTime * 1.2f;
-                    D_value = Mathf.Clamp(D_value, 0, 0.2f);
+                    D_value = Mathf.Lerp(D_value, WSAD_Max_speed, WSAD_speed);
                 }
                 else
                 {
@@ -127,8 +127,7 @@ public class CameraController : MonoBehaviour
 
                 if (inputController.GetAInputHold())
                 {
-                    A_value += WSAD_move_Speed * Time.deltaTime * 1.2f;
-                    A_value = Mathf.Clamp(A_value, 0, 0.2f);
+                    A_value = Mathf.Lerp(A_value, WSAD_Max_speed, WSAD_speed);
                 }
                 else
                 {
@@ -143,8 +142,7 @@ public class CameraController : MonoBehaviour
                 //鍵盤輸入
                 if (inputController.GetWInputHold())
                 {
-                    W_value += WSAD_move_Speed * Time.deltaTime * 1.2f;
-                    W_value = Mathf.Clamp(W_value, 0, 0.2f);
+                    W_value = Mathf.Lerp(W_value, WSAD_Max_speed, WSAD_speed);
                 }
                 else
                 {
@@ -154,8 +152,7 @@ public class CameraController : MonoBehaviour
 
                 if (inputController.GetSInputHold())
                 {
-                    S_value += WSAD_move_Speed * Time.deltaTime * 1.2f;
-                    S_value = Mathf.Clamp(S_value, 0, 0.2f);
+                    S_value = Mathf.Lerp(S_value, WSAD_Max_speed, WSAD_speed);
                 }
                 else
                 {
@@ -225,10 +222,10 @@ public class CameraController : MonoBehaviour
                 5.maxSpeed 所允許的最大速度，默認無窮大
                 6.deltaTime 自上次調用這個函數的時間，默認為Time.deltaTime
                 */
-                #endregion
-            }
+#endregion
+                }
 
-            referenceObjectPosition.y = HeightOffset; //指定虛擬參考物的高度為 HeightOffset (不受 Player 跳起來而改變)
+                referenceObjectPosition.y = HeightOffset; //指定虛擬參考物的高度為 HeightOffset (不受 Player 跳起來而改變)
             referenceObjectToCameraOffset = Quaternion.Euler(CameraAngle_Y, CameraAngle_X, 0) * new Vector3(0, 0, -cameraToTargetDistance); // Quaternion.Euler 可以乘 Vector3 ，結果為往那個方向的向量長度!!! 
             transform.position = referenceObjectPosition + referenceObjectToCameraOffset; //從虛擬參考物的位置(受 SmoothDamp() 效果影響) 在加上 referenceObjectToCameraOffset 即為攝影機該在的位置
 

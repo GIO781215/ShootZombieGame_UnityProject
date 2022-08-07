@@ -531,6 +531,7 @@ public class MutantController : MonoBehaviour
     //---------------------------------------- Debug 用 ------------------------------------------------
 
     //畫圖功能 Debug 用 
+    /*
     void OnDrawGizmos()
     {
         for (int i = 0; i < transform.childCount; i++)
@@ -558,6 +559,7 @@ public class MutantController : MonoBehaviour
             
         }
     }
+    */
 
 
     //----------------------------------------------------------------------------------------

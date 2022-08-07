@@ -319,6 +319,7 @@ public class ZombieController : MonoBehaviour
     //-------------------------------------------------------------------------------
 
     //畫圖功能 Debug 用 
+    /*
     void OnDrawGizmos()
     {
         for (int i = 0; i < transform.childCount; i++)
@@ -331,7 +332,7 @@ public class ZombieController : MonoBehaviour
             //GameObject.transform.TransformDirection(Vector3 direction) 能把向量 direction 從物件的 local 座標系轉換到世界座標系上
         }
     }
-
+    */
 
 
 

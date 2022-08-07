@@ -133,6 +133,8 @@ public class PatrolPath : MonoBehaviour
         return transform.childCount;
     }
 
+
+    /*
     //畫圖功能 Debug 用 (沒有寫在 void Start 裡也會被執行到，很神奇@@ ........................................................???
     void OnDrawGizmos() 
     {
@@ -146,7 +148,7 @@ public class PatrolPath : MonoBehaviour
             Handles.DrawWireDisc(GetPatrolPointPosition(i), new Vector3(0, 1, 0), CircleRadius); //畫圓，參數: 圓盤中心、圓盤法線、圓盤半徑 (須 using UnityEditor)
         }
     }
-
+    */
 
 
 }
