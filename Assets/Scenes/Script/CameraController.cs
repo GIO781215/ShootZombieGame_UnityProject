@@ -160,7 +160,7 @@ public class CameraController : MonoBehaviour
                 }
                 CameraAngle_Y += S_value;
             }
-
+             
             //---------------------------------手機版的控制---------------------------------
             if (GameManager.Instance.IsPhoneMode)  
             {
@@ -283,6 +283,7 @@ public class CameraController : MonoBehaviour
             rushEffect.Play();
         }
     }
+
 
 
 
