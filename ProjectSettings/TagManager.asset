@@ -20,6 +20,12 @@ TagManager:
   - flamethrowerUI_1
   - flamethrowerUI_2
   - flamethrowerUI_3
+  - phone_machinegunUI_1
+  - phone_machinegunUI_2
+  - phone_machinegunUI_3
+  - phone_flamethrowerUI_1
+  - phone_flamethrowerUI_2
+  - phone_flamethrowerUI_3
   layers:
   - Default
   - TransparentFX

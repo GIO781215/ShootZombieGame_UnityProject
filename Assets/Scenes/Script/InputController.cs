@@ -29,7 +29,7 @@ public class InputController : MonoBehaviour
 
     private void Start()
     {
-  
+
 
         Cursor.lockState = CursorLockMode.Locked; //將鼠標鎖住
         canInput = true;
@@ -39,9 +39,9 @@ public class InputController : MonoBehaviour
 
     void Update()
     {
-        if(IsFirstTime)
+        if (IsFirstTime)
         {
-            IsFirstTime=false;
+            IsFirstTime = false;
             Invoke("StartMessage", 1f);
         }
 
@@ -71,7 +71,7 @@ public class InputController : MonoBehaviour
 
     private void checkCursorState()
     {
-        if(Input.GetKeyDown(KeyCode.Return) && !cameraController.IsPlayerDeath && !cameraController.IsMutantDeath)
+        if (Input.GetKeyDown(KeyCode.Return) && !cameraController.IsPlayerDeath && !cameraController.IsMutantDeath)
         {
             if (Cursor.lockState == CursorLockMode.Locked) //if (pauseUI.activeInHierarchy == false)   
             {
@@ -91,14 +91,14 @@ public class InputController : MonoBehaviour
                 audioSource.PlayOneShot(sound_Stop);
 
                 Time.timeScale = 1; //繼續遊戲 (恢復遊戲運行速度)
-                if(pauseUI != null)
+                if (pauseUI != null)
                 {
                     pauseUI.SetActive(false);
                 }
                 Cursor.lockState = CursorLockMode.Locked;
                 canInput = true;
-                if(pauseUI_ClolseButton)
-                  Destroy(pauseUI_ClolseButton);
+                if (pauseUI_ClolseButton)
+                    Destroy(pauseUI_ClolseButton);
             }
         }
     }
@@ -136,7 +136,7 @@ public class InputController : MonoBehaviour
 
     public float GetMouseScrollWheel() //得到滑鼠的滾輪輸入
     {
-        if (canInput) 
+        if (canInput)
             return Input.GetAxis("Mouse ScrollWheel");
         return 0;
     }
@@ -257,13 +257,13 @@ public class InputController : MonoBehaviour
 
     public bool GetShiftInputHold() //是否有按住 Shift 鍵
     {
-        if(canInput)
+        if (canInput)
         {
             return Input.GetKey(KeyCode.LeftShift);
         }
         return false;
     }
-    
+
 
 
 
@@ -347,5 +347,23 @@ public class InputController : MonoBehaviour
         audioSource.PlayOneShot(sound_Stop);
         ConputgerWeaponUI.SetActive(false);
         PhoneUI.SetActive(true);
+    }
+
+    public void SetComputerUI_NoSound() //給 PlayerWeaponController 初始化時用的
+    {
+        ConputgerWeaponUI.SetActive(true);
+        PhoneUI.SetActive(false);
+    }
+
+    public void SetPhoneUI_NoSound() //給 PlayerWeaponController 初始化時用的
+    {
+        ConputgerWeaponUI.SetActive(false);
+        PhoneUI.SetActive(true);
+    }
+
+    public void SetAllUI(bool value) //給 PlayerWeaponController 初始化時用的
+    {
+        ConputgerWeaponUI.SetActive(value);
+        PhoneUI.SetActive(value);
     }
 }

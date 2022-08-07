@@ -16,7 +16,9 @@ public class PlayerWeaponController : MonoBehaviour
     [SerializeField] List<Weapon> AllWeaponsList = new List<Weapon>(); //遊戲中所有種類的武器，在 Unity 中就把所有武器的 prefab 都先丟進來給他 (只要把 Weapon 腳本掛在武器模型的預製物件下，就可以直接先丟進去)
     Image[] machinegunUI = new Image[3];
     Image[] flamethrowerUI = new Image[3];
-    //public Sprite image; //可直接放圖片資源
+    Image[] phone_machinegunUI = new Image[3];
+    Image[] phone_flamethrowerUI = new Image[3];
+    //public Sprite image; //也可直接放圖片資源
 
 
     Weapon[] PlayerWeaponSlot = new Weapon[3]; //Player 的武器槽，Player 最多只能得到三個武器，但這遊戲現在最多就只有兩把武器而已，所以武器 weaponUI 就只有先設 2 而已
@@ -36,12 +38,8 @@ public class PlayerWeaponController : MonoBehaviour
 
     void Start()
     {
-        if (GameManager.Instance.IsPhoneMode) //初始化前顯把 UI 始能 避免之前被換成手機版時關掉，導致找不到物件
-        {
-            GameManager.Instance.inputController.SetComputerUI();
-        }
 
-        WeaponUI_Init();
+        WeaponUI_Init(); //要先把所有的 UI 始能打開才能初始化
 
         audioSource = GetComponent<AudioSource>();
         inputController = GameManager.Instance.inputController;
@@ -59,10 +57,14 @@ public class PlayerWeaponController : MonoBehaviour
         }
           */
 
-        //最後再來判斷是否為手機模式需要隱藏
+        //最後再來判斷是哪種模式的UI要顯示
         if (GameManager.Instance.IsPhoneMode)
         {
-            GameManager.Instance.inputController.SetPhoneUI();
+            GameManager.Instance.inputController.SetPhoneUI_NoSound();
+        }
+        else
+        {
+            GameManager.Instance.inputController.SetComputerUI_NoSound();
         }
     }
 
@@ -100,12 +102,32 @@ public class PlayerWeaponController : MonoBehaviour
             }
         }
 
+        //不停更新所有武器的 UI 的彈藥量條 (手機版)
+        foreach (Weapon weapon in PlayerWeaponSlot)
+        {
+            if (weapon != null && weapon.weaponType == WeaponType.machinegun)
+            {
+                phone_machinegunUI[1].fillAmount = Mathf.Lerp(phone_machinegunUI[1].fillAmount, weapon.CurrentAmmoRatio_machinegun(), 0.05f);
+            }
+            else if (weapon != null && weapon.weaponType == WeaponType.flamethrower)
+            {
+                phone_flamethrowerUI[1].fillAmount = Mathf.Lerp(phone_flamethrowerUI[1].fillAmount, weapon.CurrentAmmoRatio_flamethrower(), 0.3f);
+            }
+        }
+
+
+
+
     }
 
 
     public void WeaponUI_Init() //初始化武器的UI
     {
 
+        GameManager.Instance.inputController.SetAllUI(true);
+
+
+        //電腦版 UI 初始化---------------------------------------------
 
         //初始化武器 UI，獲得武器的 UI 的 GameObject
         machinegunUI[0] = GameObject.FindGameObjectsWithTag("machinegunUI_1")[0].GetComponent<Image>();
@@ -126,7 +148,26 @@ public class PlayerWeaponController : MonoBehaviour
         flamethrowerUI[1].color = new Color(170f / 255f, 170f / 255f, 170f / 255f, 255f / 255f);
         flamethrowerUI[2].color = new Color(170f / 255f, 170f / 255f, 170f / 255f, 255f / 255f);
 
- 
+        //手機版 UI 初始化---------------------------------------------
+        phone_machinegunUI[0] = GameObject.FindGameObjectsWithTag("phone_machinegunUI_1")[0].GetComponent<Image>();
+        phone_machinegunUI[1] = GameObject.FindGameObjectsWithTag("phone_machinegunUI_2")[0].GetComponent<Image>();
+        phone_machinegunUI[2] = GameObject.FindGameObjectsWithTag("phone_machinegunUI_3")[0].GetComponent<Image>();
+        phone_flamethrowerUI[0] = GameObject.FindGameObjectsWithTag("phone_flamethrowerUI_1")[0].GetComponent<Image>();
+        phone_flamethrowerUI[1] = GameObject.FindGameObjectsWithTag("phone_flamethrowerUI_2")[0].GetComponent<Image>();
+        phone_flamethrowerUI[2] = GameObject.FindGameObjectsWithTag("phone_flamethrowerUI_3")[0].GetComponent<Image>();
+
+        //變小變灰所有武器的 UI
+        phone_machinegunUI[0].transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
+        phone_flamethrowerUI[0].transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
+
+        phone_machinegunUI[0].color = new Color(170f / 255f, 170f / 255f, 170f / 255f, 0f / 255f);
+        phone_machinegunUI[1].color = new Color(170f / 255f, 170f / 255f, 170f / 255f, 0f / 255f);
+        phone_machinegunUI[2].color = new Color(170f / 255f, 170f / 255f, 170f / 255f, 160f / 255f);
+        phone_flamethrowerUI[0].color = new Color(170f / 255f, 170f / 255f, 170f / 255f, 0f / 255f);
+        phone_flamethrowerUI[1].color = new Color(170f / 255f, 170f / 255f, 170f / 255f, 0f / 255f);
+        phone_flamethrowerUI[2].color = new Color(170f / 255f, 170f / 255f, 170f / 255f, 160f / 255f);
+
+
 
     }
 
@@ -155,12 +196,13 @@ public class PlayerWeaponController : MonoBehaviour
                 //顯示加入的武器的UI
                 if (weapon == AllWeaponsList[0]) //武器是 machinegun
                 {
-                    machinegunUI[2].color = new Color(170f / 255f, 170f / 255f, 170f / 255f, 0 / 255f);
-
+                    machinegunUI[2].color = new Color(170f / 255f, 170f / 255f, 170f / 255f, 0 / 255f);        //電腦板 UI
+                    phone_machinegunUI[2].color = new Color(170f / 255f, 170f / 255f, 170f / 255f, 0 / 255f);  //手機板 UI
                 }
                 else if (weapon == AllWeaponsList[1])  //武器是 flamethrower
                 {
-                    flamethrowerUI[2].color = new Color(170f / 255f, 170f / 255f, 170f / 255f, 0 / 255f);
+                    flamethrowerUI[2].color = new Color(170f / 255f, 170f / 255f, 170f / 255f, 0 / 255f);        //電腦板 UI
+                    phone_flamethrowerUI[2].color = new Color(170f / 255f, 170f / 255f, 170f / 255f, 0 / 255f);  //手機板 UI
                 }
 
                 //print("成功加入武器 " + weaponInstance);
@@ -261,12 +303,28 @@ public class PlayerWeaponController : MonoBehaviour
             //變小變灰所有武器的 UI
             machinegunUI[0].transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
             flamethrowerUI[0].transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
+
             machinegunUI[0].color = new Color(170f / 255f, 170f / 255f, 170f / 255f);
             machinegunUI[1].color = new Color(170f / 255f, 170f / 255f, 170f / 255f);
-          //  machinegunUI[2].color = new Color(170f / 255f, 170f / 255f, 170f / 255f);
             flamethrowerUI[0].color = new Color(170f / 255f, 170f / 255f, 170f / 255f);
             flamethrowerUI[1].color = new Color(170f / 255f, 170f / 255f, 170f / 255f);
-          //  flamethrowerUI[2].color = new Color(170f / 255f, 170f / 255f, 170f / 255f);
+
+            //手機版 UI
+            phone_machinegunUI[0].transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
+            phone_flamethrowerUI[0].transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
+
+            //已經有這些武器才去動他透明度
+            if (HasWeapon(AllWeaponsList[0])) // 如果已經有機關槍了
+            {
+                phone_machinegunUI[0].color = new Color(170f / 255f, 170f / 255f, 170f / 255f, 200f / 255f);
+                phone_machinegunUI[1].color = new Color(170f / 255f, 170f / 255f, 170f / 255f, 100f / 255f);
+            }
+            if (HasWeapon(AllWeaponsList[1])) // 如果已經有火焰槍了
+            {
+                phone_flamethrowerUI[0].color = new Color(170f / 255f, 170f / 255f, 170f / 255f, 200f / 255f);
+                phone_flamethrowerUI[1].color = new Color(170f / 255f, 170f / 255f, 170f / 255f, 100f / 255f);
+            }
+
 
 
             //只顯示那把武器
@@ -280,11 +338,21 @@ public class PlayerWeaponController : MonoBehaviour
                 {
                     machinegunUI[0].transform.localScale = new Vector3(1f, 1f, 1f);
                     machinegunUI[1].color = Color.white;
+
+                    //手機版 UI
+                    phone_machinegunUI[0].transform.localScale = new Vector3(1f, 1f, 1f);
+                    phone_machinegunUI[0].color = new Color(255f / 255f, 255f / 255f, 255f / 255f, 200f / 255f);
+                    phone_machinegunUI[1].color = new Color(255f / 255f, 255f / 255f, 255f / 255f, 100f / 255f);
                 }
                 else if (PlayerWeaponSlot[index].weaponType == WeaponType.flamethrower)
                 {
                     flamethrowerUI[0].transform.localScale = new Vector3(1f, 1f, 1f);
                     flamethrowerUI[1].color = Color.white;
+
+                    //手機版 UI
+                    phone_flamethrowerUI[0].transform.localScale = new Vector3(1f, 1f, 1f);
+                    phone_flamethrowerUI[0].color = new Color(255f / 255f, 255f / 255f, 255f / 255f, 200f / 255f);
+                    phone_flamethrowerUI[1].color = new Color(255f / 255f, 255f / 255f, 255f / 255f, 100f / 255f);
                 }
             }
             else
