@@ -104,8 +104,12 @@ public class CameraController : MonoBehaviour
     {
         if (Cursor.lockState == CursorLockMode.Locked || GameManager.Instance.IsPhoneMode)
         {
-            //設置攝影機角度
-            if (!GameManager.Instance.IsPhoneMode) //電腦版的控制
+
+
+            //設置攝影機角度----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+            //---------------------------------電腦版的控制---------------------------------
+            if (!GameManager.Instance.IsPhoneMode) 
             {
                 //滑鼠輸入
                 CameraAngle_X += inputController.GetMouseX() * sensitivity_X;
@@ -132,7 +136,7 @@ public class CameraController : MonoBehaviour
                 }
                 CameraAngle_X -= A_value;
 
-                //------------------------------
+                //------------------- 
 
                 //滑鼠輸入
                 CameraAngle_Y += inputController.GetMouseY() * sensitivity_Y;
@@ -159,7 +163,23 @@ public class CameraController : MonoBehaviour
                 }
                 CameraAngle_Y += S_value;
             }
-            //------------------------------
+
+            //---------------------------------手機版的控制---------------------------------
+            if (GameManager.Instance.IsPhoneMode)  
+            {
+                //有按住攝影機圖示的時候
+                if (GameManager.Instance.inputController.Phone_Camera)
+                {
+                    CameraAngle_X += inputController.GetMouseX() * sensitivity_X;
+                    CameraAngle_Y += inputController.GetMouseY() * sensitivity_Y;
+                }
+            }
+            //------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
             if (IsFirsrRun)
             {
                 CameraAngle_X += CameraAngle_Offset; //遊戲一開始先設定攝影機的旋轉角度朝向
