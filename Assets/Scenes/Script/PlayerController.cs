@@ -107,13 +107,14 @@ public class PlayerController : MonoBehaviour
     {
             IsAim = !IsAim;
             animatorController.SetBool("IsAim", IsAim);
-            onAim?.Invoke(IsAim); //更改 PlayerWeaponController 的 isAim 變數                    
+            onAim?.Invoke(IsAim);              
     }
 
     public void ShootAimBehaviour_PhoneMode()
     {
         IsAim = true;
         animatorController.SetBool("IsAim", IsAim);
+        onAim?.Invoke(IsAim);
     }
 
     public void MoveBehaviour_PhoneMode()

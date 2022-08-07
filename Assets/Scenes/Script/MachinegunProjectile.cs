@@ -35,8 +35,6 @@ public class MachinegunProjectile : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        print(other);
-
         if (other.gameObject.tag == "Weapon" || other.gameObject.tag == "Player" || other.gameObject.tag == "SpawnWall") 
         {
             return; //如果子彈碰到槍或玩家則沒反應

@@ -25,7 +25,6 @@ public class FlameThrowerCollision : MonoBehaviour
 
     private void OnParticleCollision(GameObject other) //當火焰粒子特效的碰撞事件發生時會觸發這個函數
     {
-        print(other);
 
         if (other.gameObject.tag == "Weapon" || other.gameObject.tag == "Player") return; //如果子彈碰到槍或玩家則沒反應
 

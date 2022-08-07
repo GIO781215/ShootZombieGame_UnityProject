@@ -102,64 +102,69 @@ public class CameraController : MonoBehaviour
 
     private void LateUpdate() //在 Update 後執行
     {
-        if (Cursor.lockState == CursorLockMode.Locked)
+        if (Cursor.lockState == CursorLockMode.Locked || GameManager.Instance.IsPhoneMode)
         {
             //設置攝影機角度
-            //滑鼠輸入
-            CameraAngle_X += inputController.GetMouseX() * sensitivity_X;
-            //鍵盤輸入
-            if (inputController.GetDInputHold())
+            if (!GameManager.Instance.IsPhoneMode) //電腦版的控制
             {
-                D_value += WSAD_move_Speed * Time.deltaTime * 1.2f;
-                D_value = Mathf.Clamp(D_value, 0, 0.2f);
-            }
-            else
-            {
-                D_value = 0;
-            }
-            CameraAngle_X += D_value;
+                //滑鼠輸入
+                CameraAngle_X += inputController.GetMouseX() * sensitivity_X;
+                //鍵盤輸入
+                if (inputController.GetDInputHold())
+                {
+                    D_value += WSAD_move_Speed * Time.deltaTime * 1.2f;
+                    D_value = Mathf.Clamp(D_value, 0, 0.2f);
+                }
+                else
+                {
+                    D_value = 0;
+                }
+                CameraAngle_X += D_value;
 
-            if (inputController.GetAInputHold())
-            {
-                A_value += WSAD_move_Speed * Time.deltaTime * 1.2f;
-                A_value = Mathf.Clamp(A_value, 0, 0.2f);
+                if (inputController.GetAInputHold())
+                {
+                    A_value += WSAD_move_Speed * Time.deltaTime * 1.2f;
+                    A_value = Mathf.Clamp(A_value, 0, 0.2f);
+                }
+                else
+                {
+                    A_value = 0;
+                }
+                CameraAngle_X -= A_value;
+
+                //------------------------------
+
+                //滑鼠輸入
+                CameraAngle_Y += inputController.GetMouseY() * sensitivity_Y;
+                //鍵盤輸入
+                if (inputController.GetWInputHold())
+                {
+                    W_value += WSAD_move_Speed * Time.deltaTime * 1.2f;
+                    W_value = Mathf.Clamp(W_value, 0, 0.2f);
+                }
+                else
+                {
+                    W_value = 0;
+                }
+                CameraAngle_Y -= W_value;
+
+                if (inputController.GetSInputHold())
+                {
+                    S_value += WSAD_move_Speed * Time.deltaTime * 1.2f;
+                    S_value = Mathf.Clamp(S_value, 0, 0.2f);
+                }
+                else
+                {
+                    S_value = 0;
+                }
+                CameraAngle_Y += S_value;
             }
-            else
-            {
-                A_value = 0;
-            }
-            CameraAngle_X -= A_value;
             //------------------------------
             if (IsFirsrRun)
             {
                 CameraAngle_X += CameraAngle_Offset; //遊戲一開始先設定攝影機的旋轉角度朝向
             }
 
-            //滑鼠輸入
-            CameraAngle_Y += inputController.GetMouseY() * sensitivity_Y;
-            //鍵盤輸入
-            if (inputController.GetWInputHold())
-            {
-                W_value += WSAD_move_Speed * Time.deltaTime * 1.2f;
-                W_value = Mathf.Clamp(W_value, 0, 0.2f);
-            }
-            else
-            {
-                W_value = 0;
-            }
-            CameraAngle_Y -= W_value;
-
-            if (inputController.GetSInputHold())
-            {
-                S_value += WSAD_move_Speed * Time.deltaTime * 1.2f;
-                S_value = Mathf.Clamp(S_value, 0, 0.2f);
-            }
-            else
-            {
-                S_value = 0;
-            }
-            CameraAngle_Y += S_value;
-            //------------------------------
             CameraAngle_Y = Mathf.Clamp(CameraAngle_Y, minVerticalAngle, maxVerticalAngle); //限制 CameraAngle_Y 的最大角度與最小角度
             transform.rotation = Quaternion.Euler(CameraAngle_Y, CameraAngle_X, 0);
 

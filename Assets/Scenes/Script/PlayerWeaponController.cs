@@ -33,8 +33,7 @@ public class PlayerWeaponController : MonoBehaviour
     [SerializeField] AudioClip sound_SwtichWeapon; //切換武器的音效
     AudioSource audioSource;
 
-
-
+    bool PhoneUI_Machinegun_Shoot_freeze = false; //手機版 UI 用的，機關槍連射延遲用的變數
 
     void Start()
     {
@@ -75,17 +74,25 @@ public class PlayerWeaponController : MonoBehaviour
         if (playerController.health.currentHealth == 0)
             return;
          
-
         hasSwitchWeaponInput(); //判斷有沒有按下切換武器鍵要切換武器
 
         //處理射擊
-        if (currentWeaponSlotIndex != -1 && isAim && !toAim && !GameManager.Instance.IsPhoneMode) //如果目前有選擇武器，且為瞄準狀態，且不是手機版的 UI 時
+        if (currentWeaponSlotIndex != -1 && isAim && !toAim) //如果目前有選擇武器，且為瞄準狀態
         {
-            //用滑鼠控制射擊
-            PlayerWeaponSlot[currentWeaponSlotIndex].HandleShootInput(inputController.GetMouseLeftKeyDown(), inputController.GetMouseLeftKeyHeldDown()); //處理射擊
-
-            //用鍵盤控制射擊
-            PlayerWeaponSlot[currentWeaponSlotIndex].HandleShootInput(inputController.GetSpaceInputDown(), inputController.GetSpaceInputHold()); //處理射擊
+            if (!GameManager.Instance.IsPhoneMode) //電腦版控制方式 
+            {
+                //用滑鼠控制射擊
+                PlayerWeaponSlot[currentWeaponSlotIndex].HandleShootInput(inputController.GetMouseLeftKeyDown(), inputController.GetMouseLeftKeyHeldDown()); //處理射擊
+                //用鍵盤控制射擊
+                PlayerWeaponSlot[currentWeaponSlotIndex].HandleShootInput(inputController.GetSpaceInputDown(), inputController.GetSpaceInputHold()); //處理射擊
+            } 
+            else //手機版控制方式 
+            {
+                if (GameManager.Instance.inputController.Phone_Shoot && PlayerWeaponSlot[currentWeaponSlotIndex].weaponType == WeaponType.flamethrower) //如果現在選擇的是火焰槍才處理
+                {
+                    PlayerWeaponSlot[currentWeaponSlotIndex].HandleShootInput(true, true); //處理(火焰槍)射擊
+                }
+            }
         }
 
 
@@ -115,12 +122,20 @@ public class PlayerWeaponController : MonoBehaviour
             }
         }
 
-
-
-
     }
 
 
+    public void PhoneUI_Machinegun_Shoot()
+    {
+        if (PlayerWeaponSlot[currentWeaponSlotIndex].weaponType == WeaponType.machinegun) //如果現在選擇的武器是機關槍才處理
+        {
+            if (currentWeaponSlotIndex != -1 && isAim && !toAim && !PhoneUI_Machinegun_Shoot_freeze)
+            {
+                PlayerWeaponSlot[currentWeaponSlotIndex].HandleShootInput(true, false); //處理射擊(機關槍)
+            }
+        }
+    }
+ 
     public void WeaponUI_Init() //初始化武器的UI
     {
 
@@ -410,6 +425,27 @@ public class PlayerWeaponController : MonoBehaviour
         foreach (Weapon PWS_weapon in PlayerWeaponSlot)
         {
             if (PWS_weapon != null && PWS_weapon.weaponType == WeaponType.flamethrower)
+            {
+                break;
+            }
+            index++;
+        }
+        if (index >= PlayerWeaponSlot.Length) return;
+
+        currentWeaponSlotIndex = index;
+        audioSource.PlayOneShot(sound_SwtichWeapon);
+        switchWeapon(currentWeaponSlotIndex);
+
+    }
+
+
+    public void SwitchWeaponToMachinegun() //直接切換成機關槍
+    {
+        int index = 0;
+
+        foreach (Weapon PWS_weapon in PlayerWeaponSlot)
+        {
+            if (PWS_weapon != null && PWS_weapon.weaponType == WeaponType.machinegun)
             {
                 break;
             }

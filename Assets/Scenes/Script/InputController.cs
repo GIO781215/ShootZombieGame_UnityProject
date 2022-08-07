@@ -202,7 +202,6 @@ public class InputController : MonoBehaviour
 
 
 
-
     public Vector3 GetMoveInput() //得到鍵盤前後左右的輸入值
     {
 
@@ -211,7 +210,6 @@ public class InputController : MonoBehaviour
             Vector3 move;
             move = new Vector3(Input.GetAxis("Horizontal"), 0f, Input.GetAxis("Vertical"));
             move = Vector3.ClampMagnitude(move, 1); //將向量限制在 1 單位
-            print(move);
             return move;
         }
         else  //手機版移動處理
@@ -219,11 +217,8 @@ public class InputController : MonoBehaviour
             Vector3 move;
             move = new Vector3(player_Right_speed - player_Left_speed, 0f, player_Forward_speed - player_Back_speed);
             move = Vector3.ClampMagnitude(move, 1); //將向量限制在 1 單位
-            print(move);
-
             return move;
         }
-
     }
 
  
@@ -483,13 +478,13 @@ public class InputController : MonoBehaviour
         }
     }
 
-
     public void PhoneUI_Shoot_Down()
     {
         if (canInput && GameManager.Instance.playerController != null)
         {
             Phone_Shoot = true;
             GameManager.Instance.playerController.ShootAimBehaviour_PhoneMode(); //變成射擊動作與使能射擊旗標
+            GameManager.Instance.playerWeaponController.PhoneUI_Machinegun_Shoot();
         }
     }
     public void PhoneUI_Shoot_Up()
@@ -531,16 +526,26 @@ public class InputController : MonoBehaviour
     }
     public void PhoneUI_Machinegun()
     {
-      
-
-
+        if (GameManager.Instance.playerWeaponController != null)
+        {
+            GameManager.Instance.playerWeaponController.SwitchWeaponToMachinegun();
+        }
     }
     public void PhoneUI_Flamethrower()
     {
-
-
-
+        if (GameManager.Instance.playerWeaponController != null)
+        {
+            GameManager.Instance.playerWeaponController.SwitchWeaponToFlamethrower();
+        }
     }
+
+    public void PhoneUI_OnOffLittleMap()
+    {
+        audioSource.PlayOneShot(sound_Stop);
+        LittleMapUI_Flag = !LittleMapUI_Flag;
+        LittleMapUI.SetActive(LittleMapUI_Flag);
+    }
+
     public void PhoneUI_Setting()
     {
         if (!cameraController.IsPlayerDeath && !cameraController.IsMutantDeath)
@@ -589,6 +594,7 @@ public class InputController : MonoBehaviour
     {
         if (GetKeyFInputDown())
         {
+            audioSource.PlayOneShot(sound_Stop);
             LittleMapUI_Flag = !LittleMapUI_Flag;
             LittleMapUI.SetActive(LittleMapUI_Flag);
         }
