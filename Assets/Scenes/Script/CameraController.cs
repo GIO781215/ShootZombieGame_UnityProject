@@ -308,10 +308,17 @@ public class CameraController : MonoBehaviour
         //重置參數
         IsPlayerDeath = false;
         IsMutantDeath = false;
-        Cursor.lockState = CursorLockMode.Locked; //鎖住滑鼠
 
+        //調整滑鼠焦點狀態，之後可能會再調整這個寫法，注意一下!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        Cursor.lockState = CursorLockMode.Locked;
+        if (GameManager.Instance.IsPhoneMode)
+        {
+            Invoke("setCursorLockMode", 0.5f);
+        }
     }
 
-
-
+    void setCursorLockMode()
+    {
+        Cursor.lockState = CursorLockMode.None;
+    }
 }

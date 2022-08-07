@@ -82,11 +82,16 @@ public class PlayerController : MonoBehaviour
 
 
         AimBehaviour();
+        //AimBehaviour_PhoneMode();
+
         MoveBehaviour();
-        if(!IsAim) //不在瞄準模式下才能跳躍
+        //MoveBehaviour_PhoneMode();
+
+        if (!IsAim) //不在瞄準模式下才能跳躍
+        {
             jumpBehaviour();
-
-
+            //jumpBehaviour_PhoneMode();
+        }
         /*
         //印出鍵盤移動的輸入值
         if(inputController.GetMoveInput() != Vector3.zero)
@@ -95,6 +100,24 @@ public class PlayerController : MonoBehaviour
         }
         */
     }
+
+
+
+    public void AimBehaviour_PhoneMode()
+    {
+        print("Aim");
+    }
+
+    public void MoveBehaviour_PhoneMode()
+    {
+        print("Move");
+    }
+
+    public void jumpBehaviour_PhoneMode()
+    {
+        print("Jump");
+    }
+
 
     //處理瞄準動作
     private void AimBehaviour()

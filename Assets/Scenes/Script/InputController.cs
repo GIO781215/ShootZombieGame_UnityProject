@@ -27,6 +27,28 @@ public class InputController : MonoBehaviour
     [SerializeField] GameObject ConputgerWeaponUI;
     bool LittleMapUI_Flag = true;
 
+
+    //手機版按鍵控制參數
+    bool Phone_Forward = false;
+    bool Phone_Back = false;
+    bool Phone_Left = false;
+    bool Phone_Right = false;
+    bool Phone_Camera = false;
+
+    bool Phone_Shoot = false;
+    bool Phone_Rush = false;
+    bool Phone_Jump = false;
+    bool Phone_Aim = false;
+    bool Phone_Machinegun = false;
+    bool Phone_Flamethrower = false;
+    bool Phone_Setting = false;
+
+
+
+
+
+
+
     private void Start()
     {
 
@@ -39,6 +61,8 @@ public class InputController : MonoBehaviour
 
     void Update()
     {
+        PhoneUI_SetFalse();  
+
         if (IsFirstTime)
         {
             IsFirstTime = false;
@@ -46,6 +70,7 @@ public class InputController : MonoBehaviour
         }
 
         audioSource = GetComponent<AudioSource>();
+
         checkCursorState();
 
         On_Off_LittleMap(); //開關小地圖
@@ -71,7 +96,7 @@ public class InputController : MonoBehaviour
 
     private void checkCursorState()
     {
-        if (Input.GetKeyDown(KeyCode.Return) && !cameraController.IsPlayerDeath && !cameraController.IsMutantDeath)
+        if ((Input.GetKeyDown(KeyCode.Return)) && !cameraController.IsPlayerDeath && !cameraController.IsMutantDeath)
         {
             if (Cursor.lockState == CursorLockMode.Locked) //if (pauseUI.activeInHierarchy == false)   
             {
@@ -105,7 +130,6 @@ public class InputController : MonoBehaviour
 
     public void ContinueGame()
     {
-
         audioSource.PlayOneShot(sound_Stop);
 
         Time.timeScale = 1; //繼續遊戲 (恢復遊戲運行速度)
@@ -113,7 +137,15 @@ public class InputController : MonoBehaviour
         {
             pauseUI.SetActive(false);
         }
-        Cursor.lockState = CursorLockMode.Locked;
+        if(GameManager.Instance.IsPhoneMode)
+        {
+            Cursor.lockState = CursorLockMode.None;
+
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+        }
         canInput = true;
         if (pauseUI_ClolseButton)
             Destroy(pauseUI_ClolseButton);
@@ -180,7 +212,7 @@ public class InputController : MonoBehaviour
         return move;
     }
 
-
+ 
 
     public bool GetSpaceInputDown() //是否按下 Space 鍵
     {
@@ -321,6 +353,123 @@ public class InputController : MonoBehaviour
         }
         return false;
     }
+
+
+
+    public void PhoneUI_SetFalse() 
+    {
+       Phone_Forward = false;
+       Phone_Back = false;
+       Phone_Left = false;
+       Phone_Right = false;
+       Phone_Camera = false;
+
+       Phone_Shoot = false;
+       Phone_Rush = false;
+       Phone_Jump = false;
+       Phone_Aim = false;
+       Phone_Machinegun = false;
+       Phone_Flamethrower = false;
+       Phone_Setting = false;
+    }
+
+    public void PhoneUI_Forward()
+    {
+        if (canInput)
+            Phone_Forward = true;
+    }
+    public void PhoneUI_Back()
+    {
+        if (canInput)
+            Phone_Back = true;
+    }
+    public void PhoneUI_Left()
+    {
+        if (canInput)
+            Phone_Left = true;
+    }
+    public void PhoneUI_Right()
+    {
+        if (canInput)
+            Phone_Right = true;
+    }
+    public void PhoneUI_Camera()
+    {
+        if (canInput)
+            Phone_Camera = true;
+    }
+    public void PhoneUI_Shoot()
+    {
+
+    }
+    public void PhoneUI_Rush()
+    {
+        if (canInput)
+            Phone_Rush = true;
+    }
+    public void PhoneUI_Jump()
+    {
+        if (canInput && GameManager.Instance.playerController != null)
+        {
+            GameManager.Instance.playerController.jumpBehaviour_PhoneMode();
+        }
+    }
+    public void PhoneUI_Aim()
+    {
+        if (canInput && GameManager.Instance.playerController != null)
+        {
+            GameManager.Instance.playerController.AimBehaviour_PhoneMode();
+        }
+    }
+    public void PhoneUI_Machinegun()
+    {
+        if (canInput)
+            Phone_Machinegun = true;
+    }
+    public void PhoneUI_Flamethrower()
+    {
+        if (canInput)
+            Phone_Flamethrower = true;
+    }
+    public void PhoneUI_Setting()
+    {
+        if (!cameraController.IsPlayerDeath && !cameraController.IsMutantDeath)
+        {
+            if (pauseUI.activeInHierarchy == false)   
+            {
+                audioSource.PlayOneShot(sound_Stop);
+
+                Time.timeScale = 0; //暫停遊戲
+                if (pauseUI != null)
+                {
+                    pauseUI.SetActive(true);
+                }
+                Cursor.lockState = CursorLockMode.None;
+                canInput = false;
+                pauseUI_ClolseButton = Instantiate(pauseUI_ClolseButton_Prefab, closeButtonPosition.transform.position, closeButtonPosition.transform.rotation, GameObject.FindGameObjectsWithTag("closeButtonPosition")[0].transform);
+            }
+            else
+            {
+                audioSource.PlayOneShot(sound_Stop);
+
+                Time.timeScale = 1; //繼續遊戲 (恢復遊戲運行速度)
+                if (pauseUI != null)
+                {
+                    pauseUI.SetActive(false);
+                }
+                Cursor.lockState = CursorLockMode.Locked;
+                canInput = true;
+                if (pauseUI_ClolseButton)
+                    Destroy(pauseUI_ClolseButton);
+            }
+        }
+    }
+
+
+
+
+
+
 
 
 

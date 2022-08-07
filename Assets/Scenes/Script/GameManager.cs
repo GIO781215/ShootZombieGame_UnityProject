@@ -8,6 +8,8 @@ public class GameManager : MonoBehaviour
 
     public static GameManager Instance;
     public CameraController cameraController;
+    public PlayerController playerController;
+    public PlayerWeaponController playerWeaponController;
     [HideInInspector] public InputController inputController;
     [SerializeField] GameObject Game_Scence;
     [SerializeField] GameObject Game_Scence_Root;
@@ -56,6 +58,10 @@ public class GameManager : MonoBehaviour
             restartGameScence = Instantiate(Game_Scence_Prefab, Game_Scence_Root.transform.position, Game_Scence_Root.transform.rotation, GameObject.FindGameObjectsWithTag("Scence_Prefab")[0].transform); //生成僵屍的巡邏路徑，第四個參數是生成的實體要把誰當作父對象
             cameraController.target = GameObject.FindGameObjectsWithTag("Player")[0].transform; //這邊再把 cameraController.target 指定回來
             cameraController.resetCamera(); //其他要重置的一些參數在 CameraController 中
+
+            playerController = GameObject.FindGameObjectsWithTag("Player")[0].GetComponent<PlayerController>();
+            playerWeaponController = GameObject.FindGameObjectsWithTag("Player")[0].GetComponent<PlayerWeaponController>();
+
         }
     }
 
@@ -63,17 +69,12 @@ public class GameManager : MonoBehaviour
     public void setPhoneMode()
     {
         IsPhoneMode = true;
-        print(IsPhoneMode);
-        print("PhoneMode");
-
     }
 
 
     public void setComputerMode()
     {
         IsPhoneMode = false;
-        print(IsPhoneMode);
-        print("ComputerMode");
     }
 
     /*---------不喜歡這樣寫------------

@@ -79,7 +79,7 @@ public class PlayerWeaponController : MonoBehaviour
         hasSwitchWeaponInput(); //判斷有沒有按下切換武器鍵要切換武器
 
         //處理射擊
-        if (currentWeaponSlotIndex != -1 && isAim && !toAim) //如果目前有選擇武器，且為瞄準狀態
+        if (currentWeaponSlotIndex != -1 && isAim && !toAim && !GameManager.Instance.IsPhoneMode) //如果目前有選擇武器，且為瞄準狀態，且不是手機版的 UI 時
         {
             //用滑鼠控制射擊
             PlayerWeaponSlot[currentWeaponSlotIndex].HandleShootInput(inputController.GetMouseLeftKeyDown(), inputController.GetMouseLeftKeyHeldDown()); //處理射擊
