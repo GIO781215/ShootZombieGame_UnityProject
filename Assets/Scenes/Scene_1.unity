@@ -396,6 +396,7 @@ GameObject:
   - component: {fileID: 113249277}
   - component: {fileID: 113249276}
   - component: {fileID: 113249275}
+  - component: {fileID: 113249278}
   m_Layer: 5
   m_Name: shoot_right
   m_TagString: Untagged
@@ -465,19 +466,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 113249276}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 977133456}
-        m_TargetAssemblyTypeName: InputController, Assembly-CSharp
-        m_MethodName: PhoneUI_Shoot
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &113249276
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -516,6 +505,51 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 113249273}
   m_CullTransparentMesh: 1
+--- !u!114 &113249278
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 113249273}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 2
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 977133456}
+          m_TargetAssemblyTypeName: InputController, Assembly-CSharp
+          m_MethodName: PhoneUI_Shoot_Down
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 3
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 977133456}
+          m_TargetAssemblyTypeName: InputController, Assembly-CSharp
+          m_MethodName: PhoneUI_Shoot_Up
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &126833316
 GameObject:
   m_ObjectHideFlags: 0
@@ -531,7 +565,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &126833317
 RectTransform:
   m_ObjectHideFlags: 0
@@ -648,6 +682,7 @@ GameObject:
   - component: {fileID: 183992568}
   - component: {fileID: 183992567}
   - component: {fileID: 183992566}
+  - component: {fileID: 183992569}
   m_Layer: 5
   m_Name: jump
   m_TagString: Untagged
@@ -717,19 +752,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 183992567}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 977133456}
-        m_TargetAssemblyTypeName: InputController, Assembly-CSharp
-        m_MethodName: PhoneUI_Jump
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &183992567
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -768,6 +791,35 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 183992564}
   m_CullTransparentMesh: 1
+--- !u!114 &183992569
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 183992564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 2
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 977133456}
+          m_TargetAssemblyTypeName: InputController, Assembly-CSharp
+          m_MethodName: PhoneUI_Jump
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &228995879
 GameObject:
   m_ObjectHideFlags: 0
@@ -1071,6 +1123,7 @@ GameObject:
   - component: {fileID: 438438516}
   - component: {fileID: 438438515}
   - component: {fileID: 438438514}
+  - component: {fileID: 438438517}
   m_Layer: 5
   m_Name: setting
   m_TagString: Untagged
@@ -1140,19 +1193,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 438438515}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 977133456}
-        m_TargetAssemblyTypeName: InputController, Assembly-CSharp
-        m_MethodName: PhoneUI_Setting
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &438438515
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1191,6 +1232,35 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 438438512}
   m_CullTransparentMesh: 1
+--- !u!114 &438438517
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 438438512}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 977133456}
+          m_TargetAssemblyTypeName: InputController, Assembly-CSharp
+          m_MethodName: PhoneUI_Setting
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &502560015
 GameObject:
   m_ObjectHideFlags: 0
@@ -1459,6 +1529,7 @@ GameObject:
   - component: {fileID: 673084625}
   - component: {fileID: 673084624}
   - component: {fileID: 673084623}
+  - component: {fileID: 673084626}
   m_Layer: 5
   m_Name: Machinegun
   m_TagString: Untagged
@@ -1529,19 +1600,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 673084624}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 977133456}
-        m_TargetAssemblyTypeName: InputController, Assembly-CSharp
-        m_MethodName: PhoneUI_Machinegun
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &673084624
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1580,6 +1639,35 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 673084621}
   m_CullTransparentMesh: 1
+--- !u!114 &673084626
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 673084621}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 2
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 977133456}
+          m_TargetAssemblyTypeName: InputController, Assembly-CSharp
+          m_MethodName: PhoneUI_Machinegun
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &680627905
 GameObject:
   m_ObjectHideFlags: 0
@@ -1826,6 +1914,7 @@ GameObject:
   - component: {fileID: 738904716}
   - component: {fileID: 738904715}
   - component: {fileID: 738904714}
+  - component: {fileID: 738904717}
   m_Layer: 5
   m_Name: shoot_left
   m_TagString: Untagged
@@ -1895,19 +1984,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 738904715}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 977133456}
-        m_TargetAssemblyTypeName: InputController, Assembly-CSharp
-        m_MethodName: PhoneUI_Shoot
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &738904715
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1946,6 +2023,51 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 738904712}
   m_CullTransparentMesh: 1
+--- !u!114 &738904717
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 738904712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 2
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 977133456}
+          m_TargetAssemblyTypeName: InputController, Assembly-CSharp
+          m_MethodName: PhoneUI_Shoot_Down
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 3
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 977133456}
+          m_TargetAssemblyTypeName: InputController, Assembly-CSharp
+          m_MethodName: PhoneUI_Shoot_Up
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!224 &821754096 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6390913348496967624, guid: 0c14adb55a39b81429f268613b28b730, type: 3}
@@ -2636,6 +2758,13 @@ MonoBehaviour:
   LittleMapUI: {fileID: 886274332}
   PhoneUI: {fileID: 126833316}
   ConputgerWeaponUI: {fileID: 2072685200}
+  Phone_Forward: 0
+  Phone_Back: 0
+  Phone_Left: 0
+  Phone_Right: 0
+  Phone_Rush: 0
+  Phone_Shoot: 0
+  Phone_Camera: 0
 --- !u!82 &977133457
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2907,6 +3036,7 @@ GameObject:
   - component: {fileID: 1144288612}
   - component: {fileID: 1144288611}
   - component: {fileID: 1144288610}
+  - component: {fileID: 1144288613}
   m_Layer: 5
   m_Name: Aim
   m_TagString: Untagged
@@ -2976,19 +3106,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1144288611}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 977133456}
-        m_TargetAssemblyTypeName: InputController, Assembly-CSharp
-        m_MethodName: PhoneUI_Aim
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1144288611
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3027,6 +3145,35 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1144288608}
   m_CullTransparentMesh: 1
+--- !u!114 &1144288613
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1144288608}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 2
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 977133456}
+          m_TargetAssemblyTypeName: InputController, Assembly-CSharp
+          m_MethodName: PhoneUI_Aim
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &1157598206
 GameObject:
   m_ObjectHideFlags: 0
@@ -3255,6 +3402,7 @@ GameObject:
   - component: {fileID: 1160697830}
   - component: {fileID: 1160697829}
   - component: {fileID: 1160697828}
+  - component: {fileID: 1160697831}
   m_Layer: 5
   m_Name: down
   m_TagString: Untagged
@@ -3324,19 +3472,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1160697829}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 977133456}
-        m_TargetAssemblyTypeName: InputController, Assembly-CSharp
-        m_MethodName: PhoneUI_Back
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1160697829
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3375,6 +3511,51 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1160697826}
   m_CullTransparentMesh: 1
+--- !u!114 &1160697831
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1160697826}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 2
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 977133456}
+          m_TargetAssemblyTypeName: InputController, Assembly-CSharp
+          m_MethodName: PhoneUI_Back_Down
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 3
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 977133456}
+          m_TargetAssemblyTypeName: InputController, Assembly-CSharp
+          m_MethodName: PhoneUI_Back_Up
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &1172349229
 GameObject:
   m_ObjectHideFlags: 0
@@ -3387,6 +3568,7 @@ GameObject:
   - component: {fileID: 1172349233}
   - component: {fileID: 1172349232}
   - component: {fileID: 1172349231}
+  - component: {fileID: 1172349234}
   m_Layer: 5
   m_Name: rush
   m_TagString: Untagged
@@ -3456,19 +3638,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1172349232}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 977133456}
-        m_TargetAssemblyTypeName: InputController, Assembly-CSharp
-        m_MethodName: PhoneUI_Rush
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1172349232
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3507,6 +3677,51 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1172349229}
   m_CullTransparentMesh: 1
+--- !u!114 &1172349234
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1172349229}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 2
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 977133456}
+          m_TargetAssemblyTypeName: InputController, Assembly-CSharp
+          m_MethodName: PhoneUI_Rush_Down
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 3
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 977133456}
+          m_TargetAssemblyTypeName: InputController, Assembly-CSharp
+          m_MethodName: PhoneUI_Rush_Up
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &1174018921
 GameObject:
   m_ObjectHideFlags: 0
@@ -4242,6 +4457,7 @@ GameObject:
   - component: {fileID: 1539788040}
   - component: {fileID: 1539788039}
   - component: {fileID: 1539788038}
+  - component: {fileID: 1539788041}
   m_Layer: 5
   m_Name: left
   m_TagString: Untagged
@@ -4311,19 +4527,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1539788039}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 977133456}
-        m_TargetAssemblyTypeName: InputController, Assembly-CSharp
-        m_MethodName: PhoneUI_Left
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1539788039
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4362,6 +4566,51 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1539788036}
   m_CullTransparentMesh: 1
+--- !u!114 &1539788041
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1539788036}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 2
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 977133456}
+          m_TargetAssemblyTypeName: InputController, Assembly-CSharp
+          m_MethodName: PhoneUI_Left_Down
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 3
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 977133456}
+          m_TargetAssemblyTypeName: InputController, Assembly-CSharp
+          m_MethodName: PhoneUI_Left_Up
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &1557097333
 GameObject:
   m_ObjectHideFlags: 0
@@ -4374,6 +4623,7 @@ GameObject:
   - component: {fileID: 1557097337}
   - component: {fileID: 1557097336}
   - component: {fileID: 1557097335}
+  - component: {fileID: 1557097338}
   m_Layer: 5
   m_Name: up
   m_TagString: Untagged
@@ -4443,19 +4693,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1557097336}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 977133456}
-        m_TargetAssemblyTypeName: InputController, Assembly-CSharp
-        m_MethodName: PhoneUI_Forward
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1557097336
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4494,6 +4732,51 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1557097333}
   m_CullTransparentMesh: 1
+--- !u!114 &1557097338
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1557097333}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 2
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 977133456}
+          m_TargetAssemblyTypeName: InputController, Assembly-CSharp
+          m_MethodName: PhoneUI_Forward_Down
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 3
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 977133456}
+          m_TargetAssemblyTypeName: InputController, Assembly-CSharp
+          m_MethodName: PhoneUI_Forward_Up
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &1573267919
 GameObject:
   m_ObjectHideFlags: 0
@@ -4634,6 +4917,7 @@ GameObject:
   - component: {fileID: 1666945585}
   - component: {fileID: 1666945584}
   - component: {fileID: 1666945583}
+  - component: {fileID: 1666945588}
   m_Layer: 5
   m_Name: camera
   m_TagString: Untagged
@@ -4761,6 +5045,51 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1666945581}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1666945588
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1666945581}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 2
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 977133456}
+          m_TargetAssemblyTypeName: InputController, Assembly-CSharp
+          m_MethodName: PhoneUI_Camera_Down
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 3
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 977133456}
+          m_TargetAssemblyTypeName: InputController, Assembly-CSharp
+          m_MethodName: PhoneUI_Camera_Up
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &1696074421
 GameObject:
   m_ObjectHideFlags: 0
@@ -4837,6 +5166,7 @@ GameObject:
   - component: {fileID: 1797483276}
   - component: {fileID: 1797483275}
   - component: {fileID: 1797483274}
+  - component: {fileID: 1797483277}
   m_Layer: 5
   m_Name: right
   m_TagString: Untagged
@@ -4906,19 +5236,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1797483275}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 977133456}
-        m_TargetAssemblyTypeName: InputController, Assembly-CSharp
-        m_MethodName: PhoneUI_Right
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1797483275
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4957,6 +5275,51 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1797483272}
   m_CullTransparentMesh: 1
+--- !u!114 &1797483277
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1797483272}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 2
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 977133456}
+          m_TargetAssemblyTypeName: InputController, Assembly-CSharp
+          m_MethodName: PhoneUI_Right_Down
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 3
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 977133456}
+          m_TargetAssemblyTypeName: InputController, Assembly-CSharp
+          m_MethodName: PhoneUI_Right_Up
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &1803360131
 GameObject:
   m_ObjectHideFlags: 0
@@ -5498,6 +5861,7 @@ GameObject:
   - component: {fileID: 2030138562}
   - component: {fileID: 2030138561}
   - component: {fileID: 2030138560}
+  - component: {fileID: 2030138563}
   m_Layer: 5
   m_Name: FlameThrower
   m_TagString: Untagged
@@ -5568,19 +5932,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2030138561}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 977133456}
-        m_TargetAssemblyTypeName: InputController, Assembly-CSharp
-        m_MethodName: PhoneUI_Flamethrower
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &2030138561
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5619,6 +5971,35 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2030138558}
   m_CullTransparentMesh: 1
+--- !u!114 &2030138563
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2030138558}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 2
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 977133456}
+          m_TargetAssemblyTypeName: InputController, Assembly-CSharp
+          m_MethodName: PhoneUI_Flamethrower
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &2072685200
 GameObject:
   m_ObjectHideFlags: 0

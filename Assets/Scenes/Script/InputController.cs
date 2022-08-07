@@ -28,23 +28,18 @@ public class InputController : MonoBehaviour
     bool LittleMapUI_Flag = true;
 
 
-    //手機版按鍵控制參數
-    bool Phone_Forward = false;
-    bool Phone_Back = false;
-    bool Phone_Left = false;
-    bool Phone_Right = false;
-    bool Phone_Camera = false;
-
-    bool Phone_Shoot = false;
-    bool Phone_Rush = false;
-    bool Phone_Jump = false;
-    bool Phone_Aim = false;
-    bool Phone_Machinegun = false;
-    bool Phone_Flamethrower = false;
-    bool Phone_Setting = false;
-
-
-
+    //手機版按鍵參數
+    public bool Phone_Forward = false; //是否正按住前進
+    public bool Phone_Back = false; //是否正按住後退
+    public bool Phone_Left = false; //是否正按住往左
+    public bool Phone_Right = false; //是否正按住往右
+    public bool Phone_Rush = false; //是否正按住衝刺
+    public bool Phone_Shoot = false; //是否正按住射擊
+    public bool Phone_Camera = false; //是否正按住攝影機
+    float player_Forward_speed = 0;
+    float player_Back_speed = 0;
+    float player_Left_speed = 0;
+    float player_Right_speed = 0;
 
 
 
@@ -61,7 +56,10 @@ public class InputController : MonoBehaviour
 
     void Update()
     {
-        PhoneUI_SetFalse();  
+        if (GameManager.Instance.IsPhoneMode) //手機版移動處理
+        {
+            PhoneUI_Move_process();
+        }
 
         if (IsFirstTime)
         {
@@ -207,9 +205,25 @@ public class InputController : MonoBehaviour
 
     public Vector3 GetMoveInput() //得到鍵盤前後左右的輸入值
     {
-        Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0f, Input.GetAxis("Vertical"));
-        move = Vector3.ClampMagnitude(move, 1); //將向量限制在 1 單位
-        return move;
+
+        if (!GameManager.Instance.IsPhoneMode) //電腦版移動處理
+        {
+            Vector3 move;
+            move = new Vector3(Input.GetAxis("Horizontal"), 0f, Input.GetAxis("Vertical"));
+            move = Vector3.ClampMagnitude(move, 1); //將向量限制在 1 單位
+            print(move);
+            return move;
+        }
+        else  //手機版移動處理
+        {
+            Vector3 move;
+            move = new Vector3(player_Right_speed - player_Left_speed, 0f, player_Forward_speed - player_Back_speed);
+            move = Vector3.ClampMagnitude(move, 1); //將向量限制在 1 單位
+            print(move);
+
+            return move;
+        }
+
     }
 
  
@@ -301,10 +315,6 @@ public class InputController : MonoBehaviour
 
 
 
-
-
-
-
     public bool GetWInputHold() //是否有按住 W 鍵
     {
         if (canInput)
@@ -356,57 +366,155 @@ public class InputController : MonoBehaviour
 
 
 
-    public void PhoneUI_SetFalse() 
-    {
-       Phone_Forward = false;
-       Phone_Back = false;
-       Phone_Left = false;
-       Phone_Right = false;
-       Phone_Camera = false;
 
-       Phone_Shoot = false;
-       Phone_Rush = false;
-       Phone_Jump = false;
-       Phone_Aim = false;
-       Phone_Machinegun = false;
-       Phone_Flamethrower = false;
-       Phone_Setting = false;
+
+    //--------------------------------------手機 UI (滑鼠)控制操作--------------------------------------
+     void PhoneUI_Move_process()
+    {
+        if(Phone_Forward)
+        {
+            player_Forward_speed = Mathf.Lerp(player_Forward_speed, 1, 0.1f);
+        }
+        else
+        {
+            player_Forward_speed = 0;
+        }
+
+        if (Phone_Back)
+        {
+            player_Back_speed = Mathf.Lerp(player_Back_speed, 1, 0.1f);
+        }
+        else
+        {
+            player_Back_speed = 0;
+        }
+
+        if (Phone_Left)
+        {
+            player_Left_speed = Mathf.Lerp(player_Left_speed, 1, 0.1f);
+        }
+        else
+        {
+            player_Left_speed = 0;
+        }
+        if (Phone_Right)
+        {
+            player_Right_speed = Mathf.Lerp(player_Right_speed, 1, 0.1f);
+        }
+        else
+        {
+            player_Right_speed = 0;
+        }
     }
 
-    public void PhoneUI_Forward()
+
+    public void PhoneUI_Forward_Down()
     {
-        if (canInput)
+        if (canInput && GameManager.Instance.playerController != null)
+        {
             Phone_Forward = true;
+        }
     }
-    public void PhoneUI_Back()
+    public void PhoneUI_Forward_Up()
     {
-        if (canInput)
-            Phone_Back = true;
+        if (canInput && GameManager.Instance.playerController != null)
+        {
+            Phone_Forward = false;
+        }
     }
-    public void PhoneUI_Left()
-    {
-        if (canInput)
-            Phone_Left = true;
-    }
-    public void PhoneUI_Right()
-    {
-        if (canInput)
-            Phone_Right = true;
-    }
-    public void PhoneUI_Camera()
-    {
-        if (canInput)
-            Phone_Camera = true;
-    }
-    public void PhoneUI_Shoot()
-    {
 
-    }
-    public void PhoneUI_Rush()
+    public void PhoneUI_Back_Down()
     {
-        if (canInput)
-            Phone_Rush = true;
+        if (canInput && GameManager.Instance.playerController != null)
+        {
+            Phone_Back = true;
+        }
     }
+    public void PhoneUI_Back_Up()
+    {
+        if (canInput && GameManager.Instance.playerController != null)
+        {
+            Phone_Back = false;
+        }
+    }
+
+    public void PhoneUI_Left_Down()
+    {
+        if (canInput && GameManager.Instance.playerController != null)
+        {
+            Phone_Left = true;
+        }
+    }
+    public void PhoneUI_Left_Up()
+    {
+        if (canInput && GameManager.Instance.playerController != null)
+        {
+            Phone_Left = false;
+        }
+    }
+
+    public void PhoneUI_Right_Down()
+    {
+        if (canInput && GameManager.Instance.playerController != null)
+        {
+            Phone_Right = true;
+        }
+    }
+    public void PhoneUI_Right_Up()
+    {
+        if (canInput && GameManager.Instance.playerController != null)
+        {
+            Phone_Right = false;
+        }
+    }
+
+    public void PhoneUI_Camera_Down()
+    {
+        if (canInput && GameManager.Instance.playerController != null)
+        {
+            Phone_Camera = true;
+        }
+    }
+    public void PhoneUI_Camera_Up()
+    {
+        if (canInput && GameManager.Instance.playerController != null)
+        {
+            Phone_Camera = false;
+        }
+    }
+
+
+    public void PhoneUI_Shoot_Down()
+    {
+        if (canInput && GameManager.Instance.playerController != null)
+        {
+            Phone_Shoot = true;
+            GameManager.Instance.playerController.ShootAimBehaviour_PhoneMode(); //變成射擊動作與使能射擊旗標
+        }
+    }
+    public void PhoneUI_Shoot_Up()
+    {
+        if (canInput && GameManager.Instance.playerController != null)
+        {
+            Phone_Shoot = false;
+        }
+    }
+
+    public void PhoneUI_Rush_Down()
+    {
+        if (canInput && GameManager.Instance.playerController != null)
+        {
+            Phone_Rush = true;
+        }
+    }
+    public void PhoneUI_Rush_Up()
+    {
+        if (canInput && GameManager.Instance.playerController != null)
+        {
+            Phone_Rush = false;
+        }
+    }
+  
     public void PhoneUI_Jump()
     {
         if (canInput && GameManager.Instance.playerController != null)
@@ -423,13 +531,15 @@ public class InputController : MonoBehaviour
     }
     public void PhoneUI_Machinegun()
     {
-        if (canInput)
-            Phone_Machinegun = true;
+      
+
+
     }
     public void PhoneUI_Flamethrower()
     {
-        if (canInput)
-            Phone_Flamethrower = true;
+
+
+
     }
     public void PhoneUI_Setting()
     {
@@ -465,7 +575,7 @@ public class InputController : MonoBehaviour
         }
     }
 
-
+    //----------------------------------------------------------------------------------------------------------------------------------
 
 
 

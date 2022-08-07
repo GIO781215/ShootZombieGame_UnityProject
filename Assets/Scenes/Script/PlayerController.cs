@@ -102,10 +102,18 @@ public class PlayerController : MonoBehaviour
     }
 
 
-
+    //--------------------------------------手機 UI (滑鼠)控制操作--------------------------------------
     public void AimBehaviour_PhoneMode()
     {
-        print("Aim");
+            IsAim = !IsAim;
+            animatorController.SetBool("IsAim", IsAim);
+            onAim?.Invoke(IsAim); //更改 PlayerWeaponController 的 isAim 變數                    
+    }
+
+    public void ShootAimBehaviour_PhoneMode()
+    {
+        IsAim = true;
+        animatorController.SetBool("IsAim", IsAim);
     }
 
     public void MoveBehaviour_PhoneMode()
@@ -115,8 +123,21 @@ public class PlayerController : MonoBehaviour
 
     public void jumpBehaviour_PhoneMode()
     {
-        print("Jump");
+        if(IsOnGround() && CanJumpAgain && !IsAim)
+        {
+            jumpDirection = Vector3.zero;
+            jumpDirection += jumpForce * Vector3.up;
+
+            animatorController.SetTrigger("IsJump"); //使用 animatorController 中的 SetTrigger()，就能播放之前設置 Trigger 時觸發的動畫
+
+            //設置可跳躍旗標
+            CanJumpAgain = false;
+            OnGroundTime = 0;
+        }
     }
+    //--------------------------------------------------------------------------------------------------- 
+
+
 
 
     //處理瞄準動作
@@ -124,14 +145,14 @@ public class PlayerController : MonoBehaviour
     {
         if (IsOnGround())
         {
-            if (inputController.GetMouseLeftKeyDown() || inputController.GetSpaceInputDown())
+            if (!GameManager.Instance.IsPhoneMode && (inputController.GetMouseLeftKeyDown() || inputController.GetSpaceInputDown()))
             {
                 IsAim = true;
                 animatorController.SetBool("IsAim", IsAim);
                 onAim?.Invoke(IsAim); //更改 PlayerWeaponController 的 isAim 變數
             }
 
-            if (inputController.GetMouseRightKeyDown() || inputController.GetKeyCInputDown())
+            if (!GameManager.Instance.IsPhoneMode && inputController.GetMouseRightKeyDown() || inputController.GetKeyCInputDown())
             {
                 IsAim = !IsAim;
                 animatorController.SetBool("IsAim", IsAim);
@@ -144,14 +165,13 @@ public class PlayerController : MonoBehaviour
             animatorController.SetBool("IsAim", IsAim);
             onAim?.Invoke(IsAim);
         }
-
-
-
     }
+
 
     //處理移動
     private void MoveBehaviour()
     {
+  
         //獲得輸入移動方向上的單位向量
         moveDirection = Vector3.zero;
         moveDirection += inputController.GetMoveInput().z * GetCurrentCameraForward();
@@ -163,7 +183,7 @@ public class PlayerController : MonoBehaviour
         {
             playerGoalSpeed = 0f; //Player 移動速度設為 0 -> 閒置狀態
         }
-        else if (inputController.GetKeyZInputHold() && !IsAim) //是否按下 Z 加速，並且不在瞄準模式
+        else if ((inputController.GetKeyZInputHold() || GameManager.Instance.inputController.Phone_Rush) && !IsAim) //是否按下 Z 加速，並且不在瞄準模式
         {
             moveDirection *= SpeedMultipler;
             playerGoalSpeed = 1f;  //Player 移動速度設為 1 -> 跑步狀態
