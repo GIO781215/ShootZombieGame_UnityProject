@@ -36,6 +36,10 @@ public class PlayerWeaponController : MonoBehaviour
 
     void Start()
     {
+        if (GameManager.Instance.IsPhoneMode) //初始化前顯把 UI 始能 避免之前被換成手機版時關掉，導致找不到物件
+        {
+            GameManager.Instance.inputController.SetComputerUI();
+        }
 
         WeaponUI_Init();
 
@@ -55,14 +59,20 @@ public class PlayerWeaponController : MonoBehaviour
         }
           */
 
+        //最後再來判斷是否為手機模式需要隱藏
+        if (GameManager.Instance.IsPhoneMode)
+        {
+            GameManager.Instance.inputController.SetPhoneUI();
+        }
     }
 
 
     void Update()
     {
+
         if (playerController.health.currentHealth == 0)
             return;
-
+         
 
         hasSwitchWeaponInput(); //判斷有沒有按下切換武器鍵要切換武器
 
@@ -89,13 +99,13 @@ public class PlayerWeaponController : MonoBehaviour
                 flamethrowerUI[1].fillAmount = Mathf.Lerp(flamethrowerUI[1].fillAmount, weapon.CurrentAmmoRatio_flamethrower(), 0.3f);
             }
         }
+
     }
 
 
     public void WeaponUI_Init() //初始化武器的UI
     {
-        //如果剛剛是手機模式 這些被隱藏使不能了 會收不到耶怎麼辦?  最後都打開來再隱藏一次???@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-        //另外這邊要和手機版的武器UI一起處理
+
 
         //初始化武器 UI，獲得武器的 UI 的 GameObject
         machinegunUI[0] = GameObject.FindGameObjectsWithTag("machinegunUI_1")[0].GetComponent<Image>();
@@ -109,18 +119,15 @@ public class PlayerWeaponController : MonoBehaviour
         machinegunUI[0].transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
         flamethrowerUI[0].transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
 
-        machinegunUI[0].color = new Color(170f / 255f, 170f / 255f, 170f / 255f);
-        machinegunUI[1].color = new Color(170f / 255f, 170f / 255f, 170f / 255f);
-        machinegunUI[2].color = new Color(170f / 255f, 170f / 255f, 170f / 255f);
-        flamethrowerUI[0].color = new Color(170f / 255f, 170f / 255f, 170f / 255f);
-        flamethrowerUI[1].color = new Color(170f / 255f, 170f / 255f, 170f / 255f);
-        flamethrowerUI[2].color = new Color(170f / 255f, 170f / 255f, 170f / 255f);
+        machinegunUI[0].color = new Color(170f / 255f, 170f / 255f, 170f / 255f, 255f / 255f);
+        machinegunUI[1].color = new Color(170f / 255f, 170f / 255f, 170f / 255f, 255f / 255f);
+        machinegunUI[2].color = new Color(170f / 255f, 170f / 255f, 170f / 255f, 255f / 255f);
+        flamethrowerUI[0].color = new Color(170f / 255f, 170f / 255f, 170f / 255f, 255f / 255f);
+        flamethrowerUI[1].color = new Color(170f / 255f, 170f / 255f, 170f / 255f, 255f / 255f);
+        flamethrowerUI[2].color = new Color(170f / 255f, 170f / 255f, 170f / 255f, 255f / 255f);
 
-        machinegunUI[2].enabled = true;
-        flamethrowerUI[2].enabled = true;
+ 
 
-
-        //最後再來判斷是否為手機模式需要隱藏
     }
 
 
@@ -143,17 +150,17 @@ public class PlayerWeaponController : MonoBehaviour
                 Weapon weaponInstance = Instantiate(weapon, equipPosition); //實例化一個 Weapon 腳本 
                 weaponInstance.sourcePrefab = weapon.gameObject; //為這個 Weapon 腳本的 sourcePrefab 指定初始值         
                 PlayerWeaponSlot[i] = weaponInstance; //---------------------------------------------------------------------所以 AllWeaponsList 中的 Weapon 還不是實體，而 PlayerWeaponSlot[] 中的 Weapon 是實體嗎???
-                PlayerWeaponSlot[i].HiddenWeapon(); //先不顯示
+                PlayerWeaponSlot[i].HiddenWeapon(); //先不顯示武器模型
 
                 //顯示加入的武器的UI
                 if (weapon == AllWeaponsList[0]) //武器是 machinegun
                 {
-                    machinegunUI[2].enabled = false;
+                    machinegunUI[2].color = new Color(170f / 255f, 170f / 255f, 170f / 255f, 0 / 255f);
 
                 }
                 else if (weapon == AllWeaponsList[1])  //武器是 flamethrower
                 {
-                    flamethrowerUI[2].enabled = false;
+                    flamethrowerUI[2].color = new Color(170f / 255f, 170f / 255f, 170f / 255f, 0 / 255f);
                 }
 
                 //print("成功加入武器 " + weaponInstance);
@@ -205,8 +212,15 @@ public class PlayerWeaponController : MonoBehaviour
                 currentWeaponSlotIndex += 1;
             audioSource.PlayOneShot(sound_SwtichWeapon);
 
+
+            //------------------ 想最後臨時改一下，變成一定會拿槍，且只有 V 鍵能換槍(反正只有兩把) --------------------
+            if(currentWeaponSlotIndex == -1) currentWeaponSlotIndex++;
+            //--------------------------------------------------------------------------------------------------------- 
+
+
             switchWeapon(currentWeaponSlotIndex); //切換成那把武器
         }
+        /*  //讓 B 鍵失去功能
         else if (inputController.GetKeyBInputDown())
         {
             //往左移動 index
@@ -229,6 +243,7 @@ public class PlayerWeaponController : MonoBehaviour
 
             switchWeapon(currentWeaponSlotIndex); //切換成那把武器
         }
+        */
     }
 
     private void switchWeapon(int index) //切換武器，其實只是在做武器的隱藏/顯示而已
@@ -248,10 +263,10 @@ public class PlayerWeaponController : MonoBehaviour
             flamethrowerUI[0].transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
             machinegunUI[0].color = new Color(170f / 255f, 170f / 255f, 170f / 255f);
             machinegunUI[1].color = new Color(170f / 255f, 170f / 255f, 170f / 255f);
-            machinegunUI[2].color = new Color(170f / 255f, 170f / 255f, 170f / 255f);
+          //  machinegunUI[2].color = new Color(170f / 255f, 170f / 255f, 170f / 255f);
             flamethrowerUI[0].color = new Color(170f / 255f, 170f / 255f, 170f / 255f);
             flamethrowerUI[1].color = new Color(170f / 255f, 170f / 255f, 170f / 255f);
-            flamethrowerUI[2].color = new Color(170f / 255f, 170f / 255f, 170f / 255f);
+          //  flamethrowerUI[2].color = new Color(170f / 255f, 170f / 255f, 170f / 255f);
 
 
             //只顯示那把武器
