@@ -29,6 +29,7 @@ public class PlayerController : MonoBehaviour
     //-------------------設定動畫的參數-------------------
     Animator animatorController; //動畫播放控制器
     float playerMovingSpeed = 0; //player 當前移動速度 (控制混成動畫的變數)
+    float playerMovingSpeed_Anime = 0;
     float playerGoalSpeed = 0; //player 的目標速度
     float SpeedChangeRatio = 0.01f; //從當前速度變化到目標速度的快慢比率
     bool CanJumpAgain = true; //是否可以再次跳躍，為了解決播放跳躍動畫時會有二段跳問題而設的參數
@@ -205,9 +206,10 @@ public class PlayerController : MonoBehaviour
         if (playerMovingSpeed != playerGoalSpeed) //其實不用這個 if 判斷也沒關係
         {
             playerMovingSpeed = Mathf.Lerp(playerMovingSpeed, playerGoalSpeed, SpeedChangeRatio);
+            playerMovingSpeed_Anime = Mathf.Lerp(playerMovingSpeed, playerGoalSpeed, 0.1f);
         }
 
-        animatorController.SetFloat("walkSpeed", playerMovingSpeed); //改變變數 walkSpeed 就能從 animatorController 中播放對應的動畫
+        animatorController.SetFloat("walkSpeed", playerMovingSpeed_Anime); //改變變數 walkSpeed 就能從 animatorController 中播放對應的動畫
         animatorController.SetFloat("Vertical", inputController.GetMoveInput().z);  
         animatorController.SetFloat("Horizontal", inputController.GetMoveInput().x);
         //上下跟左右快速切換會導致動畫跳針，限制上鍵按下鬆開一段時間後按下鍵才有移動效果，或是上鍵按下後再按下鍵過一段時間後才有移動效果，左右同理 <--------------------------之後再來實現這功能

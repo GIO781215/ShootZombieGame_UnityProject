@@ -41,7 +41,7 @@ public class InputController : MonoBehaviour
     float player_Left_speed = 0;
     float player_Right_speed = 0;
 
-
+    bool canJump=true;
 
 
     private void Start()
@@ -467,9 +467,14 @@ public class InputController : MonoBehaviour
     {
         if (canInput && GameManager.Instance.playerController != null)
         {
-            Phone_Camera = true;
+            Invoke("Phone_Camera_True", 0.1f); //延遲一下再設為 true，避開觸空第一下距離會跳很大的判定問題
         }
     }
+    void Phone_Camera_True()
+    {
+        Phone_Camera = true;
+    }
+
     public void PhoneUI_Camera_Up()
     {
         if (canInput && GameManager.Instance.playerController != null)
@@ -480,7 +485,7 @@ public class InputController : MonoBehaviour
 
     public void PhoneUI_Shoot_Down()
     {
-        if (canInput && GameManager.Instance.playerController != null)
+        if (canInput && GameManager.Instance.playerController != null && Phone_Shoot == false) //壓下那一瞬間才使能(做實驗)
         {
             Phone_Shoot = true;
             GameManager.Instance.playerController.ShootAimBehaviour_PhoneMode(); //變成射擊動作與使能射擊旗標
@@ -510,13 +515,23 @@ public class InputController : MonoBehaviour
         }
     }
   
-    public void PhoneUI_Jump()
+    public void PhoneUI_Jump_1()
     {
-        if (canInput && GameManager.Instance.playerController != null)
+
+        if (canInput && GameManager.Instance.playerController != null && canJump == true)
         {
+            canJump = false;
             GameManager.Instance.playerController.jumpBehaviour_PhoneMode();
         }
+        Invoke("PhoneUI_Jump_2", 0.5f);
     }
+    public void PhoneUI_Jump_2()
+    {
+        canJump = true;
+    }
+
+
+
     public void PhoneUI_Aim()
     {
         if (canInput && GameManager.Instance.playerController != null)

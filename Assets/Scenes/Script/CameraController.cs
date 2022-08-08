@@ -167,15 +167,13 @@ public class CameraController : MonoBehaviour
                 //有按住攝影機圖示的時候
                 if (GameManager.Instance.inputController.Phone_Camera)
                 {
-                    CameraAngle_X += inputController.GetMouseX() * sensitivity_X;
-                    CameraAngle_Y += inputController.GetMouseY() * sensitivity_Y;
+                    CameraAngle_X = CameraAngle_X + inputController.GetMouseX() * sensitivity_X;
+                    CameraAngle_Y = CameraAngle_Y + inputController.GetMouseY() * sensitivity_Y;
                 }
             }
             //------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-
-
-
+ 
 
             if (IsFirsrRun)
             {
