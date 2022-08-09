@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEditor;
 
 
@@ -9,6 +10,7 @@ public class MutantController : MonoBehaviour
     GameObject player;
     MutantNavMeshAgent mutantNavMeshAgent; //用來獲得自己寫的移動導航物件
     Health health; //用來獲得自己的血量系統物件
+    [SerializeField] Image Position_icon; //自己的在小地圖上的圖標
 
     bool gameOver = false;
     float timeSinceLastGameOver = 0;
@@ -473,10 +475,9 @@ public class MutantController : MonoBehaviour
 
     void OnDie()
     {
-        //死亡叫一下
+        Position_icon.color = new Color(0, 0, 0, 0);//讓圖標消失(變透明)
         mutantNavMeshAgent.CancelMove(); //停止移動 
         animatorController.SetTrigger("IsDead"); //播放死亡動畫
-
     }
 
 

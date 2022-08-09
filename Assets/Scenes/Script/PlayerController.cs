@@ -173,7 +173,6 @@ public class PlayerController : MonoBehaviour
     //處理移動
     private void MoveBehaviour()
     {
-  
         //獲得輸入移動方向上的單位向量
         moveDirection = Vector3.zero;
         moveDirection += inputController.GetMoveInput().z * GetCurrentCameraForward();
@@ -206,7 +205,7 @@ public class PlayerController : MonoBehaviour
         if (playerMovingSpeed != playerGoalSpeed) //其實不用這個 if 判斷也沒關係
         {
             playerMovingSpeed = Mathf.Lerp(playerMovingSpeed, playerGoalSpeed, SpeedChangeRatio);
-            playerMovingSpeed_Anime = Mathf.Lerp(playerMovingSpeed, playerGoalSpeed, 0.1f);
+            playerMovingSpeed_Anime = Mathf.Lerp(playerMovingSpeed, playerGoalSpeed, 1f); //電腦版是 0.5 但手機版用 1 才正常 
         }
 
         animatorController.SetFloat("walkSpeed", playerMovingSpeed_Anime); //改變變數 walkSpeed 就能從 animatorController 中播放對應的動畫

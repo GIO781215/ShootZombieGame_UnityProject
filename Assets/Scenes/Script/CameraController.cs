@@ -164,16 +164,22 @@ public class CameraController : MonoBehaviour
             //---------------------------------手機版的控制---------------------------------
             if (GameManager.Instance.IsPhoneMode)  
             {
-                //有按住攝影機圖示的時候
-                if (GameManager.Instance.inputController.Phone_Camera)
+                if (GameManager.Instance.inputController.Phone_Camera) //有按住攝影機圖示的時候
                 {
-                    CameraAngle_X = CameraAngle_X + inputController.GetMouseX() * sensitivity_X;
-                    CameraAngle_Y = CameraAngle_Y + inputController.GetMouseY() * sensitivity_Y;
+                    if (Mathf.Abs(inputController.GetMouseX()) <= 2f) //過濾掉跳太大的值
+
+                    {
+                        CameraAngle_X = CameraAngle_X + inputController.GetMouseX() * sensitivity_X * 10;
+                    }
+                    if (Mathf.Abs(inputController.GetMouseY()) <= 2f) //過濾跳太大的值
+                    {
+                        CameraAngle_Y = CameraAngle_Y + inputController.GetMouseY() * sensitivity_Y * 10;
+                    }
                 }
             }
             //------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
  
+
 
             if (IsFirsrRun)
             {

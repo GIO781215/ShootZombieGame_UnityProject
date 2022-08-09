@@ -36,12 +36,19 @@ public class InputController : MonoBehaviour
     public bool Phone_Rush = false; //是否正按住衝刺
     public bool Phone_Shoot = false; //是否正按住射擊
     public bool Phone_Camera = false; //是否正按住攝影機
+
+    public bool Phone_Aim = false; //是否按下了瞄準
+    public bool Phone_Jump = false; //是否按下了跳躍
+    public bool Phone_Machinegun = false; //是否按下了開關小地圖
+    public bool Phone_OnOffLittleMap = false; //是否按下了切換機械槍
+    public bool Phone_Flamethrower = false; //是否按下了切換火焰槍
+
+
+
     float player_Forward_speed = 0;
     float player_Back_speed = 0;
     float player_Left_speed = 0;
     float player_Right_speed = 0;
-
-    bool canJump=true;
 
 
     private void Start()
@@ -467,14 +474,10 @@ public class InputController : MonoBehaviour
     {
         if (canInput && GameManager.Instance.playerController != null)
         {
-            Invoke("Phone_Camera_True", 0.1f); //延遲一下再設為 true，避開觸空第一下距離會跳很大的判定問題
+            Phone_Camera = true;
+            //Invoke("Phone_Camera_True", 0.01f); //延遲一下再設為 true，避開觸空第一下距離會跳很大的判定問題
         }
     }
-    void Phone_Camera_True()
-    {
-        Phone_Camera = true;
-    }
-
     public void PhoneUI_Camera_Up()
     {
         if (canInput && GameManager.Instance.playerController != null)
@@ -485,7 +488,7 @@ public class InputController : MonoBehaviour
 
     public void PhoneUI_Shoot_Down()
     {
-        if (canInput && GameManager.Instance.playerController != null && Phone_Shoot == false) //壓下那一瞬間才使能(做實驗)
+        if (canInput && GameManager.Instance.playerController != null && Phone_Shoot == false) //避免按壓時重複觸發
         {
             Phone_Shoot = true;
             GameManager.Instance.playerController.ShootAimBehaviour_PhoneMode(); //變成射擊動作與使能射擊旗標
@@ -509,57 +512,80 @@ public class InputController : MonoBehaviour
     }
     public void PhoneUI_Rush_Up()
     {
-        if (canInput && GameManager.Instance.playerController != null)
-        {
             Phone_Rush = false;
-        }
     }
   
-    public void PhoneUI_Jump_1()
+    public void PhoneUI_Jump_Down()
     {
 
-        if (canInput && GameManager.Instance.playerController != null && canJump == true)
+        if (canInput && GameManager.Instance.playerController != null && Phone_Jump == false)
         {
-            canJump = false;
+            Phone_Jump = true;
             GameManager.Instance.playerController.jumpBehaviour_PhoneMode();
+            Invoke("PhoneUI_Jump_Up", 0.8f); //靠延遲自動重置旗標
         }
-        Invoke("PhoneUI_Jump_2", 0.5f);
+ 
     }
-    public void PhoneUI_Jump_2()
+    public void PhoneUI_Jump_Up()
     {
-        canJump = true;
+        Phone_Jump = false;
     }
 
-
-
-    public void PhoneUI_Aim()
+    public void PhoneUI_Aim_Down()
     {
-        if (canInput && GameManager.Instance.playerController != null)
+        if (canInput && GameManager.Instance.playerController != null && Phone_Aim == false)
         {
+            Phone_Aim = true;
             GameManager.Instance.playerController.AimBehaviour_PhoneMode();
         }
     }
-    public void PhoneUI_Machinegun()
+    public void PhoneUI_Aim_Up()
     {
-        if (GameManager.Instance.playerWeaponController != null)
+        Phone_Aim = false;
+    }
+
+
+    public void PhoneUI_Machinegun_Down()
+    {
+        if (GameManager.Instance.playerWeaponController != null && Phone_Machinegun == false)
         {
+            Phone_Machinegun = true;
             GameManager.Instance.playerWeaponController.SwitchWeaponToMachinegun();
         }
     }
-    public void PhoneUI_Flamethrower()
+    public void PhoneUI_Machinegun_Up()
     {
-        if (GameManager.Instance.playerWeaponController != null)
+        Phone_Machinegun = false;
+    }
+
+    public void PhoneUI_Flamethrower_Down()
+    {
+        if (GameManager.Instance.playerWeaponController != null && Phone_Flamethrower == false)
         {
+            Phone_Flamethrower = true;
             GameManager.Instance.playerWeaponController.SwitchWeaponToFlamethrower();
         }
     }
-
-    public void PhoneUI_OnOffLittleMap()
+    public void PhoneUI_Flamethrower_Up()
     {
-        audioSource.PlayOneShot(sound_Stop);
-        LittleMapUI_Flag = !LittleMapUI_Flag;
-        LittleMapUI.SetActive(LittleMapUI_Flag);
+        Phone_Flamethrower = false;
     }
+
+    public void PhoneUI_OnOffLittleMap_Dowm()
+    {
+        if (canInput && GameManager.Instance.playerController != null && Phone_OnOffLittleMap == false)
+        {
+            Phone_OnOffLittleMap = true;
+            audioSource.PlayOneShot(sound_Stop);
+            LittleMapUI_Flag = !LittleMapUI_Flag;
+            LittleMapUI.SetActive(LittleMapUI_Flag);
+        }
+    }
+    public void PhoneUI_OnOffLittleMap_Up()
+    {
+        Phone_OnOffLittleMap = false;
+    }
+
 
     public void PhoneUI_Setting()
     {

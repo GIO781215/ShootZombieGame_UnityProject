@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEditor;
 
 
@@ -10,6 +11,7 @@ public class ZombieController : MonoBehaviour
     GameObject player;
     ZombieNavMeshAgent zombieNavMeshAgent; //用來獲得自己寫的移動導航物件
     Health health; //用來獲得自己的血量系統物件
+    [SerializeField] Image Position_icon; //自己的在小地圖上的圖標
 
     bool gameOver = false;
 
@@ -86,7 +88,7 @@ public class ZombieController : MonoBehaviour
         if(gameOver == true )
         {
             return;
-        }
+        }  
         if ((this.health.IsDead() || player.GetComponent<Health>().IsDead()))  //如果殭屍或玩家已經死了那就什麼都不做了
         {
             zombieNavMeshAgent.CancelMove(); //停止移動 
@@ -276,11 +278,10 @@ public class ZombieController : MonoBehaviour
     }
 
     void OnDie()
-    {
-        //死亡叫一下
-
+    {      
         zombieNavMeshAgent.CancelMove(); //停止移動 
         animatorController.SetTrigger("IsDead"); //播放死亡動畫
+        Position_icon.color = new Color(0, 0, 0, 0);//讓圖標消失(變透明)
         Invoke("DestroyCollider", 2.5f);
     }
     void DestroyCollider()
