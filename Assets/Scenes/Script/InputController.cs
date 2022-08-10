@@ -263,7 +263,14 @@ public class InputController : MonoBehaviour
         return false;
     }
 
-
+    public bool GetKeyAInputHold() //是否按住 A 鍵
+    {
+        if (canInput)
+        {
+            return Input.GetKey(KeyCode.A);
+        }
+        return false;
+    }
 
 
 
@@ -306,6 +313,22 @@ public class InputController : MonoBehaviour
     {
         if (canInput)
             return Input.GetKeyDown(KeyCode.F);
+        return false;
+    }
+
+    public bool GetKeyGInputDown() //是否按下 G 鍵
+    {
+        if (canInput)
+            return Input.GetKeyDown(KeyCode.G);
+        return false;
+    }
+
+    public bool GetKeyQInputDown() //是否有按下 Q 鍵
+    {
+        if (canInput)
+        {
+            return Input.GetKeyDown(KeyCode.Q);
+        }
         return false;
     }
 
@@ -835,7 +858,7 @@ public class InputController : MonoBehaviour
     //開啟 / 關閉小地圖
     void On_Off_LittleMap()
     {
-        if (GetKeyFInputDown())
+        if (GetKeyQInputDown())
         {
             audioSource.PlayOneShot(sound_Stop);
             LittleMapUI_Flag = !LittleMapUI_Flag;

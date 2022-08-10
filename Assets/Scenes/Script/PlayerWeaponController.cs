@@ -84,7 +84,9 @@ public class PlayerWeaponController : MonoBehaviour
                 //用滑鼠控制射擊
                 PlayerWeaponSlot[currentWeaponSlotIndex].HandleShootInput(inputController.GetMouseLeftKeyDown(), inputController.GetMouseLeftKeyHeldDown()); //處理射擊
                 //用鍵盤控制射擊
+                /*
                 PlayerWeaponSlot[currentWeaponSlotIndex].HandleShootInput(inputController.GetSpaceInputDown(), inputController.GetSpaceInputHold()); //處理射擊
+                */
             } 
             else //手機版控制方式 
             {
@@ -255,7 +257,7 @@ public class PlayerWeaponController : MonoBehaviour
 
     private void hasSwitchWeaponInput() //判斷有沒有按下切換武器鍵要切換武器
     {
-        if (inputController.GetKeyVInputDown())
+        if (inputController.GetKeyGInputDown())
         {
             //往右移動 index
             currentWeaponSlotIndex += 1;

@@ -115,6 +115,7 @@ public class CameraController : MonoBehaviour
                 //·Æ¹«¿é¤J
                 CameraAngle_X += inputController.GetMouseX() * sensitivity_X;
                 //Áä½L¿é¤J
+                /*
                 if (inputController.GetDInputHold())
                 {
                     D_value = Mathf.Lerp(D_value, WSAD_Max_speed, WSAD_speed);
@@ -134,12 +135,13 @@ public class CameraController : MonoBehaviour
                     A_value = 0;
                 }
                 CameraAngle_X -= A_value;
-
+                */
                 //------------------- 
 
                 //·Æ¹«¿é¤J
                 CameraAngle_Y += inputController.GetMouseY() * sensitivity_Y;
                 //Áä½L¿é¤J
+                /*
                 if (inputController.GetWInputHold())
                 {
                     W_value = Mathf.Lerp(W_value, WSAD_Max_speed, WSAD_speed);
@@ -159,6 +161,7 @@ public class CameraController : MonoBehaviour
                     S_value = 0;
                 }
                 CameraAngle_Y += S_value;
+                */
             }
             //---------------------------------¤â¾÷ª©ªº±±¨î---------------------------------
             if (GameManager.Instance.IsPhoneMode)
@@ -195,6 +198,7 @@ public class CameraController : MonoBehaviour
             //·Æ¹«¿é¤J
             cameraToTargetDistance += inputController.GetMouseScrollWheel() * sensitivity_ScrollWheel;
             //Áä½L¿é¤J
+            /*
             if (inputController.GetQInputHold())
             {
                 cameraToTargetDistance += 0.02f;
@@ -203,6 +207,7 @@ public class CameraController : MonoBehaviour
             {
                 cameraToTargetDistance -= 0.02f;
             }
+            */
             cameraToTargetDistance = Mathf.Clamp(cameraToTargetDistance, cameraToTargetMinDistance, cameraToTargetMaxDistance);
 
             if (IsFirsrRun)

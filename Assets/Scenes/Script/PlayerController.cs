@@ -40,11 +40,11 @@ public class PlayerController : MonoBehaviour
     //-------------------瞄準動作相關的參數-------------------
     bool IsAim = false;
     public event Action<bool> onAim; //切換成瞄準動作的事件容器
-                                     //----------------------------------------------------
+     //----------------------------------------------------
 
     public event Action onSprint; //用來觸發加速時的特效函數
 
-
+    float idle_walk_switch_speed = 1f; //電腦版是 0.2 但手機版用 1 才正常 
 
 
     InputController inputController;
@@ -147,14 +147,14 @@ public class PlayerController : MonoBehaviour
     {
         if (IsOnGround())
         {
-            if (!GameManager.Instance.IsPhoneMode && (inputController.GetMouseLeftKeyDown() || inputController.GetSpaceInputDown()))
+            if (!GameManager.Instance.IsPhoneMode && (inputController.GetMouseLeftKeyDown()))// || inputController.GetSpaceInputDown()))
             {
                 IsAim = true;
                 animatorController.SetBool("IsAim", IsAim);
                 onAim?.Invoke(IsAim); //更改 PlayerWeaponController 的 isAim 變數
             }
 
-            if (!GameManager.Instance.IsPhoneMode && inputController.GetMouseRightKeyDown() || inputController.GetKeyCInputDown())
+            if (!GameManager.Instance.IsPhoneMode && inputController.GetMouseRightKeyDown())// || inputController.GetKeyCInputDown())
             {
                 IsAim = !IsAim;
                 animatorController.SetBool("IsAim", IsAim);
@@ -184,7 +184,7 @@ public class PlayerController : MonoBehaviour
         {
             playerGoalSpeed = 0f; //Player 移動速度設為 0 -> 閒置狀態
         }
-        else if ((inputController.GetKeyZInputHold() || GameManager.Instance.inputController.Phone_Rush) && !IsAim) //是否按下 Z 加速，並且不在瞄準模式
+        else if ((inputController.GetKeyAInputHold() || GameManager.Instance.inputController.Phone_Rush) && !IsAim) //是否按下 A 加速，並且不在瞄準模式
         {
             moveDirection *= SpeedMultipler;
             playerGoalSpeed = 1f;  //Player 移動速度設為 1 -> 跑步狀態
@@ -205,7 +205,7 @@ public class PlayerController : MonoBehaviour
         if (playerMovingSpeed != playerGoalSpeed) //其實不用這個 if 判斷也沒關係
         {
             playerMovingSpeed = Mathf.Lerp(playerMovingSpeed, playerGoalSpeed, SpeedChangeRatio);
-            playerMovingSpeed_Anime = Mathf.Lerp(playerMovingSpeed, playerGoalSpeed, 1f); //電腦版是 0.5 但手機版用 1 才正常 
+            playerMovingSpeed_Anime = Mathf.Lerp(playerMovingSpeed, playerGoalSpeed, idle_walk_switch_speed); 
         }
 
         animatorController.SetFloat("walkSpeed", playerMovingSpeed_Anime); //改變變數 walkSpeed 就能從 animatorController 中播放對應的動畫
@@ -302,7 +302,7 @@ public class PlayerController : MonoBehaviour
     private void jumpBehaviour()
     {
         //Debug.DrawRay(transform.position, Vector3.down* distanceToGround, Color.red); //可看出有效接觸地板的距離
-        if (inputController.GetKeyXInputDown() && IsOnGround() && CanJumpAgain)
+        if (inputController.GetSpaceInputDown() && IsOnGround() && CanJumpAgain)
         {
             jumpDirection = Vector3.zero;
             jumpDirection += jumpForce * Vector3.up;
