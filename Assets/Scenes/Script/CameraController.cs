@@ -64,7 +64,7 @@ public class CameraController : MonoBehaviour
     float A_value = 0;
     float D_value = 0;
 
-
+    public bool PhoneUI_Camera_Drag = false;
 
 
 
@@ -160,25 +160,26 @@ public class CameraController : MonoBehaviour
                 }
                 CameraAngle_Y += S_value;
             }
-             
             //---------------------------------手機版的控制---------------------------------
-            if (GameManager.Instance.IsPhoneMode)  
+            if (GameManager.Instance.IsPhoneMode)
             {
-                if (GameManager.Instance.inputController.Phone_Camera) //有按住攝影機圖示的時候
+                if (GameManager.Instance.inputController.Phone_Camera || PhoneUI_Camera_Drag) //有滑入或拖曳攝影機圖示的時候
                 {
-                    if (Mathf.Abs(inputController.GetMouseX()) <= 2f) //過濾掉跳太大的值
+                    if (Mathf.Abs(inputController.GetMouseX()) <= 1f) //過濾掉跳太大的值
 
                     {
                         CameraAngle_X = CameraAngle_X + inputController.GetMouseX() * sensitivity_X * 10;
                     }
-                    if (Mathf.Abs(inputController.GetMouseY()) <= 2f) //過濾跳太大的值
+                    if (Mathf.Abs(inputController.GetMouseY()) <= 1f) //過濾跳太大的值
                     {
                         CameraAngle_Y = CameraAngle_Y + inputController.GetMouseY() * sensitivity_Y * 10;
                     }
                 }
             }
+            PhoneUI_Camera_Drag = false;
+
             //------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
- 
+
 
 
             if (IsFirsrRun)
@@ -235,6 +236,23 @@ public class CameraController : MonoBehaviour
 
         }
     }
+
+    public void PhoneUI_ControllCamera()
+    {
+        PhoneUI_Camera_Drag = true;
+        /*
+        if (Mathf.Abs(inputController.GetMouseX()) <= 1f) //過濾掉跳太大的值
+
+        {
+            CameraAngle_X = CameraAngle_X + inputController.GetMouseX() * sensitivity_X * 10;
+        }
+        if (Mathf.Abs(inputController.GetMouseY()) <= 1f) //過濾跳太大的值
+        {
+            CameraAngle_Y = CameraAngle_Y + inputController.GetMouseY() * sensitivity_Y * 10;
+        }
+        */
+    }
+
 
     private void OnDamage()
     {

@@ -29,10 +29,16 @@ public class InputController : MonoBehaviour
 
 
     //手機版按鍵參數
-    public bool Phone_Forward = false; //是否正按住前進
-    public bool Phone_Back = false; //是否正按住後退
-    public bool Phone_Left = false; //是否正按住往左
-    public bool Phone_Right = false; //是否正按住往右
+    public bool Phone_Forward = false;  
+    public bool Phone_Back = false;  
+    public bool Phone_Left = false;  
+    public bool Phone_Right = false;  
+    public bool Phone_Forward_Left = false;  
+    public bool Phone_Forward_Right = false;  
+    public bool Phone_Back_Left = false;  
+    public bool Phone_Back_Right = false;  
+
+
     public bool Phone_Rush = false; //是否正按住衝刺
     public bool Phone_Shoot = false; //是否正按住射擊
     public bool Phone_Camera = false; //是否正按住攝影機
@@ -142,7 +148,7 @@ public class InputController : MonoBehaviour
         {
             pauseUI.SetActive(false);
         }
-        if(GameManager.Instance.IsPhoneMode)
+        if (GameManager.Instance.IsPhoneMode)
         {
             Cursor.lockState = CursorLockMode.None;
 
@@ -228,7 +234,7 @@ public class InputController : MonoBehaviour
         }
     }
 
- 
+
 
     public bool GetSpaceInputDown() //是否按下 Space 鍵
     {
@@ -371,9 +377,9 @@ public class InputController : MonoBehaviour
 
 
     //--------------------------------------手機 UI (滑鼠)控制操作--------------------------------------
-     void PhoneUI_Move_process()
+    void PhoneUI_Move_process()
     {
-        if(Phone_Forward)
+        if (Phone_Forward || Phone_Forward_Left || Phone_Forward_Right)
         {
             player_Forward_speed = Mathf.Lerp(player_Forward_speed, 1, 0.1f);
         }
@@ -382,7 +388,7 @@ public class InputController : MonoBehaviour
             player_Forward_speed = 0;
         }
 
-        if (Phone_Back)
+        if (Phone_Back || Phone_Back_Left || Phone_Back_Right)
         {
             player_Back_speed = Mathf.Lerp(player_Back_speed, 1, 0.1f);
         }
@@ -391,7 +397,7 @@ public class InputController : MonoBehaviour
             player_Back_speed = 0;
         }
 
-        if (Phone_Left)
+        if (Phone_Left || Phone_Forward_Left || Phone_Back_Left)
         {
             player_Left_speed = Mathf.Lerp(player_Left_speed, 1, 0.1f);
         }
@@ -399,7 +405,7 @@ public class InputController : MonoBehaviour
         {
             player_Left_speed = 0;
         }
-        if (Phone_Right)
+        if (Phone_Right || Phone_Forward_Right || Phone_Back_Right)
         {
             player_Right_speed = Mathf.Lerp(player_Right_speed, 1, 0.1f);
         }
@@ -412,7 +418,7 @@ public class InputController : MonoBehaviour
 
     public void PhoneUI_Forward_Down()
     {
-        if (canInput && GameManager.Instance.playerController != null)
+        if (canInput && GameManager.Instance.playerController != null && Phone_Forward == false)
         {
             Phone_Forward = true;
         }
@@ -421,13 +427,25 @@ public class InputController : MonoBehaviour
     {
         if (canInput && GameManager.Instance.playerController != null)
         {
+            //Invoke("_PhoneUI_Forward_Up", 0.01f); //延遲置零旗標 是為了解決手機性能太差會卡鍵造成二次觸發 PhoneUI_Forward_Down() 的問題
             Phone_Forward = false;
+            StartCoroutine(_PhoneUI_Forward_Up());
+        }
+    }
+    IEnumerator _PhoneUI_Forward_Up()
+    {
+        for (int i = 0; i < 2; i++)
+        {
+            Phone_Forward = false;
+            yield return new WaitForSeconds(0.005f);
         }
     }
 
+
+
     public void PhoneUI_Back_Down()
     {
-        if (canInput && GameManager.Instance.playerController != null)
+        if (canInput && GameManager.Instance.playerController != null && Phone_Back == false)
         {
             Phone_Back = true;
         }
@@ -437,12 +455,23 @@ public class InputController : MonoBehaviour
         if (canInput && GameManager.Instance.playerController != null)
         {
             Phone_Back = false;
+            StartCoroutine(_PhoneUI_Back_Up());
+        }
+    }
+    IEnumerator _PhoneUI_Back_Up()
+    {
+        for (int i = 0; i < 2; i++)
+        {
+            Phone_Back = false;
+            yield return new WaitForSeconds(0.005f);
         }
     }
 
+ 
+
     public void PhoneUI_Left_Down()
     {
-        if (canInput && GameManager.Instance.playerController != null)
+        if (canInput && GameManager.Instance.playerController != null && Phone_Left == false)
         {
             Phone_Left = true;
         }
@@ -452,12 +481,23 @@ public class InputController : MonoBehaviour
         if (canInput && GameManager.Instance.playerController != null)
         {
             Phone_Left = false;
+            StartCoroutine(_PhoneUI_Left_Up());
+        }
+    }
+    IEnumerator _PhoneUI_Left_Up()
+    {
+        for (int i = 0; i < 2; i++)
+        {
+            Phone_Left = false;
+            yield return new WaitForSeconds(0.005f);
         }
     }
 
+   
+
     public void PhoneUI_Right_Down()
     {
-        if (canInput && GameManager.Instance.playerController != null)
+        if (canInput && GameManager.Instance.playerController != null && Phone_Right == false)
         {
             Phone_Right = true;
         }
@@ -467,10 +507,128 @@ public class InputController : MonoBehaviour
         if (canInput && GameManager.Instance.playerController != null)
         {
             Phone_Right = false;
+            StartCoroutine(_PhoneUI_Right_Up());
+        }
+    }
+    IEnumerator _PhoneUI_Right_Up()
+    {
+        for (int i = 0; i < 2; i++)
+        {
+            Phone_Right = false;
+            yield return new WaitForSeconds(0.005f);
         }
     }
 
-    public void PhoneUI_Camera_Down()
+
+    public void PhoneUI_Forward_Left_Down()
+    {
+        if (canInput && GameManager.Instance.playerController != null && Phone_Forward_Left == false)
+        {
+            Phone_Forward_Left = true;
+        }
+    }
+    public void PhoneUI_Forward_Left_Up()
+    {
+        if (canInput && GameManager.Instance.playerController != null)
+        {
+            Phone_Forward_Left = false;
+            StartCoroutine(_PhoneUI_Forward_Left_Up());
+        }
+    }
+    IEnumerator _PhoneUI_Forward_Left_Up()
+    {
+        for (int i = 0; i < 2; i++)
+        {
+            Phone_Forward_Left = false;
+            yield return new WaitForSeconds(0.005f);
+        }
+    }
+ 
+
+    public void PhoneUI_Forward_Right_Down()
+    {
+        if (canInput && GameManager.Instance.playerController != null && Phone_Forward_Right == false)
+        {
+            Phone_Forward_Right = true;
+        }
+    }
+    public void PhoneUI_Forward_Right_Up()
+    {
+        if (canInput && GameManager.Instance.playerController != null)
+        {
+            Phone_Forward_Right = false;
+            StartCoroutine(_PhoneUI_Forward_Right_Up());
+        }
+    }
+    IEnumerator _PhoneUI_Forward_Right_Up()
+    {
+        for (int i = 0; i < 2; i++)
+        {
+            Phone_Forward_Right = false;
+            yield return new WaitForSeconds(0.005f);
+        }
+    }
+  
+
+    public void PhoneUI_Back_Left_Down()
+    {
+        if (canInput && GameManager.Instance.playerController != null && Phone_Back_Left == false)
+        {
+            Phone_Back_Left = true;
+        }
+    }
+    public void PhoneUI_Back_Left_Up()
+    {
+        if (canInput && GameManager.Instance.playerController != null)
+        {
+            Phone_Back_Left = false;
+            StartCoroutine(_PhoneUI_Back_Left_Up());
+        }
+    }
+    IEnumerator _PhoneUI_Back_Left_Up()
+    {
+        for (int i = 0; i < 2; i++)
+        {
+            Phone_Back_Left = false;
+            yield return new WaitForSeconds(0.005f);
+        }
+    }
+
+    public void PhoneUI_Back_Right_Down()
+    {
+        if (canInput && GameManager.Instance.playerController != null && Phone_Back_Right == false)
+        {
+            Phone_Back_Right = true;
+        }
+    }
+    public void PhoneUI_Back_Right_Up()
+    {
+        if (canInput && GameManager.Instance.playerController != null)
+        {
+            Phone_Back_Right = false;
+            StartCoroutine(_PhoneUI_Back_Right_Up());
+        }
+    }
+    IEnumerator _PhoneUI_Back_Right_Up()
+    {
+        for (int i = 0; i < 2; i++)
+        {
+            Phone_Back_Right = false;
+            yield return new WaitForSeconds(0.005f);
+        }
+    }
+
+
+
+    public void PhoneUI_Camera_Drag()
+    {
+        if (canInput && GameManager.Instance.playerController != null)
+        {
+            cameraController.PhoneUI_ControllCamera();
+            //Invoke("Phone_Camera_True", 0.01f); //延遲一下再設為 true，避開觸空第一下距離會跳很大的判定問題
+        }
+    }
+    public void PhoneUI_Camera_Enter()
     {
         if (canInput && GameManager.Instance.playerController != null)
         {
@@ -486,6 +644,9 @@ public class InputController : MonoBehaviour
         }
     }
 
+
+
+
     public void PhoneUI_Shoot_Down()
     {
         if (canInput && GameManager.Instance.playerController != null && Phone_Shoot == false) //避免按壓時重複觸發
@@ -499,37 +660,51 @@ public class InputController : MonoBehaviour
     {
         if (canInput && GameManager.Instance.playerController != null)
         {
-            Phone_Shoot = false;
+            Invoke("_PhoneUI_Shoot_Up", 0.01f);
         }
     }
+    void _PhoneUI_Shoot_Up()
+    {
+        Phone_Shoot = false;
+    }
+
+
 
     public void PhoneUI_Rush_Down()
     {
-        if (canInput && GameManager.Instance.playerController != null)
+        if (canInput && GameManager.Instance.playerController != null && Phone_Rush == false)
         {
             Phone_Rush = true;
         }
     }
     public void PhoneUI_Rush_Up()
     {
-            Phone_Rush = false;
+        if (canInput && GameManager.Instance.playerController != null)
+        {
+            Invoke("_PhoneUI_Rush_Up", 0.01f);
+        }
     }
-  
+    void _PhoneUI_Rush_Up()
+    {
+        Phone_Rush = false;
+    }
+    
+
     public void PhoneUI_Jump_Down()
     {
-
         if (canInput && GameManager.Instance.playerController != null && Phone_Jump == false)
         {
             Phone_Jump = true;
             GameManager.Instance.playerController.jumpBehaviour_PhoneMode();
             Invoke("PhoneUI_Jump_Up", 0.8f); //靠延遲自動重置旗標
         }
- 
     }
     public void PhoneUI_Jump_Up()
     {
         Phone_Jump = false;
     }
+
+
 
     public void PhoneUI_Aim_Down()
     {
@@ -541,9 +716,21 @@ public class InputController : MonoBehaviour
     }
     public void PhoneUI_Aim_Up()
     {
-        Phone_Aim = false;
+        if (canInput && GameManager.Instance.playerController != null)
+        {
+            Phone_Aim = false;
+            StartCoroutine(_PhoneUI_Aim_Up());
+        }
     }
-
+ 
+    IEnumerator _PhoneUI_Aim_Up()
+    {
+        for (int i = 0; i < 2; i++)
+        {
+            Phone_Aim = false;
+            yield return new WaitForSeconds(0.005f);
+        }
+    }
 
     public void PhoneUI_Machinegun_Down()
     {
@@ -555,8 +742,13 @@ public class InputController : MonoBehaviour
     }
     public void PhoneUI_Machinegun_Up()
     {
+        Invoke("_PhoneUI_Machinegun_Up", 0.01f);
+    }
+    void _PhoneUI_Machinegun_Up()
+    {
         Phone_Machinegun = false;
     }
+
 
     public void PhoneUI_Flamethrower_Down()
     {
@@ -568,8 +760,13 @@ public class InputController : MonoBehaviour
     }
     public void PhoneUI_Flamethrower_Up()
     {
+        Invoke("_PhoneUI_Flamethrower_Up", 0.01f);
+    }
+    void _PhoneUI_Flamethrower_Up()
+    {
         Phone_Flamethrower = false;
     }
+
 
     public void PhoneUI_OnOffLittleMap_Dowm()
     {
@@ -583,7 +780,12 @@ public class InputController : MonoBehaviour
     }
     public void PhoneUI_OnOffLittleMap_Up()
     {
+        Invoke("_PhoneUI_OnOffLittleMap_Up", 0.01f);
+    }
+    void _PhoneUI_OnOffLittleMap_Up()
+    {
         Phone_OnOffLittleMap = false;
+
     }
 
 

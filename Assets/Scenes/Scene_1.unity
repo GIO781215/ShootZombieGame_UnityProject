@@ -562,13 +562,13 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-  - eventID: 0
+  - eventID: 1
     callback:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 977133456}
           m_TargetAssemblyTypeName: InputController, Assembly-CSharp
-          m_MethodName: PhoneUI_Shoot_Down
+          m_MethodName: PhoneUI_Shoot_Up
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -922,19 +922,7 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 977133456}
           m_TargetAssemblyTypeName: InputController, Assembly-CSharp
-          m_MethodName: PhoneUI_Back_Up
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 977133456}
-          m_TargetAssemblyTypeName: InputController, Assembly-CSharp
-          m_MethodName: PhoneUI_Right_Up
+          m_MethodName: PhoneUI_Back_Right_Up
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -950,19 +938,7 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 977133456}
           m_TargetAssemblyTypeName: InputController, Assembly-CSharp
-          m_MethodName: PhoneUI_Back_Down
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 977133456}
-          m_TargetAssemblyTypeName: InputController, Assembly-CSharp
-          m_MethodName: PhoneUI_Right_Down
+          m_MethodName: PhoneUI_Back_Right_Down
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -978,75 +954,7 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 977133456}
           m_TargetAssemblyTypeName: InputController, Assembly-CSharp
-          m_MethodName: PhoneUI_Back_Up
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 977133456}
-          m_TargetAssemblyTypeName: InputController, Assembly-CSharp
-          m_MethodName: PhoneUI_Right_Up
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - eventID: 14
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 977133456}
-          m_TargetAssemblyTypeName: InputController, Assembly-CSharp
-          m_MethodName: PhoneUI_Back_Up
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 977133456}
-          m_TargetAssemblyTypeName: InputController, Assembly-CSharp
-          m_MethodName: PhoneUI_Right_Up
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - eventID: 6
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 977133456}
-          m_TargetAssemblyTypeName: InputController, Assembly-CSharp
-          m_MethodName: PhoneUI_Back_Up
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 977133456}
-          m_TargetAssemblyTypeName: InputController, Assembly-CSharp
-          m_MethodName: PhoneUI_Right_Up
+          m_MethodName: PhoneUI_Back_Right_Up
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -1102,19 +1010,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 977133456}
         m_TargetAssemblyTypeName: InputController, Assembly-CSharp
-        m_MethodName: PhoneUI_Back_Up
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 977133456}
-        m_TargetAssemblyTypeName: InputController, Assembly-CSharp
-        m_MethodName: PhoneUI_Right_Up
+        m_MethodName: PhoneUI_Back_Right_Up
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1511,19 +1407,7 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 977133456}
           m_TargetAssemblyTypeName: InputController, Assembly-CSharp
-          m_MethodName: PhoneUI_Back_Up
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 977133456}
-          m_TargetAssemblyTypeName: InputController, Assembly-CSharp
-          m_MethodName: PhoneUI_Left_Up
+          m_MethodName: PhoneUI_Back_Left_Up
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -1539,19 +1423,7 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 977133456}
           m_TargetAssemblyTypeName: InputController, Assembly-CSharp
-          m_MethodName: PhoneUI_Back_Down
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 977133456}
-          m_TargetAssemblyTypeName: InputController, Assembly-CSharp
-          m_MethodName: PhoneUI_Left_Down
+          m_MethodName: PhoneUI_Back_Left_Down
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -1567,75 +1439,7 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 977133456}
           m_TargetAssemblyTypeName: InputController, Assembly-CSharp
-          m_MethodName: PhoneUI_Back_Up
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 977133456}
-          m_TargetAssemblyTypeName: InputController, Assembly-CSharp
-          m_MethodName: PhoneUI_Left_Up
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - eventID: 14
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 977133456}
-          m_TargetAssemblyTypeName: InputController, Assembly-CSharp
-          m_MethodName: PhoneUI_Back_Up
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 977133456}
-          m_TargetAssemblyTypeName: InputController, Assembly-CSharp
-          m_MethodName: PhoneUI_Left_Up
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - eventID: 6
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 977133456}
-          m_TargetAssemblyTypeName: InputController, Assembly-CSharp
-          m_MethodName: PhoneUI_Back_Up
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 977133456}
-          m_TargetAssemblyTypeName: InputController, Assembly-CSharp
-          m_MethodName: PhoneUI_Left_Up
+          m_MethodName: PhoneUI_Back_Left_Up
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -1691,19 +1495,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 977133456}
         m_TargetAssemblyTypeName: InputController, Assembly-CSharp
-        m_MethodName: PhoneUI_Back_Up
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 977133456}
-        m_TargetAssemblyTypeName: InputController, Assembly-CSharp
-        m_MethodName: PhoneUI_Left_Up
+        m_MethodName: PhoneUI_Back_Left_Up
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2191,7 +1983,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 172, y: 32.25}
+  m_AnchoredPosition: {x: 170, y: 32.25}
   m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &673084623
@@ -2306,6 +2098,22 @@ MonoBehaviour:
             m_BoolArgument: 0
           m_CallState: 2
   - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 977133456}
+          m_TargetAssemblyTypeName: InputController, Assembly-CSharp
+          m_MethodName: PhoneUI_Machinegun_Up
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 3
     callback:
       m_PersistentCalls:
         m_Calls:
@@ -2591,8 +2399,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 75, y: 195}
-  m_SizeDelta: {x: 45, y: 45}
+  m_AnchoredPosition: {x: 35, y: 170}
+  m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &738904714
 MonoBehaviour:
@@ -2733,13 +2541,13 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-  - eventID: 0
+  - eventID: 1
     callback:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 977133456}
           m_TargetAssemblyTypeName: InputController, Assembly-CSharp
-          m_MethodName: PhoneUI_Shoot_Down
+          m_MethodName: PhoneUI_Shoot_Up
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -3179,6 +2987,7 @@ MonoBehaviour:
   HeightOffset: 3
   CameraAngle_Offset: 270
   smoothMoveTime: 0.2
+  PhoneUI_Camera_Drag: 0
 --- !u!82 &963194230
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3430,6 +3239,10 @@ MonoBehaviour:
   Phone_Back: 0
   Phone_Left: 0
   Phone_Right: 0
+  Phone_Forward_Left: 0
+  Phone_Forward_Right: 0
+  Phone_Back_Left: 0
+  Phone_Back_Right: 0
   Phone_Rush: 0
   Phone_Shoot: 0
   Phone_Camera: 0
@@ -3733,7 +3546,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 25, y: 175}
+  m_AnchoredPosition: {x: 85, y: 190}
   m_SizeDelta: {x: 45, y: 45}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1144288610
@@ -3847,7 +3660,39 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 977133456}
+          m_TargetAssemblyTypeName: InputController, Assembly-CSharp
+          m_MethodName: PhoneUI_Aim_Down
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
   - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 977133456}
+          m_TargetAssemblyTypeName: InputController, Assembly-CSharp
+          m_MethodName: PhoneUI_Aim_Up
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 3
     callback:
       m_PersistentCalls:
         m_Calls:
@@ -4273,38 +4118,6 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-  - eventID: 14
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 977133456}
-          m_TargetAssemblyTypeName: InputController, Assembly-CSharp
-          m_MethodName: PhoneUI_Back_Up
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - eventID: 6
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 977133456}
-          m_TargetAssemblyTypeName: InputController, Assembly-CSharp
-          m_MethodName: PhoneUI_Back_Up
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
 --- !u!1 &1172349229
 GameObject:
   m_ObjectHideFlags: 0
@@ -4506,6 +4319,22 @@ MonoBehaviour:
         - m_Target: {fileID: 977133456}
           m_TargetAssemblyTypeName: InputController, Assembly-CSharp
           m_MethodName: PhoneUI_Rush_Up
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 977133456}
+          m_TargetAssemblyTypeName: InputController, Assembly-CSharp
+          m_MethodName: PhoneUI_Rush_Down
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -5188,19 +5017,7 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 977133456}
           m_TargetAssemblyTypeName: InputController, Assembly-CSharp
-          m_MethodName: PhoneUI_Forward_Up
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 977133456}
-          m_TargetAssemblyTypeName: InputController, Assembly-CSharp
-          m_MethodName: PhoneUI_Left_Up
+          m_MethodName: PhoneUI_Forward_Left_Up
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -5216,19 +5033,7 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 977133456}
           m_TargetAssemblyTypeName: InputController, Assembly-CSharp
-          m_MethodName: PhoneUI_Forward_Down
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 977133456}
-          m_TargetAssemblyTypeName: InputController, Assembly-CSharp
-          m_MethodName: PhoneUI_Left_Down
+          m_MethodName: PhoneUI_Forward_Left_Down
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -5244,75 +5049,7 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 977133456}
           m_TargetAssemblyTypeName: InputController, Assembly-CSharp
-          m_MethodName: PhoneUI_Forward_Up
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 977133456}
-          m_TargetAssemblyTypeName: InputController, Assembly-CSharp
-          m_MethodName: PhoneUI_Left_Up
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - eventID: 14
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 977133456}
-          m_TargetAssemblyTypeName: InputController, Assembly-CSharp
-          m_MethodName: PhoneUI_Forward_Up
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 977133456}
-          m_TargetAssemblyTypeName: InputController, Assembly-CSharp
-          m_MethodName: PhoneUI_Left_Up
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - eventID: 6
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 977133456}
-          m_TargetAssemblyTypeName: InputController, Assembly-CSharp
-          m_MethodName: PhoneUI_Forward_Up
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 977133456}
-          m_TargetAssemblyTypeName: InputController, Assembly-CSharp
-          m_MethodName: PhoneUI_Left_Up
+          m_MethodName: PhoneUI_Forward_Left_Up
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -5368,19 +5105,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 977133456}
         m_TargetAssemblyTypeName: InputController, Assembly-CSharp
-        m_MethodName: PhoneUI_Forward_Up
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 977133456}
-        m_TargetAssemblyTypeName: InputController, Assembly-CSharp
-        m_MethodName: PhoneUI_Left_Up
+        m_MethodName: PhoneUI_Forward_Left_Up
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5730,38 +5455,6 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-  - eventID: 14
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 977133456}
-          m_TargetAssemblyTypeName: InputController, Assembly-CSharp
-          m_MethodName: PhoneUI_Left_Up
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - eventID: 6
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 977133456}
-          m_TargetAssemblyTypeName: InputController, Assembly-CSharp
-          m_MethodName: PhoneUI_Left_Up
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
 --- !u!1 &1557097333
 GameObject:
   m_ObjectHideFlags: 0
@@ -5941,38 +5634,6 @@ MonoBehaviour:
             m_BoolArgument: 0
           m_CallState: 2
   - eventID: 1
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 977133456}
-          m_TargetAssemblyTypeName: InputController, Assembly-CSharp
-          m_MethodName: PhoneUI_Forward_Up
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - eventID: 14
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 977133456}
-          m_TargetAssemblyTypeName: InputController, Assembly-CSharp
-          m_MethodName: PhoneUI_Forward_Up
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - eventID: 6
     callback:
       m_PersistentCalls:
         m_Calls:
@@ -6269,13 +5930,45 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Delegates:
-  - eventID: 2
+  - eventID: 5
     callback:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 977133456}
           m_TargetAssemblyTypeName: InputController, Assembly-CSharp
-          m_MethodName: PhoneUI_Camera_Down
+          m_MethodName: PhoneUI_Camera_Drag
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 977133456}
+          m_TargetAssemblyTypeName: InputController, Assembly-CSharp
+          m_MethodName: PhoneUI_Camera_Enter
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 977133456}
+          m_TargetAssemblyTypeName: InputController, Assembly-CSharp
+          m_MethodName: PhoneUI_Camera_Up
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -6292,22 +5985,6 @@ MonoBehaviour:
         - m_Target: {fileID: 977133456}
           m_TargetAssemblyTypeName: InputController, Assembly-CSharp
           m_MethodName: PhoneUI_Camera_Up
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - eventID: 0
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 977133456}
-          m_TargetAssemblyTypeName: InputController, Assembly-CSharp
-          m_MethodName: PhoneUI_Camera_Down
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -6560,38 +6237,6 @@ MonoBehaviour:
             m_BoolArgument: 0
           m_CallState: 2
   - eventID: 1
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 977133456}
-          m_TargetAssemblyTypeName: InputController, Assembly-CSharp
-          m_MethodName: PhoneUI_Right_Up
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - eventID: 14
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 977133456}
-          m_TargetAssemblyTypeName: InputController, Assembly-CSharp
-          m_MethodName: PhoneUI_Right_Up
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - eventID: 6
     callback:
       m_PersistentCalls:
         m_Calls:
@@ -6940,7 +6585,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 50, y: 130}
+  m_AnchoredPosition: {x: 45, y: 125}
   m_SizeDelta: {x: 80, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2020015493
@@ -7292,6 +6937,22 @@ MonoBehaviour:
             m_BoolArgument: 0
           m_CallState: 2
   - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 977133456}
+          m_TargetAssemblyTypeName: InputController, Assembly-CSharp
+          m_MethodName: PhoneUI_Flamethrower_Up
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 3
     callback:
       m_PersistentCalls:
         m_Calls:
@@ -7734,19 +7395,7 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 977133456}
           m_TargetAssemblyTypeName: InputController, Assembly-CSharp
-          m_MethodName: PhoneUI_Forward_Up
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 977133456}
-          m_TargetAssemblyTypeName: InputController, Assembly-CSharp
-          m_MethodName: PhoneUI_Right_Up
+          m_MethodName: PhoneUI_Forward_Right_Up
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -7762,19 +7411,7 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 977133456}
           m_TargetAssemblyTypeName: InputController, Assembly-CSharp
-          m_MethodName: PhoneUI_Forward_Down
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 977133456}
-          m_TargetAssemblyTypeName: InputController, Assembly-CSharp
-          m_MethodName: PhoneUI_Right_Down
+          m_MethodName: PhoneUI_Forward_Right_Down
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -7790,75 +7427,7 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 977133456}
           m_TargetAssemblyTypeName: InputController, Assembly-CSharp
-          m_MethodName: PhoneUI_Forward_Up
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 977133456}
-          m_TargetAssemblyTypeName: InputController, Assembly-CSharp
-          m_MethodName: PhoneUI_Right_Up
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - eventID: 14
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 977133456}
-          m_TargetAssemblyTypeName: InputController, Assembly-CSharp
-          m_MethodName: PhoneUI_Forward_Up
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 977133456}
-          m_TargetAssemblyTypeName: InputController, Assembly-CSharp
-          m_MethodName: PhoneUI_Right_Up
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - eventID: 6
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 977133456}
-          m_TargetAssemblyTypeName: InputController, Assembly-CSharp
-          m_MethodName: PhoneUI_Forward_Up
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 977133456}
-          m_TargetAssemblyTypeName: InputController, Assembly-CSharp
-          m_MethodName: PhoneUI_Right_Up
+          m_MethodName: PhoneUI_Forward_Right_Up
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -7914,19 +7483,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 977133456}
         m_TargetAssemblyTypeName: InputController, Assembly-CSharp
-        m_MethodName: PhoneUI_Forward_Up
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 977133456}
-        m_TargetAssemblyTypeName: InputController, Assembly-CSharp
-        m_MethodName: PhoneUI_Right_Up
+        m_MethodName: PhoneUI_Forward_Right_Up
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
