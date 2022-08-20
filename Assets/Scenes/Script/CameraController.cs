@@ -40,7 +40,7 @@ public class CameraController : MonoBehaviour
     float CameraAngle_Y = 15; //攝影機上下起始角度
     float sensitivity_X = 2; //滑鼠控制攝影機左右移動的靈敏度
     float sensitivity_Y = 2; //滑鼠控制攝影機上下移動的靈敏度
-    float sensitivity_ScrollWheel = 1.5f; //滑鼠控制攝影機前後移動的靈敏度
+    float sensitivity_ScrollWheel = 0.5f; //滑鼠控制攝影機前後移動的靈敏度
     float minVerticalAngle = -10; //攝影機上下移動的最小角度 (其實是往上仰視的最大角度，因為在 Unity 裡的 Edir -> Project Setting -> Input Manager -> Mouse Y 有勾選 Invert，所以上下有相反)
     float maxVerticalAngle = 20; //攝影機上下移動的最大角度 (其實是往下俯視的最大角度，因為在 Unity 裡的 Edir -> Project Setting -> Input Manager -> Mouse Y 有勾選 Invert，所以上下有相反)
     float cameraToTargetDistance = 10; //攝影機與目標的起始距離
