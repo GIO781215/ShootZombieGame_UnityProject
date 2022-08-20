@@ -257,7 +257,7 @@ public class PlayerWeaponController : MonoBehaviour
 
     private void hasSwitchWeaponInput() //判斷有沒有按下切換武器鍵要切換武器
     {
-        if (inputController.GetKeyGInputDown())
+        if (inputController.GetKeyFInputDown())
         {
             //往右移動 index
             currentWeaponSlotIndex += 1;

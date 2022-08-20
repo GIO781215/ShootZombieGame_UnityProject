@@ -184,7 +184,7 @@ public class PlayerController : MonoBehaviour
         {
             playerGoalSpeed = 0f; //Player 移動速度設為 0 -> 閒置狀態
         }
-        else if ((inputController.GetKeyAInputHold() || GameManager.Instance.inputController.Phone_Rush) && !IsAim) //是否按下 A 加速，並且不在瞄準模式
+        else if ((inputController.GetShiftInputHold() || GameManager.Instance.inputController.Phone_Rush) && !IsAim) //是否按下 Shift 加速，並且不在瞄準模式
         {
             moveDirection *= SpeedMultipler;
             playerGoalSpeed = 1f;  //Player 移動速度設為 1 -> 跑步狀態

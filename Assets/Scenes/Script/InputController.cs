@@ -245,35 +245,6 @@ public class InputController : MonoBehaviour
         return false;
     }
 
-    public bool GetSpaceInputHold() //是否按住 Space 鍵
-    {
-        if (canInput)
-        {
-            return Input.GetKey(KeyCode.Space);
-        }
-        return false;
-    }
-
-    public bool GetKeyZInputHold() //是否按住 Z 鍵
-    {
-        if (canInput)
-        {
-            return Input.GetKey(KeyCode.Z);
-        }
-        return false;
-    }
-
-    public bool GetKeyAInputHold() //是否按住 A 鍵
-    {
-        if (canInput)
-        {
-            return Input.GetKey(KeyCode.A);
-        }
-        return false;
-    }
-
-
-
     public bool GetKeyXInputDown() //是否按下 X 鍵
     {
         if (canInput)
@@ -345,6 +316,23 @@ public class InputController : MonoBehaviour
 
 
 
+    public bool GetSpaceInputHold() //是否按住 Space 鍵
+    {
+        if (canInput)
+        {
+            return Input.GetKey(KeyCode.Space);
+        }
+        return false;
+    }
+
+    public bool GetKeyZInputHold() //是否按住 Z 鍵
+    {
+        if (canInput)
+        {
+            return Input.GetKey(KeyCode.Z);
+        }
+        return false;
+    }
 
     public bool GetWInputHold() //是否有按住 W 鍵
     {
