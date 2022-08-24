@@ -22,7 +22,7 @@ public class PlayerController : MonoBehaviour
     [Tooltip("地心引力的力量")]
     [SerializeField] float gravityForce;
 
-    float distanceToGround = 0.2f; //角色與地面之間的距離(小於此距離角色才可跳躍)
+    float distanceToGround = 0.1f; //角色與地面之間的距離(小於此距離角色才可跳躍)
 
 
 
@@ -33,7 +33,7 @@ public class PlayerController : MonoBehaviour
     float playerGoalSpeed = 0; //player 的目標速度
     float SpeedChangeRatio = 0.01f; //從當前速度變化到目標速度的快慢比率
     bool CanJumpAgain = true; //是否可以再次跳躍，為了解決播放跳躍動畫時會有二段跳問題而設的參數
-    float JumpFreezingTime = 0.2f;//跳躍冷卻時間
+    float JumpFreezingTime = 0.4f;//跳躍冷卻時間
     float OnGroundTime = 0; //有踏在地上時間
     //----------------------------------------------------
 
@@ -93,6 +93,13 @@ public class PlayerController : MonoBehaviour
             jumpBehaviour();
             //jumpBehaviour_PhoneMode();
         }
+
+        //處理地心引力墜落
+        jumpDirection.y -= gravityForce * Time.deltaTime; //物體無時無刻都受到向下的力
+        jumpDirection.y = Mathf.Max(jumpDirection.y, -gravityForce); //向下的力最小就是 gravityForce
+        characterController.Move(jumpDirection * Time.deltaTime); //實現物體受力而移動
+
+
         /*
         //印出鍵盤移動的輸入值
         if(inputController.GetMoveInput() != Vector3.zero)
@@ -328,11 +335,6 @@ public class PlayerController : MonoBehaviour
             OnGroundTime += Time.deltaTime;
             if (OnGroundTime >= JumpFreezingTime) CanJumpAgain = true;
         }
-
-        jumpDirection.y -= gravityForce * Time.deltaTime; //物體無時無刻都受到向下的力
-        jumpDirection.y = Mathf.Max(jumpDirection.y, -gravityForce); //向下的力最小就是 gravityForce
-
-        characterController.Move(jumpDirection * Time.deltaTime); //實現物體受力而移動
     }
 
 
