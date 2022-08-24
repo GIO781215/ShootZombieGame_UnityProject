@@ -24,7 +24,7 @@ public class InputController : MonoBehaviour
 
     [SerializeField] GameObject LittleMapUI; //小地圖，開啟關閉的功能加在此腳本
     [SerializeField] GameObject PhoneUI;
-    [SerializeField] GameObject ConputgerWeaponUI;
+    [SerializeField] GameObject ComputerWeaponUI;
     bool LittleMapUI_Flag = true;
 
 
@@ -287,6 +287,15 @@ public class InputController : MonoBehaviour
         return false;
     }
 
+    public bool GetKeyEInputDown() //是否按下 E 鍵
+    {
+        if (canInput)
+        {
+            return Input.GetKeyDown(KeyCode.E);
+        }
+        return false;
+    }
+
     public bool GetKeyGInputDown() //是否按下 G 鍵
     {
         if (canInput)
@@ -303,6 +312,30 @@ public class InputController : MonoBehaviour
         return false;
     }
 
+    public bool GetTabInputDown() //是否有按下 Tab 鍵
+    {
+        if (canInput)
+        {
+            return Input.GetKeyDown(KeyCode.Tab);
+        }
+        return false;
+    }
+
+    public bool GetShiftInputDown() //是否有按下 Shift 鍵
+    {
+        if (canInput)
+        {
+            return Input.GetKeyDown(KeyCode.LeftShift);
+        }
+        return false;
+    }
+
+
+
+
+
+
+
     public bool GetShiftInputHold() //是否有按住 Shift 鍵
     {
         if (canInput)
@@ -311,10 +344,6 @@ public class InputController : MonoBehaviour
         }
         return false;
     }
-
-
-
-
 
     public bool GetSpaceInputHold() //是否按住 Space 鍵
     {
@@ -374,7 +403,7 @@ public class InputController : MonoBehaviour
         }
         return false;
     }
-    public bool GetEInputHold() //是否有按住 R 鍵
+    public bool GetEInputHold() //是否有按住 E 鍵
     {
         if (canInput)
         {
@@ -857,32 +886,32 @@ public class InputController : MonoBehaviour
     public void SetComputerUI()
     {
         audioSource.PlayOneShot(sound_Stop);
-        ConputgerWeaponUI.SetActive(true);
+        ComputerWeaponUI.SetActive(true);
         PhoneUI.SetActive(false);
     }
 
     public void SetPhoneUI()
     {
         audioSource.PlayOneShot(sound_Stop);
-        ConputgerWeaponUI.SetActive(false);
+        ComputerWeaponUI.SetActive(false);
         PhoneUI.SetActive(true);
     }
 
     public void SetComputerUI_NoSound() //給 PlayerWeaponController 初始化時用的
     {
-        ConputgerWeaponUI.SetActive(true);
+        ComputerWeaponUI.SetActive(true);
         PhoneUI.SetActive(false);
     }
 
     public void SetPhoneUI_NoSound() //給 PlayerWeaponController 初始化時用的
     {
-        ConputgerWeaponUI.SetActive(false);
+        ComputerWeaponUI.SetActive(false);
         PhoneUI.SetActive(true);
     }
 
     public void SetAllUI(bool value) //給 PlayerWeaponController 初始化時用的
     {
-        ConputgerWeaponUI.SetActive(value);
+        ComputerWeaponUI.SetActive(value);
         PhoneUI.SetActive(value);
     }
 }

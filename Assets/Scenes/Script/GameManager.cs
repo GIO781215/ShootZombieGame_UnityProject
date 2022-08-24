@@ -9,6 +9,9 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
     public CameraController cameraController;
     public PlayerController playerController;
+    public PlayerHealthBar playerHealthBar_computer;
+    public PlayerHealthBar playerHealthBar_phone;
+
     public PlayerWeaponController playerWeaponController;
     [HideInInspector] public InputController inputController;
     [SerializeField] GameObject Game_Scence;
@@ -60,7 +63,9 @@ public class GameManager : MonoBehaviour
             cameraController.resetCamera(); //其他要重置的一些參數在 CameraController 中
 
             playerController = GameObject.FindGameObjectsWithTag("Player")[0].GetComponent<PlayerController>();
-            playerWeaponController = GameObject.FindGameObjectsWithTag("Player")[0].GetComponent<PlayerWeaponController>();
+            playerWeaponController = GameObject.FindGameObjectsWithTag("Player")[0].GetComponent<PlayerWeaponController>();       
+            playerHealthBar_computer.resetHealth();
+            playerHealthBar_phone.resetHealth();
 
         }
     }

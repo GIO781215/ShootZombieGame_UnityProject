@@ -138,7 +138,7 @@ public class MutantController : MonoBehaviour
 
  
         //-------------攻擊-------------
-        if (InFireBallAttackRange() && !HitAttacking && !JumpAttacking && !FireBallAttacking && (this.health.currentHealth <= this.health.maxHealth / 2))  //丟火球攻擊 (血剩一半後才會丟火球)
+        if (InFireBallAttackRange() && !HitAttacking && !JumpAttacking && !FireBallAttacking)  //丟火球攻擊
         {
             FireBallAttacking = true;
             timeSinceLastSawPlayer = 0;
@@ -475,6 +475,11 @@ public class MutantController : MonoBehaviour
 
     void OnDie()
     {
+        if (projectileAtHand != null) //如果火球還黏在手上就銷毀
+        {
+            Destroy(projectileAtHand.gameObject);
+        }
+
         Position_icon.color = new Color(0, 0, 0, 0);//讓圖標消失(變透明)
         mutantNavMeshAgent.CancelMove(); //停止移動 
         animatorController.SetTrigger("IsDead"); //播放死亡動畫

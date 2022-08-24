@@ -22,7 +22,7 @@ public class PlayerController : MonoBehaviour
     [Tooltip("地心引力的力量")]
     [SerializeField] float gravityForce;
 
-    float distanceToGround = 0.1f; //角色與地面之間的距離(小於此距離角色才可跳躍)
+    float distanceToGround = 0.2f; //角色與地面之間的距離(小於此距離角色才可跳躍)
 
 
 
@@ -167,6 +167,15 @@ public class PlayerController : MonoBehaviour
             animatorController.SetBool("IsAim", IsAim);
             onAim?.Invoke(IsAim);
         }
+   
+        
+        if (inputController.GetSpaceInputHold() ) //如果按下衝刺+移動也解除瞄準狀態
+        {
+            IsAim = false;
+            animatorController.SetBool("IsAim", IsAim);
+            onAim?.Invoke(IsAim);
+        }
+        
     }
 
 
@@ -184,7 +193,7 @@ public class PlayerController : MonoBehaviour
         {
             playerGoalSpeed = 0f; //Player 移動速度設為 0 -> 閒置狀態
         }
-        else if ((inputController.GetShiftInputHold() || GameManager.Instance.inputController.Phone_Rush) && !IsAim) //是否按下 Shift 加速，並且不在瞄準模式
+        else if ((inputController.GetSpaceInputHold() || GameManager.Instance.inputController.Phone_Rush) && !IsAim) //是否按下空白鍵加速，並且不在瞄準模式
         {
             moveDirection *= SpeedMultipler;
             playerGoalSpeed = 1f;  //Player 移動速度設為 1 -> 跑步狀態
@@ -302,7 +311,7 @@ public class PlayerController : MonoBehaviour
     private void jumpBehaviour()
     {
         //Debug.DrawRay(transform.position, Vector3.down* distanceToGround, Color.red); //可看出有效接觸地板的距離
-        if (inputController.GetSpaceInputDown() && IsOnGround() && CanJumpAgain)
+        if (inputController.GetKeyEInputDown() && IsOnGround() && CanJumpAgain)
         {
             jumpDirection = Vector3.zero;
             jumpDirection += jumpForce * Vector3.up;
@@ -366,7 +375,7 @@ public class PlayerController : MonoBehaviour
 
     private bool IsOnGround()
     {
-        return Physics.Raycast(transform.position, Vector3.down, distanceToGround);  //參數意義: (射線發射點, 射線方向, 射線長度)，回傳值為射線是否有射到障礙物
+        return Physics.Raycast(transform.position, Vector3.down, 1f);  //參數意義: (射線發射點, 射線方向, 射線長度)，回傳值為射線是否有射到障礙物
         //CharacterController、CapsuleCollider、PlayerController 等組件都掛載在空物件 Player 底下，而網格模型則是在 PlayerMesh 中，Player 的錨點在 PlayerMesh 的正下方，所以 Player 往下一點距離就是地板了
         //但這樣做的話要記得 CharacterController 與 CapsuleCollider 的位置都要再往上移才能與 PlayerMesh 的模型位置吻合
     }
